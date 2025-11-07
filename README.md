@@ -31,6 +31,6 @@ It includes interactive sections built with HTML, CSS, JavaScript, TailwindCSS, 
 ## ▶️ Running Locally
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/portfolio.git
+   git clone https://github.com/bhanu2006-24/portfolio.git
    cd portfolio
 # portfolio
