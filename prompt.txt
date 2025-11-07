@@ -1,0 +1,63 @@
+📊 Data Analyst Portfolio Website Prompt  
+
+Name: Bhanu Saini  
+Email: bhanupsaini2024@gmail.com  
+LinkedIn: https://www.linkedin.com/in/bhanu-saini-3bb251391  
+GitHub: https://github.com/bhanu2006-24  
+Tableau Public: https://public.tableau.com/app/profile/bhanu.saini6988/vizzes  
+
+🎓 Education  
+- Indian Institute of Technology, Madras (IITM) — Bachelor of Science in Data Science (2025–2028)  
+  IIT Madras is one of India’s premier institutions, globally recognized for excellence in engineering and data science. The BS in Data Science program is designed to provide strong foundations in statistics, programming, machine learning, and practical analytics projects.  
+
+- Kendriya Vidyalaya No. 2, Jaipur — Schooling  
+  Kendriya Vidyalayas are central government schools in India known for their emphasis on English medium instruction, discipline, and holistic education. KV No. 2 Jaipur has a reputation for academic rigor and preparing students for higher studies in science and technology.  
+
+---
+
+🛠️ Skills  
+- Programming: Python, SQL, PostgreSQL, Flask  
+- Data Analysis: pandas, numpy, BeautifulSoup, Requests  
+- Visualization: Streamlit, Plotly, Tableau  
+- Web: HTML, CSS, JavaScript, TailwindCSS  
+- Tools: Git/GitHub  
+- Languages: English  
+
+---
+
+📂 Featured GitHub Projects (Analysis)  
+
+1) Crypto Analysis Suite  
+Repo: https://github.com/bhanu2006-24/crypto-analysis  
+Live Demo: https://bs-crypto-analysis.streamlit.app  
+Summary: A dynamic Streamlit dashboard that fetches live cryptocurrency data from the CoinGecko API, cleans it, and visualizes key metrics. Features include automated data cleaning, KPI cards, sidebar filters, and responsive design for mobile.  
+
+2) IMDb Analytics Dashboard  
+Repo: https://github.com/bhanu2006-24/imdb-analysis  
+Summary: An interactive dashboard analyzing IMDb movie data across multiple datasets (movies, cast, genres). Provides KPIs, genre frequency, cast analysis, yearly trends, scatter plots, and correlation heatmaps. Designed for clarity and storytelling with Plotly charts.  
+
+3) Steam Games Analytics Dashboard  
+Repo: https://github.com/bhanu2006-24/steam-analysis  
+Summary: End-to-end pipeline that scrapes Steam store data, cleans it, and explores trends in genres, pricing, reviews, and release years. Includes robust scraping workflow, EDA notebooks, and a Streamlit dashboard with KPIs, genre analysis, yearly trends, and export options.  
+
+---
+
+📊 Tableau Projects  
+Link: https://public.tableau.com/app/profile/bhanu.saini6988/vizzes  
+Summary: Interactive Tableau dashboards showcasing advanced visualization skills. Projects include trend analysis, KPI tracking, and storytelling with data. These vizzes highlight the ability to communicate insights visually and complement Python/Streamlit dashboards with enterprise-grade BI tools.  
+
+---
+
+🎨 Website Requirements  
+- Stack: HTML, CSS, JavaScript (ES6+), TailwindCSS optional  
+- 3D Hero Section: Three.js animation (rotating globe or data visualization)  
+- Audio: use audio frameworks
+- Game: browser game which is playable in mobile too 
+- Contact: Include email (bhanupsaini2024@gmail.com), LinkedIn, GitHub  
+
+---
+
+Tone: Professional, clear, and visually engaging.  
+Goal: Showcase Bhanu Saini as a data analyst with strong technical depth, polished dashboards, and storytelling ability across Python, SQL, and Tableau.  
+make it mobile first.. and we can add more projects.. even can have a download cv section make it commented... i will uncomment it
+and easily i can add certificate make it also.. i will then uncomment and use it..

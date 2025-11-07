@@ -1,0 +1,37 @@
+# OS / Editor files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+desktop.ini
+
+# IDE / project settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Node / npm (if you add tooling later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build / dist (if you add bundlers)
+dist/
+build/
+
+# Cache
+.cache/
+*.tmp
+*.bak
+*.old
+
+# Environment variables
+.env
+
+# Misc
+*.lock
