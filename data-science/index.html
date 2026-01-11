@@ -12,26 +12,45 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- Custom Config for Tailwind -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                    },
                     colors: {
                         slate: {
                             850: '#1e293b',
+                            900: '#0f172a',
                             950: '#020617',
+                        },
+                        primary: {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669',
                         }
                     },
                     animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
                     },
                     keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px #3b82f6' },
+                            '100%': { boxShadow: '0 0 20px #10b981' },
                         }
                     }
                 }
@@ -40,172 +59,247 @@
     </script>
 
     <style>
+        /* Base Styles */
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f172a; 
+            background: #020617; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #3b82f6; 
+            background: linear-gradient(to bottom, #3b82f6, #10b981); 
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2563eb; 
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Glassmorphism utilities */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        /* Card 3D Effect */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
         }
-        .dark .glass-nav {
-            background: rgba(15, 23, 42, 0.9);
-            border-bottom: 1px solid rgba(30, 41, 59, 0.8);
+        .tilt-card-inner {
+            transform: translateZ(20px);
         }
 
-        /* Card Hover Effects */
-        .project-card {
-            transition: all 0.3s ease;
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
-        .project-card:hover {
-            transform: translateY(-5px);
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typing Cursor */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #3b82f6;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Neon Glow Text */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Gradient Borders */
+        .gradient-border {
+            position: relative;
+            background: #fff;
+            border-radius: 0.75rem;
+        }
+        .dark .gradient-border {
+            background: #1e293b;
+        }
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: 0.85rem;
+            background: linear-gradient(45deg, #3b82f6, #10b981, #6366f1);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gradient-border:hover::before {
+            opacity: 1;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 selection:bg-blue-500 selection:text-white">
+
+    <!-- Neural Network Background Canvas -->
+    <canvas id="neural-canvas" class="fixed top-0 left-0 w-full h-full -z-10 opacity-30 pointer-events-none"></canvas>
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="glass rounded-full px-6 py-3 flex items-center justify-between shadow-lg shadow-blue-500/5">
                 <!-- Logo -->
-                <div class="flex-shrink-0 font-bold text-2xl bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent cursor-pointer" onclick="window.scrollTo(0,0)">
-                    BS.
+                <div class="flex-shrink-0 font-bold text-2xl tracking-tighter cursor-pointer group" onclick="window.scrollTo(0,0)">
+                    <span class="bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent group-hover:neon-text transition-all duration-300">BS.</span>
                 </div>
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-500 dark:text-slate-300 dark:hover:text-white">Home</a>
-                        <a href="#about" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-500 dark:text-slate-300 dark:hover:text-white">About</a>
-                        <a href="#skills" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-500 dark:text-slate-300 dark:hover:text-white">Skills</a>
-                        <a href="#projects" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-500 dark:text-slate-300 dark:hover:text-white">Projects</a>
-                        <a href="#contact" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-500 dark:text-slate-300 dark:hover:text-white">Contact</a>
+                    <div class="flex items-baseline space-x-1">
+                        <a href="#home" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">Home</a>
+                        <a href="#about" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">About</a>
+                        <a href="#skills" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">Skills</a>
+                        <a href="#projects" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">Projects</a>
+                        <a href="#contact" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">Contact</a>
                     </div>
                 </div>
 
-                <!-- Theme Toggle & Mobile Menu Button -->
-                <div class="flex items-center gap-4">
-                    <button id="theme-toggle" class="p-2 rounded-full transition-colors bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-800 dark:text-yellow-400 dark:hover:bg-slate-700">
+                <!-- Theme Toggle & Mobile Menu -->
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle" class="p-2 rounded-full transition-all hover:scale-110 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-yellow-400 shadow-sm border border-slate-200 dark:border-slate-700">
                         <i data-lucide="moon" class="block dark:hidden w-5 h-5"></i>
                         <i data-lucide="sun" class="hidden dark:block w-5 h-5"></i>
                     </button>
                     
-                    <!-- Mobile Menu Button -->
-                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800">
+                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Home</a>
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">About</a>
-                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Skills</a>
-                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Projects</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Contact</a>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-4 right-4 glass rounded-2xl p-4 shadow-2xl z-50 transform origin-top transition-all duration-200 scale-95 opacity-0">
+            <div class="space-y-1">
+                <a href="#home" class="block px-4 py-3 rounded-xl text-base font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-500 transition-colors">Home</a>
+                <a href="#about" class="block px-4 py-3 rounded-xl text-base font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-500 transition-colors">About</a>
+                <a href="#skills" class="block px-4 py-3 rounded-xl text-base font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-500 transition-colors">Skills</a>
+                <a href="#projects" class="block px-4 py-3 rounded-xl text-base font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-500 transition-colors">Projects</a>
+                <a href="#contact" class="block px-4 py-3 rounded-xl text-base font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-500 transition-colors">Contact</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-        <!-- Background Decorative Elements -->
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,_#3b82f6_0%,_transparent_50%)]"></div>
-        
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20">
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-            <div class="inline-flex items-center px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-500 text-sm font-medium mb-6 animate-fade-in-up">
+            
+            <!-- Floating Badge -->
+            <div class="reveal animate-float inline-flex items-center px-4 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm text-blue-500 text-sm font-semibold mb-8 shadow-lg shadow-blue-500/20">
                 <span class="flex h-2 w-2 rounded-full bg-blue-500 mr-2 animate-pulse"></span>
-                Available for Internships
+                IIT Madras Data Scientist
             </div>
             
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
-                Hi, I'm <span class="bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent">Bhanu Saini</span>
+            <!-- Main Title with Gradient -->
+            <h1 class="reveal text-6xl md:text-8xl font-bold tracking-tight mb-6 leading-tight">
+                Hi, I'm <span class="bg-gradient-to-r from-blue-500 via-emerald-500 to-blue-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Bhanu Saini</span>
             </h1>
             
-            <p class="mt-4 text-xl md:text-2xl max-w-3xl mx-auto text-slate-500 dark:text-slate-400 animate-fade-in-up" style="animation-delay: 0.2s;">
-                Data Scientist & IIT Madras Student transforming raw data into actionable insights through Machine Learning and NLP.
-            </p>
+            <!-- Typing Effect Container -->
+            <div class="reveal h-12 mb-8 text-xl md:text-3xl text-slate-500 dark:text-slate-400 font-light">
+                I am <span id="typewriter" class="text-slate-800 dark:text-slate-200 font-semibold"></span><span class="cursor">&nbsp;</span>
+            </div>
 
-            <div class="mt-10 flex flex-wrap gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.3s;">
-                <a href="#projects" class="px-8 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all shadow-lg shadow-blue-500/30 flex items-center gap-2">
-                    View Projects <i data-lucide="chevron-down" class="w-4 h-4"></i>
+            <!-- CTA Buttons -->
+            <div class="reveal mt-8 flex flex-wrap gap-5 justify-center">
+                <a href="#projects" class="group relative px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold text-lg shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 overflow-hidden">
+                    <div class="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 -skew-x-12 origin-left"></div>
+                    <span class="flex items-center gap-2">Explore Work <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i></span>
                 </a>
-                <a href="https://github.com/bhanu2006-24" target="_blank" rel="noopener noreferrer" class="px-8 py-3 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-2">
+                <a href="https://github.com/bhanu2006-24" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-xl glass text-slate-700 dark:text-slate-200 font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:scale-105 transition-all duration-300 flex items-center gap-2">
                     <i data-lucide="github" class="w-5 h-5"></i> GitHub
                 </a>
             </div>
         </div>
         
-        <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400">
-            <i data-lucide="arrow-down" class="w-6 h-6"></i>
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center p-1">
+                <div class="w-1 h-2 bg-slate-400 rounded-full animate-[scroll_1.5s_infinite]"></div>
+            </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-slate-50 dark:bg-slate-900/50">
+    <section id="about" class="py-24 relative overflow-hidden">
+        <!-- Decor Elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-                <div class="mb-12 lg:mb-0">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">About Me</h2>
-                    <p class="text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                        I am currently pursuing a <strong class="text-blue-500">B.Sc. in Data Science</strong> at the prestigious <strong class="text-blue-500">Indian Institute of Technology, Madras</strong>. My academic journey has equipped me with rigorous training in statistics, machine learning, and advanced analytics.
-                    </p>
-                    <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                        I specialize in building predictive models and NLP applications. From detecting fake news to analyzing financial market sentiments, I love tackling complex problems with code.
-                    </p>
+            <div class="lg:grid lg:grid-cols-2 lg:gap-20 items-center">
+                <div class="mb-12 lg:mb-0 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">Decoding Data,<br>Building Intelligence.</h2>
                     
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 rounded-lg bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700">
-                            <div class="flex items-center gap-3 mb-2 text-blue-500">
-                                <i data-lucide="school" class="w-6 h-6"></i>
-                                <span class="font-bold">Education</span>
-                            </div>
-                            <div class="text-sm font-medium">IIT Madras</div>
-                            <div class="text-xs text-slate-500">2025 - 2028</div>
+                    <div class="space-y-6 text-lg text-slate-600 dark:text-slate-300">
+                        <p class="leading-relaxed border-l-4 border-blue-500 pl-4">
+                            Currently reading for a <strong class="text-blue-600 dark:text-blue-400">B.Sc. in Data Science</strong> at <strong class="text-slate-900 dark:text-white">IIT Madras</strong>.
+                        </p>
+                        <p>
+                            I don't just analyze data; I tell stories with it. My passion lies at the intersection of robust Statistical Analysis and modern Deep Learning. From predicting stock market sentiments to detecting misinformation, I build systems that learn.
+                        </p>
+                    </div>
+
+                    <div class="mt-10 grid grid-cols-2 gap-6">
+                        <div class="p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
+                            <i data-lucide="book-open" class="w-8 h-8 text-blue-500 mb-3"></i>
+                            <div class="font-bold text-slate-900 dark:text-white">Continuous Learner</div>
+                            <div class="text-sm text-slate-500 mt-1">Exploring LLMs & NLP</div>
                         </div>
-                        <div class="p-4 rounded-lg bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700">
-                            <div class="flex items-center gap-3 mb-2 text-emerald-500">
-                                <i data-lucide="map-pin" class="w-6 h-6"></i>
-                                <span class="font-bold">Location</span>
-                            </div>
-                            <div class="text-sm font-medium">Jaipur, India</div>
-                            <div class="text-xs text-slate-500">Open to Remote</div>
+                        <div class="p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
+                            <i data-lucide="code" class="w-8 h-8 text-emerald-500 mb-3"></i>
+                            <div class="font-bold text-slate-900 dark:text-white">Problem Solver</div>
+                            <div class="text-sm text-slate-500 mt-1">Optimizing Algorithms</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="relative">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-emerald-500 rounded-2xl transform rotate-3 opacity-20"></div>
-                    <div class="relative bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700">
-                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                            <i data-lucide="terminal" class="text-blue-500"></i> Terminal
-                        </h3>
-                        <div class="font-mono text-sm text-slate-600 dark:text-slate-400 space-y-2">
-                            <p><span class="text-green-500">➜</span> <span class="text-blue-500">~</span> whoami</p>
-                            <p class="pl-4">"Aspiring Data Scientist"</p>
-                            <p><span class="text-green-500">➜</span> <span class="text-blue-500">~</span> cat current_focus.txt</p>
-                            <p class="pl-4">["Machine Learning", "NLP", "Scikit-learn", "XGBoost"]</p>
-                            <p><span class="text-green-500">➜</span> <span class="text-blue-500">~</span> echo $GOAL</p>
-                            <p class="pl-4">"Building impactful AI solutions"</p>
-                            <p class="animate-pulse"><span class="text-green-500">➜</span> <span class="text-blue-500">~</span> <span class="inline-block w-2 h-4 bg-slate-400 align-middle"></span></p>
+                <div class="reveal relative group perspective-1000">
+                    <div class="absolute -inset-2 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative bg-slate-900 rounded-2xl p-6 shadow-2xl border border-slate-800 transform transition-transform duration-500 hover:rotate-1">
+                        <!-- Terminal Header -->
+                        <div class="flex items-center gap-2 mb-4 border-b border-slate-800 pb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <div class="ml-4 text-xs text-slate-500 font-mono">bhanu@iitm:~</div>
+                        </div>
+                        <!-- Terminal Content -->
+                        <div class="font-mono text-sm space-y-4">
+                            <div>
+                                <span class="text-pink-500">import</span> <span class="text-white">numpy</span> <span class="text-pink-500">as</span> <span class="text-white">np</span><br>
+                                <span class="text-pink-500">import</span> <span class="text-white">tensorflow</span> <span class="text-pink-500">as</span> <span class="text-white">tf</span>
+                            </div>
+                            <div>
+                                <span class="text-blue-400"># Define Mission</span><br>
+                                <span class="text-purple-400">def</span> <span class="text-yellow-400">innovate</span><span class="text-slate-400">():</span><br>
+                                <span class="pl-4 text-white">skills = [<span class="text-green-400">"Machine Learning"</span>, <span class="text-green-400">"Data Viz"</span>]</span><br>
+                                <span class="pl-4 text-pink-500">return</span> <span class="text-white">deploy_solutions(skills)</span>
+                            </div>
+                            <div>
+                                <span class="text-green-500">➜</span> <span class="text-white">innovation_status:</span> <span class="text-green-400">"Loading..."</span><span class="animate-pulse">_</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -214,230 +308,209 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20">
+    <section id="skills" class="py-24 bg-slate-100/50 dark:bg-slate-900/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Technical Arsenal</h2>
-                <div class="h-1 w-20 bg-blue-500 mx-auto rounded"></div>
+            <div class="text-center mb-16 reveal">
+                <span class="text-blue-500 font-semibold tracking-wider uppercase text-sm">Expertise</span>
+                <h2 class="text-3xl md:text-5xl font-bold mt-2">Technical Arsenal</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Languages -->
-                <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 hover:border-blue-500 transition-colors group">
-                    <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="code-2" class="w-6 h-6"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Skill Card 1 -->
+                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6">
+                        <i data-lucide="code-2" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Languages</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Python</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">SQL</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">JavaScript</span>
-                    </div>
+                    <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>Python (Advanced)</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>SQL</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>JavaScript</li>
+                    </ul>
                 </div>
 
-                <!-- ML -->
-                <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 hover:border-emerald-500 transition-colors group">
-                    <div class="w-12 h-12 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                <!-- Skill Card 2 -->
+                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-100">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6">
+                        <i data-lucide="brain-circuit" class="w-7 h-7"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Machine Learning</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Scikit-learn</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">XGBoost</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Logistic Reg</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">SVM</span>
-                    </div>
+                    <h3 class="text-xl font-bold mb-4">ML & AI</h3>
+                    <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>Scikit-learn & XGBoost</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>Deep Learning (TF)</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>NLP (NLTK, TF-IDF)</li>
+                    </ul>
                 </div>
 
-                <!-- Data Processing -->
-                <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 hover:border-purple-500 transition-colors group">
-                    <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="database" class="w-6 h-6"></i>
+                <!-- Skill Card 3 -->
+                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-200">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-6">
+                        <i data-lucide="database" class="w-7 h-7"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Data Processing</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Pandas</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">NumPy</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">NLTK</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Feature Eng</span>
-                    </div>
+                    <h3 class="text-xl font-bold mb-4">Data Ops</h3>
+                    <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>Pandas & NumPy</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>Feature Engineering</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>Data Visualization</li>
+                    </ul>
                 </div>
 
-                <!-- Tools -->
-                <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 hover:border-orange-500 transition-colors group">
-                    <div class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="wrench" class="w-6 h-6"></i>
+                <!-- Skill Card 4 -->
+                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-300">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 mb-6">
+                        <i data-lucide="wrench" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Tools</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Jupyter</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Git</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Google Colab</span>
-                        <span class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 rounded-full">Streamlit</span>
-                    </div>
+                    <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>Jupyter & Colab</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>Git & GitHub</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>Streamlit Deployment</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-slate-50 dark:bg-slate-900/50">
+    <section id="projects" class="py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto">
-                    A collection of my recent work in Machine Learning, NLP, and Predictive Analytics.
-                </p>
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+                <div>
+                    <span class="text-blue-500 font-semibold tracking-wider uppercase text-sm">Portfolio</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-2">Featured Projects</h2>
+                </div>
+                <a href="https://github.com/bhanu2006-24" target="_blank" class="hidden md:flex items-center gap-2 text-slate-500 hover:text-blue-500 transition-colors">
+                    View GitHub <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1: Fake News Detection -->
-                <div class="project-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 flex flex-col">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600">
-                                <i data-lucide="file-text" class="w-6 h-6"></i>
+                
+                <!-- Project Card 1 -->
+                <div class="reveal tilt-card group h-full">
+                    <div class="tilt-card-inner h-full bg-white dark:bg-slate-900 rounded-2xl p-1 overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-sm"></div>
+                        <div class="h-full bg-white dark:bg-slate-900 rounded-xl p-6 flex flex-col z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl text-emerald-600">
+                                    <i data-lucide="file-check" class="w-6 h-6"></i>
+                                </div>
+                                <span class="px-3 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 text-xs font-bold rounded-full border border-emerald-200 dark:border-emerald-800">97.9% Accuracy</span>
                             </div>
-                            <span class="text-xs font-bold px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 rounded">97.9% Accuracy</span>
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:to-blue-500 transition-all">Fake News Detection</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">
+                                Distinguished between real and fake news with high precision. Implemented TF-IDF vectorization and Text Classification algorithms.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">NLP</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Python</span>
+                            </div>
+                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <i data-lucide="github" class="w-4 h-4"></i> View Code
+                            </a>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-blue-500 transition-colors">Fake News Detection</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">
-                            A robust NLP classifier that distinguishes between real and fake news articles with high precision using TF-IDF vectorization.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">NLP</span>
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">TF-IDF</span>
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">Python</span>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700">
-                        <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="text-sm font-medium text-blue-500 hover:text-blue-400 flex items-center gap-1">
-                            View Code <i data-lucide="external-link" class="w-4 h-4"></i>
-                        </a>
                     </div>
                 </div>
 
-                <!-- Project 2: House Price Prediction -->
-                <div class="project-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 flex flex-col">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600">
-                                <i data-lucide="line-chart" class="w-6 h-6"></i>
+                <!-- Project Card 2 -->
+                <div class="reveal tilt-card group h-full delay-100">
+                    <div class="tilt-card-inner h-full bg-white dark:bg-slate-900 rounded-2xl p-1 overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-sm"></div>
+                        <div class="h-full bg-white dark:bg-slate-900 rounded-xl p-6 flex flex-col z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600">
+                                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+                                </div>
+                                <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 text-xs font-bold rounded-full border border-blue-200 dark:border-blue-800">82.87% R² Score</span>
                             </div>
-                            <span class="text-xs font-bold px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded">82.87% R² Score</span>
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-indigo-500 transition-all">House Price Prediction</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">
+                                Engineered an advanced regression model for California housing. Leveraged XGBoost to handle complex non-linear relationships.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">XGBoost</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Regression</span>
+                            </div>
+                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <i data-lucide="github" class="w-4 h-4"></i> View Code
+                            </a>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-blue-500 transition-colors">House Price Prediction</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">
-                            Advanced regression model estimating California housing prices. Utilizes XGBoost for high-performance predictive modeling.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">XGBoost</span>
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">Regression</span>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700">
-                        <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="text-sm font-medium text-blue-500 hover:text-blue-400 flex items-center gap-1">
-                            View Code <i data-lucide="external-link" class="w-4 h-4"></i>
-                        </a>
                     </div>
                 </div>
 
-                <!-- Project 3: Trader Sentiment -->
-                <div class="project-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 flex flex-col">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-purple-600">
-                                <i data-lucide="bitcoin" class="w-6 h-6"></i>
+                <!-- Project Card 3 -->
+                <div class="reveal tilt-card group h-full delay-200">
+                    <div class="tilt-card-inner h-full bg-white dark:bg-slate-900 rounded-2xl p-1 overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-sm"></div>
+                        <div class="h-full bg-white dark:bg-slate-900 rounded-xl p-6 flex flex-col z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl text-purple-600">
+                                    <i data-lucide="bitcoin" class="w-6 h-6"></i>
+                                </div>
+                                <span class="px-3 py-1 bg-purple-50 dark:bg-purple-900/20 text-purple-600 text-xs font-bold rounded-full border border-purple-200 dark:border-purple-800">Crypto Research</span>
                             </div>
-                            <span class="text-xs font-bold px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 rounded">Research</span>
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-500 group-hover:to-pink-500 transition-all">Trader Sentiment</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">
+                                A specialized research project analyzing the "Fear & Greed Index" against Bitcoin trader performance using Time Series data.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Time Series</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Finance</span>
+                            </div>
+                            <a href="https://github.com/bhanu2006-24/trader-sentiment-analysis" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <i data-lucide="github" class="w-4 h-4"></i> View Code
+                            </a>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-blue-500 transition-colors">Trader Sentiment Analysis</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">
-                            Analyzing the correlation between the Bitcoin Fear & Greed Index and trader performance using Time Series data.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">Time Series</span>
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">Finance</span>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700">
-                        <a href="https://github.com/bhanu2006-24/trader-sentiment-analysis" target="_blank" class="text-sm font-medium text-blue-500 hover:text-blue-400 flex items-center gap-1">
-                            View Code <i data-lucide="external-link" class="w-4 h-4"></i>
-                        </a>
                     </div>
                 </div>
 
-                <!-- Project 4: Rock vs Mine -->
-                <div class="project-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 flex flex-col">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-orange-600">
-                                <i data-lucide="radar" class="w-6 h-6"></i>
+                 <!-- Project Card 4 -->
+                 <div class="reveal tilt-card group h-full delay-300">
+                    <div class="tilt-card-inner h-full bg-white dark:bg-slate-900 rounded-2xl p-1 overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-sm"></div>
+                        <div class="h-full bg-white dark:bg-slate-900 rounded-xl p-6 flex flex-col z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-xl text-orange-600">
+                                    <i data-lucide="radar" class="w-6 h-6"></i>
+                                </div>
+                                <span class="px-3 py-1 bg-orange-50 dark:bg-orange-900/20 text-orange-600 text-xs font-bold rounded-full border border-orange-200 dark:border-orange-800">76% Accuracy</span>
                             </div>
-                            <span class="text-xs font-bold px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 rounded">76% Accuracy</span>
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:to-red-500 transition-all">Rock vs Mine</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">
+                                Binary classifier trained on SONAR signals to detect underwater mines. Used Logistic Regression for efficient boundary detection.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Logistic Reg</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">SONAR</span>
+                            </div>
+                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <i data-lucide="github" class="w-4 h-4"></i> View Code
+                            </a>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-blue-500 transition-colors">Rock vs Mine Prediction</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">
-                            Binary classifier predicting underwater objects from SONAR signals using Logistic Regression.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">Logistic Reg</span>
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">SONAR</span>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700">
-                        <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="text-sm font-medium text-blue-500 hover:text-blue-400 flex items-center gap-1">
-                            View Code <i data-lucide="external-link" class="w-4 h-4"></i>
-                        </a>
                     </div>
                 </div>
 
-                <!-- Project 5: Diabetes Prediction -->
-                <div class="project-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 flex flex-col">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg text-red-600">
-                                <i data-lucide="activity" class="w-6 h-6"></i>
-                            </div>
-                            <span class="text-xs font-bold px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 rounded">77% Accuracy</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-blue-500 transition-colors">Diabetes Prediction</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">
-                            Healthcare machine learning model predicting diabetes likelihood based on the PIMA dataset parameters.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">SVM</span>
-                            <span class="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded">Healthcare</span>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700">
-                        <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="text-sm font-medium text-blue-500 hover:text-blue-400 flex items-center gap-1">
-                            View Code <i data-lucide="external-link" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-8">Get In Touch</h2>
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-100 dark:border-slate-700">
-                <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">
-                    I'm currently looking for internship opportunities in Data Science and Machine Learning. 
-                    Whether you have a question or just want to say hi, my inbox is always open!
+    <section id="contact" class="py-24 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="reveal text-4xl md:text-5xl font-bold mb-8">Ready to Collaborate?</h2>
+            
+            <div class="reveal glass rounded-3xl p-10 md:p-14 shadow-2xl">
+                <p class="text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
+                    I'm actively seeking <span class="text-blue-500 font-bold">internship opportunities</span> where I can apply my ML skills to real-world data problems. Let's build something intelligent together.
                 </p>
                 
-                <div class="flex flex-col md:flex-row justify-center gap-6">
-                    <a href="mailto:bhanupsaini2024@gmail.com" class="flex items-center justify-center gap-3 px-6 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30">
-                        <i data-lucide="mail" class="w-5 h-5"></i>
-                        <span>bhanupsaini2024@gmail.com</span>
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <a href="mailto:bhanupsaini2024@gmail.com" class="group relative px-8 py-4 bg-blue-600 text-white rounded-xl font-bold overflow-hidden shadow-lg hover:shadow-blue-500/40 transition-all hover:-translate-y-1">
+                        <div class="absolute inset-0 bg-white/20 group-hover:scale-x-0 transition-transform origin-right duration-500"></div>
+                        <span class="flex items-center justify-center gap-3"><i data-lucide="mail" class="w-5 h-5"></i> Email Me</span>
                     </a>
-                    <a href="https://linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="flex items-center justify-center gap-3 px-6 py-4 bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-all">
-                        <i data-lucide="linkedin" class="w-5 h-5"></i>
-                        <span>LinkedIn Profile</span>
+                    <a href="https://linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-slate-700 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn
                     </a>
                 </div>
             </div>
@@ -445,20 +518,19 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-slate-500 text-sm">
-                © 2024 Bhanu Saini. All rights reserved.
+    <footer class="py-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <span class="font-bold text-xl bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent">BS.</span>
+                <span class="text-slate-500 text-sm">© 2024 Bhanu Saini</span>
             </div>
-            <div class="flex items-center gap-6">
-                <a href="https://github.com/bhanu2006-24" target="_blank" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+            
+            <div class="flex gap-6">
+                <a href="https://github.com/bhanu2006-24" target="_blank" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-slate-900 dark:hover:text-white">
                     <i data-lucide="github" class="w-5 h-5"></i>
                 </a>
-                <a href="https://linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                <a href="https://linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-slate-900 dark:hover:text-white">
                     <i data-lucide="linkedin" class="w-5 h-5"></i>
-                </a>
-                <a href="mailto:bhanupsaini2024@gmail.com" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
                 </a>
             </div>
         </div>
@@ -466,14 +538,14 @@
 
     <!-- Scripts -->
     <script>
-        // Initialize Icons
+        // --- 1. Icons ---
         lucide.createIcons();
 
-        // Theme Toggle Logic
+        // --- 2. Theme Toggle ---
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
         
-        // Check local storage or system preference
+        // Initial Theme Check
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             htmlElement.classList.add('dark');
         } else {
@@ -482,63 +554,204 @@
 
         themeToggleBtn.addEventListener('click', () => {
             htmlElement.classList.toggle('dark');
-            if (htmlElement.classList.contains('dark')) {
-                localStorage.theme = 'dark';
-            } else {
-                localStorage.theme = 'light';
-            }
+            localStorage.theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
         });
 
-        // Navbar Scroll Effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                navbar.classList.add('glass-nav', 'shadow-sm');
-                navbar.classList.remove('bg-transparent');
-            } else {
-                navbar.classList.remove('glass-nav', 'shadow-sm');
-                navbar.classList.add('bg-transparent');
+        // --- 3. Neural Network Background Animation ---
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
             }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = htmlElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.5)' : 'rgba(59, 130, 246, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(Math.floor(window.innerWidth / 15), 100); // Responsive count
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw connections first
+            ctx.strokeStyle = htmlElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.05)' : 'rgba(59, 130, 246, 0.1)';
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i < particles.length; i++) {
+                let p1 = particles[i];
+                p1.update();
+                p1.draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let distance = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
         });
 
-        // Mobile Menu Toggle
+        // Initialize Canvas
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+
+
+        // --- 4. Typing Text Effect ---
+        const words = ["Data Scientist.", "Problem Solver.", "ML Enthusiast.", "IIT Madras Student."];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeSpeed = 100;
+        const deleteSpeed = 50;
+        const waitTime = 2000;
+        const typewriterElement = document.getElementById('typewriter');
+
+        function type() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                setTimeout(type, waitTime);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? deleteSpeed : typeSpeed);
+            }
+        }
+        
+        // Start typing
+        setTimeout(type, 1000);
+
+
+        // --- 5. Scroll Reveal Animation ---
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function reveal() {
+            for (let i = 0; i < revealElements.length; i++) {
+                let windowHeight = window.innerHeight;
+                let elementTop = revealElements[i].getBoundingClientRect().top;
+                let elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    revealElements[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal(); // Trigger once on load
+
+
+        // --- 6. 3D Tilt Effect for Cards ---
+        const tiltCards = document.querySelectorAll('.tilt-card');
+
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // --- 7. Mobile Menu ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
 
         mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileMenu.classList.remove('scale-95', 'opacity-0');
+                    mobileMenu.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                mobileMenu.classList.remove('scale-100', 'opacity-100');
+                mobileMenu.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 200);
+            }
         });
 
-        // Close mobile menu when clicking a link
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+                isMenuOpen = false;
+                mobileMenu.classList.remove('scale-100', 'opacity-100');
+                mobileMenu.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 200);
             });
         });
 
-        // Active Link Highlighting (Scroll Spy)
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('text-blue-500', 'bg-blue-50', 'dark:bg-blue-900/10');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('text-blue-500');
-                    // Optional: Add background highlight for active state
-                    // link.classList.add('bg-blue-50', 'dark:bg-blue-900/10'); 
-                }
-            });
-        });
     </script>
 </body>
 </html>

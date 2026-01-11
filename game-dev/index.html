@@ -102,6 +102,13 @@
             border-radius: 8px; font-size: 0.75rem; font-weight: 700;
         }
         
+        .contact-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .contact-link {
+            text-decoration: none; color: #2563eb; font-weight: bold; font-size: 0.9rem;
+            border-bottom: 2px solid #bfdbfe; transition: 0.2s;
+        }
+        .contact-link:hover { color: #1e40af; border-color: #2563eb; }
+        
         .action-btn {
             display: block; background: #0f172a; color: #fff; text-align: center;
             padding: 16px; font-weight: 700; border-radius: 12px;
@@ -147,7 +154,7 @@
 
     <div id="loader">
         <div class="spinner"></div>
-        <div style="font-weight: 700; color: #2563eb; letter-spacing: 1px;">BUILDING WORLD...</div>
+        <div style="font-weight: 700; color: #2563eb; letter-spacing: 1px;">INITIALIZING CITY OS...</div>
     </div>
 
     <div id="canvas-container"></div>
@@ -156,9 +163,10 @@
         <div class="hud-top">
             <div class="profile-card">
                 <h1>BHANU SAINI</h1>
-                <p>Interactive Portfolio v4.0</p>
+                <p>Interactive Portfolio v4.5</p>
             </div>
             <div class="nav-pills">
+                <div class="nav-pill" style="color: #1e293b; background: white;"><div class="dot" style="background:#1e293b"></div> HQ (Center)</div>
                 <div class="nav-pill" style="color: #db2777"><div class="dot" style="background:#db2777"></div> GAMES (North)</div>
                 <div class="nav-pill" style="color: #2563eb"><div class="dot" style="background:#2563eb"></div> WEB (West)</div>
                 <div class="nav-pill" style="color: #ca8a04"><div class="dot" style="background:#ca8a04"></div> DATA (East)</div>
@@ -184,6 +192,14 @@
         </div>
         <div class="modal-body">
             <p id="modal-desc">Description text.</p>
+            
+            <!-- Specific for Contact -->
+            <div class="contact-links" id="modal-contacts" style="display:none;">
+                <a href="#" class="contact-link" id="c-github">GitHub</a>
+                <a href="#" class="contact-link" id="c-linkedin">LinkedIn</a>
+                <a href="#" class="contact-link" id="c-email">Email</a>
+            </div>
+
             <div class="tags-container" id="modal-tags"></div>
             <a href="#" target="_blank" class="action-btn" id="modal-link">VIEW PROJECT</a>
         </div>
@@ -194,26 +210,29 @@
         const ZONES = {
             GAMES: { color: 0xdb2777, name: "GAME DEV", hex: "#db2777" },
             WEB: { color: 0x2563eb, name: "WEB DEV", hex: "#2563eb" },
-            DATA: { color: 0xca8a04, name: "DATA SCIENCE", hex: "#ca8a04" }
+            DATA: { color: 0xca8a04, name: "DATA SCIENCE", hex: "#ca8a04" },
+            HQ: { color: 0x1e293b, name: "HEADQUARTERS", hex: "#1e293b" }
         };
 
-        // Expanded Project List
         const PROJECTS = [
-            // --- GAMES (North / Z Negative) ---
+            // --- HQ ---
+            { title: "Bhanu's HQ", desc: "Welcome to my central command. Connect with me or view my resume.", tech: ["Resume", "Contact", "About"], link: "#", type: "HQ", pos: {x: 0, z: 0}, isContact: true },
+            
+            // --- GAMES ---
             { title: "Echo Shooter", desc: "Neon arena shooter. Survive waves, use overdrive abilities, and score combos.", tech: ["JS", "Canvas", "Action"], link: "https://echo-shooter.pages.dev", type: "GAMES", pos: {x: 0, z: -40} },
             { title: "Portal Nexus", desc: "Survival RPG in a 100-room labyrinth with shifting portals and secrets.", tech: ["React", "TypeScript", "RPG"], link: "https://portal-nexus.pages.dev", type: "GAMES", pos: {x: -30, z: -60} },
             { title: "Neon Maze", desc: "3D Procedural maze escape with time limits and laser traps.", tech: ["Three.js", "WebGL"], link: "https://bhanu2006-24.github.io/neon-maze", type: "GAMES", pos: {x: 30, z: -60} },
             { title: "Antigravity", desc: "Top-down shooter experimenting with gravity mechanics and boss AI.", tech: ["Physics", "Canvas"], link: "https://antigravity-game.pages.dev", type: "GAMES", pos: {x: -15, z: -80} },
             { title: "Bomber Legends", desc: "Classic arcade bomber remake with destructible grid environments.", tech: ["React", "Grid Logic"], link: "https://bomber-legends.pages.dev", type: "GAMES", pos: {x: 15, z: -80} },
 
-            // --- WEB (West / X Negative) ---
+            // --- WEB ---
             { title: "NovaNews", desc: "Modern news aggregator with clean UI and smart categorization.", tech: ["React 19", "Vite", "API"], link: "https://github.com/bhanu2006-24/novanews", type: "WEB", pos: {x: -50, z: 0} },
             { title: "GrooveWave", desc: "Music analytics SaaS dashboard with real-time visualization.", tech: ["SaaS", "Data Viz"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -75, z: 20} },
             { title: "Atmosphere AI", desc: "Environmental monitoring dashboard powered by AI predictions.", tech: ["AI", "Analytics"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -75, z: -20} },
             { title: "RemoteNexus", desc: "Job portal connecting professionals with premium remote work.", tech: ["React", "Node.js"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -100, z: 0} },
             { title: "Krishna Books", desc: "Online bookstore and library management system.", tech: ["E-commerce", "Web"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -50, z: 35} },
 
-            // --- DATA (East / X Positive) ---
+            // --- DATA ---
             { title: "Crypto Pulse", desc: "Live cryptocurrency market tracker with portfolio management.", tech: ["React", "Finance API"], link: "https://github.com/bhanu2006-24/crypto-pulse", type: "DATA", pos: {x: 50, z: 0} },
             { title: "IMDb Analytics", desc: "Data dashboard analyzing movie trends and correlations.", tech: ["Python", "Plotly"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 75, z: 20} },
             { title: "Img Toolkit", desc: "Browser-based image processing tools (remove bg, filters).", tech: ["Streamlit", "CV"], link: "https://github.com/bhanu2006-24/img-toolkit", type: "DATA", pos: {x: 75, z: -20} },
@@ -223,19 +242,19 @@
 
         // --- THREE.JS SETUP ---
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xe0f2fe); // Sky blue
-        scene.fog = new THREE.Fog(0xe0f2fe, 20, 120);
+        scene.background = new THREE.Color(0xe0f2fe);
+        scene.fog = new THREE.Fog(0xe0f2fe, 30, 150);
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 300);
         camera.position.set(0, 40, 50);
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // --- LIGHTING (Daylight) ---
+        // --- LIGHTING ---
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0xe0f2fe, 0.6);
         scene.add(hemiLight);
 
@@ -244,39 +263,36 @@
         dirLight.castShadow = true;
         dirLight.shadow.mapSize.width = 2048;
         dirLight.shadow.mapSize.height = 2048;
-        dirLight.shadow.camera.left = -100; dirLight.shadow.camera.right = 100;
-        dirLight.shadow.camera.top = 100; dirLight.shadow.camera.bottom = -100;
+        dirLight.shadow.camera.left = -120; dirLight.shadow.camera.right = 120;
+        dirLight.shadow.camera.top = 120; dirLight.shadow.camera.bottom = -120;
         scene.add(dirLight);
 
-        // --- WORLD GENERATION ---
-        
-        // Ground - Clean Grid
+        // --- WORLD GEN ---
         const groundGeo = new THREE.PlaneGeometry(400, 400);
-        const groundMat = new THREE.MeshLambertMaterial({ color: 0xf8fafc });
+        const groundMat = new THREE.MeshLambertMaterial({ color: 0xf1f5f9 });
         const ground = new THREE.Mesh(groundGeo, groundMat);
         ground.rotation.x = -Math.PI/2;
         ground.receiveShadow = true;
         scene.add(ground);
 
-        // Road Grid Texture (Procedural logic)
+        // Procedural Roads
         const roadGroup = new THREE.Group();
-        const roadMat = new THREE.MeshStandardMaterial({ color: 0xcbd5e1, roughness: 0.8 });
+        const roadMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.8 });
         
-        // Main Axis Roads
-        const roadZ = new THREE.Mesh(new THREE.PlaneGeometry(12, 400), roadMat);
+        const roadZ = new THREE.Mesh(new THREE.PlaneGeometry(16, 400), roadMat);
         roadZ.rotation.x = -Math.PI/2; roadZ.position.y = 0.05; roadZ.receiveShadow = true;
         roadGroup.add(roadZ);
         
-        const roadX = new THREE.Mesh(new THREE.PlaneGeometry(400, 12), roadMat);
+        const roadX = new THREE.Mesh(new THREE.PlaneGeometry(400, 16), roadMat);
         roadX.rotation.x = -Math.PI/2; roadX.position.y = 0.06; roadX.receiveShadow = true;
         roadGroup.add(roadX);
 
         scene.add(roadGroup);
 
-        // Trees (Decor)
+        // Trees
         const treeGeo = new THREE.ConeGeometry(1.5, 4, 8);
-        const trunkGeo = new THREE.CylinderGeometry(0.5, 0.5, 1, 8);
-        const treeMat = new THREE.MeshLambertMaterial({ color: 0x10b981 }); // Emerald green
+        const trunkGeo = new THREE.CylinderGeometry(0.3, 0.4, 1, 8);
+        const treeMat = new THREE.MeshLambertMaterial({ color: 0x10b981 });
         const trunkMat = new THREE.MeshLambertMaterial({ color: 0x78350f });
 
         function createTree(x, z) {
@@ -290,19 +306,87 @@
             return grp;
         }
 
-        // Add random trees
-        for(let i=0; i<60; i++) {
-            const x = (Math.random()-0.5)*300;
-            const z = (Math.random()-0.5)*300;
-            if(Math.abs(x) > 10 && Math.abs(z) > 10) { // Avoid center
+        for(let i=0; i<80; i++) {
+            const x = (Math.random()-0.5)*350;
+            const z = (Math.random()-0.5)*350;
+            if(Math.abs(x) > 15 && Math.abs(z) > 15) {
                 scene.add(createTree(x, z));
             }
         }
 
-        // --- PROJECTS / BUILDINGS ---
+        // --- CLOUDS ---
+        const cloudGeo = new THREE.DodecahedronGeometry(1, 0);
+        const cloudMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
+        const clouds = [];
+
+        function createCloud() {
+            const grp = new THREE.Group();
+            const scale = 3 + Math.random() * 5;
+            for(let i=0; i<5; i++) {
+                const puff = new THREE.Mesh(cloudGeo, cloudMat);
+                puff.position.set(
+                    (Math.random()-0.5)*scale, 
+                    (Math.random()-0.5)*scale*0.5, 
+                    (Math.random()-0.5)*scale
+                );
+                puff.scale.setScalar(2 + Math.random());
+                grp.add(puff);
+            }
+            grp.position.set((Math.random()-0.5)*400, 30 + Math.random()*20, (Math.random()-0.5)*400);
+            scene.add(grp);
+            clouds.push({ mesh: grp, speed: 0.02 + Math.random()*0.03 });
+        }
+
+        for(let i=0; i<30; i++) createCloud();
+
+        // --- TRAFFIC SYSTEM ---
+        const trafficCars = [];
+        const carGeo = new THREE.BoxGeometry(2, 1, 4);
+        const trafficMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b }); // Taxi yellow
+
+        function createTrafficCar(axis, dir) {
+            const car = new THREE.Mesh(carGeo, trafficMat);
+            car.castShadow = true;
+            car.position.y = 1;
+            
+            let posVal = (Math.random()-0.5) * 380;
+            if(axis === 'x') {
+                car.position.set(posVal, 1, dir * 4); // offset from center
+                car.rotation.y = dir === 1 ? Math.PI/2 : -Math.PI/2;
+            } else {
+                car.position.set(dir * 4, 1, posVal);
+                car.rotation.y = dir === 1 ? 0 : Math.PI;
+            }
+            
+            scene.add(car);
+            return { mesh: car, axis: axis, dir: dir, speed: 0.4 + Math.random()*0.3 };
+        }
+
+        for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('x', 1));
+        for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('x', -1));
+        for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('z', 1));
+        for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('z', -1));
+
+        // --- PARTICLE SYSTEM ---
+        const particles = [];
+        const partGeo = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+        const partMat = new THREE.MeshBasicMaterial({ color: 0x60a5fa });
+
+        function spawnParticles(pos) {
+            for(let i=0; i<3; i++) {
+                const p = new THREE.Mesh(partGeo, partMat);
+                p.position.copy(pos);
+                p.position.x += (Math.random()-0.5);
+                p.position.y += (Math.random()-0.5)*0.5;
+                p.position.z += (Math.random()-0.5);
+                scene.add(p);
+                particles.push({ mesh: p, life: 1.0 });
+            }
+        }
+
+        // --- PROJECTS ---
         const interactables = [];
 
-        // Helper: 3D Text
         function createTextSprite(text, color) {
             const canvas = document.createElement('canvas');
             canvas.width = 512; canvas.height = 128;
@@ -313,8 +397,7 @@
             ctx.textBaseline = 'middle';
             ctx.fillText(text, 256, 64);
             const tex = new THREE.CanvasTexture(canvas);
-            const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
-            const sprite = new THREE.Sprite(mat);
+            const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true }));
             sprite.scale.set(12, 3, 1);
             return sprite;
         }
@@ -326,259 +409,227 @@
 
             let mesh;
             
-            if(p.type === 'GAMES') {
-                // Arcade / Console shape
+            if (p.type === 'HQ') {
+                // Main Tower
+                const geo = new THREE.BoxGeometry(10, 20, 10);
+                const mat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2 });
+                mesh = new THREE.Mesh(geo, mat);
+                mesh.position.y = 10;
+                
+                // Antenna
+                const ant = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 10), new THREE.MeshStandardMaterial({color: 0x94a3b8}));
+                ant.position.y = 25;
+                group.add(ant);
+                
+                // Hologram Ring
+                const ring = new THREE.Mesh(new THREE.TorusGeometry(8, 0.5, 16, 32), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
+                ring.rotation.x = Math.PI/2; ring.position.y = 15;
+                group.add(ring);
+            }
+            else if(p.type === 'GAMES') {
                 const geo = new THREE.BoxGeometry(4, 6, 4);
-                const mat = new THREE.MeshStandardMaterial({ color: 0xfce7f3 }); // Light pink
+                const mat = new THREE.MeshStandardMaterial({ color: 0xfce7f3 });
                 mesh = new THREE.Mesh(geo, mat);
                 mesh.position.y = 3;
-                
                 const screen = new THREE.Mesh(new THREE.PlaneGeometry(3, 2), new THREE.MeshBasicMaterial({ color: config.color }));
                 screen.position.set(0, 4.5, 2.05);
                 group.add(screen);
-
-                // Add bouncy rings
-                const ring = new THREE.Mesh(new THREE.TorusGeometry(3, 0.2, 8, 16), new THREE.MeshBasicMaterial({ color: config.color }));
-                ring.rotation.x = Math.PI/2; ring.position.y = 1;
-                group.add(ring);
             } 
             else if(p.type === 'WEB') {
-                // Modern Glass Building
                 const geo = new THREE.BoxGeometry(6, 10, 6);
-                const mat = new THREE.MeshPhysicalMaterial({ 
-                    color: 0xffffff, metalness: 0.1, roughness: 0.1, transmission: 0.2, opacity: 0.9, transparent: true 
-                });
+                const mat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transmission: 0.2, opacity: 0.9, transparent: true });
                 mesh = new THREE.Mesh(geo, mat);
                 mesh.position.y = 5;
-                
-                // Internal Core
                 const core = new THREE.Mesh(new THREE.BoxGeometry(3, 8, 3), new THREE.MeshLambertMaterial({ color: config.color }));
                 core.position.y = 5;
                 group.add(core);
             } 
             else { // DATA
-                // Server Rack / Lab
                 const geo = new THREE.CylinderGeometry(4, 4, 7, 6);
-                const mat = new THREE.MeshStandardMaterial({ color: 0xfffbeb }); // Light yellow
+                const mat = new THREE.MeshStandardMaterial({ color: 0xfffbeb });
                 mesh = new THREE.Mesh(geo, mat);
                 mesh.position.y = 3.5;
-                
-                // Rings
-                const ring = new THREE.Mesh(new THREE.TorusGeometry(4.2, 0.2, 8, 32), new THREE.MeshBasicMaterial({ color: config.color }));
-                ring.rotation.x = Math.PI/2; ring.position.y = 5;
-                group.add(ring);
             }
 
             mesh.castShadow = true; mesh.receiveShadow = true;
             group.add(mesh);
 
-            // Label
             const label = createTextSprite(p.title, config.hex);
-            label.position.set(0, 10, 0);
+            label.position.set(0, p.type==='HQ' ? 25 : 10, 0);
             group.add(label);
 
             scene.add(group);
-            
-            interactables.push({
-                pos: p.pos,
-                radius: 8,
-                data: p,
-                config: config,
-                mesh: group
-            });
+            interactables.push({ pos: p.pos, radius: p.type==='HQ'? 12 : 8, data: p, config: config, mesh: group });
         });
 
-        // --- PLAYER (HOVER CAR) ---
+        // --- PLAYER CAR ---
         const car = new THREE.Group();
-        
-        // Body (Sleek)
         const bodyGeo = new THREE.BoxGeometry(2.2, 0.6, 4.5);
         const bodyMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.5 });
         const body = new THREE.Mesh(bodyGeo, bodyMat);
-        body.position.y = 1;
-        body.castShadow = true;
+        body.position.y = 1; body.castShadow = true;
         car.add(body);
 
-        // Glass Cockpit
-        const glassGeo = new THREE.BoxGeometry(1.8, 0.5, 2.5);
-        const glassMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.1, metalness: 0.8 });
-        const cockpit = new THREE.Mesh(glassGeo, glassMat);
+        const cockpit = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.5, 2.5), new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.1 }));
         cockpit.position.set(0, 1.5, -0.2);
         car.add(cockpit);
-
-        // Hover Engines (Glowing rings below)
+        
+        // Engines
         const engineGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 16);
         const engineMat = new THREE.MeshBasicMaterial({ color: 0x60a5fa });
         [[-1, 1.5], [1, 1.5], [-1, -1.5], [1, -1.5]].forEach(p => {
             const e = new THREE.Mesh(engineGeo, engineMat);
-            e.position.set(p[0], 0.6, p[1]);
-            car.add(e);
+            e.position.set(p[0], 0.6, p[1]); car.add(e);
         });
-
-        // Trail Light
-        const trailLight = new THREE.PointLight(0x60a5fa, 1, 10);
-        trailLight.position.set(0, 1, 2);
-        car.add(trailLight);
+        
+        // Brake Lights
+        const brakeMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+        const bl = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.2, 0.1), brakeMat);
+        bl.position.set(-0.6, 1, 2.25); car.add(bl);
+        const br = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.2, 0.1), brakeMat);
+        br.position.set(0.6, 1, 2.25); car.add(br);
 
         scene.add(car);
 
-        // --- PHYSICS & CONTROLS ---
-        const player = {
-            pos: new THREE.Vector3(0, 0, 40),
-            vel: new THREE.Vector3(),
-            dir: Math.PI, // Face North
-            speed: 0,
-            hoverHeight: 0
-        };
-
-        const keys = { w: false, a: false, s: false, d: false, space: false };
+        // --- PHYSICS ---
+        const player = { pos: new THREE.Vector3(0, 0, 40), vel: new THREE.Vector3(), dir: Math.PI, speed: 0, hoverOffset: 0 };
+        const keys = { w:false, a:false, s:false, d:false, space:false };
         const joystick = { x:0, y:0, active:false };
 
         window.addEventListener('keydown', e => {
             const k = e.key.toLowerCase();
-            if(keys.hasOwnProperty(k) || e.code === 'Space') {
-                if(e.code === 'Space') keys.space = true;
-                else keys[k] = true;
-            }
+            if(keys.hasOwnProperty(k) || e.code==='Space') keys[e.code==='Space'?'space':k] = true;
         });
         window.addEventListener('keyup', e => {
             const k = e.key.toLowerCase();
-            if(keys.hasOwnProperty(k) || e.code === 'Space') {
-                if(e.code === 'Space') keys.space = false;
-                else keys[k] = false;
-            }
+            if(keys.hasOwnProperty(k) || e.code==='Space') keys[e.code==='Space'?'space':k] = false;
         });
 
-        // Mobile Logic
+        // Touch
         const stickZone = document.getElementById('joystick-zone');
         const stickNub = document.getElementById('stick-nub');
         const boostBtn = document.getElementById('boost-btn');
 
-        stickZone.addEventListener('touchstart', e => {
-            e.preventDefault(); joystick.active=true; handleTouch(e.touches[0]);
-        });
-        stickZone.addEventListener('touchmove', e => {
-            e.preventDefault(); if(joystick.active) handleTouch(e.touches[0]);
-        });
-        const endTouch = (e) => { 
-            e.preventDefault(); joystick.active=false; joystick.x=0; joystick.y=0; 
-            stickNub.style.transform = `translate(-50%, -50%)`;
-        };
-        stickZone.addEventListener('touchend', endTouch);
-        
+        stickZone.addEventListener('touchstart', e => { e.preventDefault(); joystick.active=true; handleTouch(e.touches[0]); });
+        stickZone.addEventListener('touchmove', e => { e.preventDefault(); if(joystick.active) handleTouch(e.touches[0]); });
+        stickZone.addEventListener('touchend', e => { e.preventDefault(); joystick.active=false; joystick.x=0; joystick.y=0; stickNub.style.transform = `translate(-50%, -50%)`; });
         boostBtn.addEventListener('touchstart', e => { e.preventDefault(); keys.space = true; });
         boostBtn.addEventListener('touchend', e => { e.preventDefault(); keys.space = false; });
 
         function handleTouch(touch) {
             const rect = stickZone.getBoundingClientRect();
-            const cx = rect.left + rect.width/2;
-            const cy = rect.top + rect.height/2;
-            const dx = (touch.clientX - cx) / (rect.width/2);
-            const dy = (touch.clientY - cy) / (rect.height/2);
+            const dx = (touch.clientX - (rect.left+rect.width/2)) / (rect.width/2);
+            const dy = (touch.clientY - (rect.top+rect.height/2)) / (rect.height/2);
             joystick.x = Math.max(-1, Math.min(1, dx));
             joystick.y = Math.max(-1, Math.min(1, dy));
-            
-            const moveX = joystick.x * (rect.width/2);
-            const moveY = joystick.y * (rect.height/2);
-            stickNub.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+            stickNub.style.transform = `translate(calc(-50% + ${joystick.x*(rect.width/2)}px), calc(-50% + ${joystick.y*(rect.height/2)}px))`;
         }
 
-
-        // --- LOOP ---
+        // --- GAME LOOP ---
         function update() {
-            // Logic
-            let gas = 0; let turn = 0;
-
-            if(joystick.active) {
-                gas = -joystick.y; turn = -joystick.x;
-            } else {
-                if(keys.w) gas += 1;
-                if(keys.s) gas -= 1;
-                if(keys.a) turn += 1;
-                if(keys.d) turn -= 1;
-            }
-
-            const MAX = keys.space ? 1.8 : 1.0;
+            // 1. Player Physics
+            let gas = joystick.active ? -joystick.y : (keys.w ? 1 : (keys.s ? -1 : 0));
+            let turn = joystick.active ? -joystick.x : (keys.a ? 1 : (keys.d ? -1 : 0));
+            
+            const MAX = keys.space ? 2.2 : 1.2;
             const ACC = 0.05;
             const FRICTION = 0.94;
 
             player.speed += gas * ACC;
             player.speed *= FRICTION;
-            
-            // Speed clamp
             if(player.speed > MAX) player.speed = MAX;
             if(player.speed < -MAX/2) player.speed = -MAX/2;
 
             if(Math.abs(player.speed) > 0.01) {
-                player.dir += turn * 0.06 * Math.sign(player.speed);
+                player.dir += turn * 0.07 * Math.sign(player.speed);
             }
 
             player.vel.set(Math.sin(player.dir) * player.speed, 0, Math.cos(player.dir) * player.speed);
             player.pos.add(player.vel);
 
-            // Boundary
-            const LIMIT = 190;
-            if(Math.abs(player.pos.x) > LIMIT) player.pos.x = Math.sign(player.pos.x)*LIMIT;
-            if(Math.abs(player.pos.z) > LIMIT) player.pos.z = Math.sign(player.pos.z)*LIMIT;
+            // Bounds
+            if(Math.abs(player.pos.x) > 190) player.pos.x = Math.sign(player.pos.x)*190;
+            if(Math.abs(player.pos.z) > 190) player.pos.z = Math.sign(player.pos.z)*190;
 
-            // Hover Animation
-            player.hoverHeight = 1 + Math.sin(Date.now() * 0.005) * 0.1;
-
-            // Apply to Car
+            // Hover bob
+            player.hoverOffset = Math.sin(Date.now() * 0.005) * 0.2;
             car.position.copy(player.pos);
-            car.position.y = player.hoverHeight;
+            car.position.y = 1 + player.hoverOffset;
             car.rotation.y = player.dir;
-            
-            // Banking
             car.rotation.z = -turn * 0.2 * Math.min(Math.abs(player.speed), 1);
             car.rotation.x = -player.speed * 0.15;
 
-            // Camera
-            const camOff = new THREE.Vector3(0, 25, -30);
+            // Particles
+            if(keys.space && Math.abs(player.speed) > 0.5) spawnParticles(player.pos);
+            for(let i=particles.length-1; i>=0; i--) {
+                const p = particles[i];
+                p.life -= 0.05;
+                p.mesh.scale.setScalar(p.life);
+                p.mesh.material.opacity = p.life;
+                if(p.life <= 0) {
+                    scene.remove(p.mesh);
+                    particles.splice(i, 1);
+                }
+            }
+
+            // 2. Environment Updates
+            // Clouds
+            clouds.forEach(c => {
+                c.mesh.position.x += c.speed;
+                if(c.mesh.position.x > 250) c.mesh.position.x = -250;
+            });
+            // Traffic
+            trafficCars.forEach(t => {
+                if(t.axis === 'x') {
+                    t.mesh.position.x += t.speed * t.dir;
+                    if(Math.abs(t.mesh.position.x) > 200) t.mesh.position.x = -200 * t.dir;
+                } else {
+                    t.mesh.position.z += t.speed * t.dir;
+                    if(Math.abs(t.mesh.position.z) > 200) t.mesh.position.z = -200 * t.dir;
+                }
+            });
+
+            // 3. Camera
+            const camOff = new THREE.Vector3(0, 25, -35);
             camOff.applyAxisAngle(new THREE.Vector3(0,1,0), player.dir);
             const camTarget = player.pos.clone().add(camOff);
-            camera.position.lerp(camTarget, 0.1);
+            camera.position.lerp(camTarget, 0.08);
             camera.lookAt(player.pos);
 
-            // Check Interaction
+            // 4. Interactions
             checkModals();
-            
-            // Animate Projects
-            interactables.forEach(item => {
-                // Bobbing labels
-                const lbl = item.mesh.children[item.mesh.children.length-1];
-                lbl.position.y = 10 + Math.sin(Date.now()*0.003)*0.5;
+            interactables.forEach(i => {
+                const lbl = i.mesh.children[i.mesh.children.length-1];
+                if(lbl.isSprite) lbl.position.y = (i.data.type==='HQ'?25:10) + Math.sin(Date.now()*0.003)*0.5;
             });
 
             renderer.render(scene, camera);
             requestAnimationFrame(update);
         }
 
+        // --- MODAL SYSTEM ---
         const modal = document.getElementById('modal');
         const mTitle = document.getElementById('modal-title');
         const mDesc = document.getElementById('modal-desc');
         const mBadge = document.getElementById('modal-badge');
         const mLink = document.getElementById('modal-link');
         const mTags = document.getElementById('modal-tags');
+        const mContacts = document.getElementById('modal-contacts');
         
         let activeProject = null;
 
         function checkModals() {
             let nearby = null;
-            let dist = 999;
-
             interactables.forEach(i => {
                 const d = player.pos.distanceTo(new THREE.Vector3(i.pos.x, 0, i.pos.z));
-                if(d < i.radius + 4) {
-                    nearby = i;
-                }
+                if(d < i.radius + 4) nearby = i;
             });
 
             if(nearby && activeProject !== nearby.data.title) {
                 openModal(nearby);
                 activeProject = nearby.data.title;
             } else if(!nearby && activeProject) {
-                closeModal();
+                modal.classList.remove('active');
                 activeProject = null;
             }
         }
@@ -586,10 +637,21 @@
         function openModal(item) {
             mTitle.innerText = item.data.title;
             mDesc.innerText = item.data.desc;
-            mLink.href = item.data.link;
             mBadge.innerText = item.config.name;
             mBadge.style.backgroundColor = item.config.hex;
-            mLink.style.backgroundColor = item.config.hex;
+            
+            if(item.data.isContact) {
+                mLink.style.display = 'none';
+                mContacts.style.display = 'flex';
+                document.getElementById('c-github').href = "https://github.com/bhanu2006-24";
+                document.getElementById('c-linkedin').href = "https://linkedin.com/in/bhanu-saini-3bb251391";
+                document.getElementById('c-email').href = "mailto:bhanupsaini2024@gmail.com";
+            } else {
+                mLink.style.display = 'block';
+                mContacts.style.display = 'none';
+                mLink.href = item.data.link;
+                mLink.style.backgroundColor = item.config.hex;
+            }
 
             mTags.innerHTML = '';
             item.data.tech.forEach(t => {
@@ -601,18 +663,10 @@
             modal.classList.add('active');
         }
 
-        function closeModal() {
-            modal.classList.remove('active');
-        }
-
-
         // Init
         setTimeout(() => {
             document.getElementById('loader').style.opacity = 0;
-            setTimeout(() => { 
-                document.getElementById('loader').remove();
-                update(); 
-            }, 600);
+            setTimeout(() => { document.getElementById('loader').remove(); update(); }, 600);
         }, 1200);
 
         window.addEventListener('resize', () => {
