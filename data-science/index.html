@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bhanu Saini | Data Scientist</title>
+  <meta name="description" content="Data Science portfolio of Bhanu Pratap Saini - ML, AI, and advanced analytics projects.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/197176166?v=4">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .three-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .glow-card {
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    .glow-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(96, 165, 250, 0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100">
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🔬</span>
+        <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Data Science</span>
+      </a>
+      <div class="flex gap-4">
+        <a href="#projects" class="text-slate-300 hover:text-white transition-colors">Projects</a>
+        <a href="#skills" class="text-slate-300 hover:text-white transition-colors">Skills</a>
+        <a href="#contact" class="text-slate-300 hover:text-white transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-16">
+    <div class="three-container" id="three-container"></div>
+    <div class="relative z-10 text-center max-w-3xl mx-auto">
+      <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-purple-500/50">
+        <img src="https://avatars.githubusercontent.com/u/197176166?v=4" alt="Bhanu Saini" class="w-full h-full object-cover">
+      </div>
+      <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+        Bhanu Saini
+      </h1>
+      <p class="mt-4 text-lg md:text-xl text-slate-300">
+        Data Scientist | Machine Learning Enthusiast | IIT Madras
+      </p>
+      <p class="mt-2 text-slate-400 max-w-2xl mx-auto">
+        Building intelligent systems with data, code, and curiosity. Passionate about AI, analytics, and automation.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="#projects" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium transition-colors">
+          <i class="fas fa-brain mr-2"></i>View Projects
+        </a>
+        <a href="https://github.com/bhanu2006-24" target="_blank" class="px-6 py-3 border border-purple-500 text-purple-400 hover:bg-purple-900/30 rounded-lg font-medium transition-colors">
+          <i class="fab fa-github mr-2"></i>GitHub
+        </a>
+        <a href="https://bhanu2006-24.github.io/Resume/datascience-resume.html" target="_blank" class="px-6 py-3 border border-slate-600 text-slate-300 hover:bg-slate-800 rounded-lg font-medium transition-colors">
+          <i class="fas fa-file-alt mr-2"></i>View Resume
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12">
+        <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Data Science Projects</span>
+      </h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Project 1 -->
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-chart-line text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Trader Sentiment Analysis</h3>
+              <p class="text-slate-400 text-sm">Bitcoin Market Sentiment</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">
+            Data science project studying how Bitcoin market sentiment (Fear & Greed Index) relates to trader performance on Hyperliquid, using merged historical sentiment and trading data.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded text-sm">Python</span>
+            <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded text-sm">Jupyter</span>
+            <span class="px-2 py-1 bg-purple-900/50 text-purple-300 rounded text-sm">Streamlit</span>
+          </div>
+          <a href="https://github.com/bhanu2006-24/trader-sentiment-analysis" target="_blank" class="text-purple-400 hover:underline">
+            <i class="fab fa-github mr-2"></i>View on GitHub
+          </a>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-cloud-sun text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Atmosphere AI</h3>
+              <p class="text-slate-400 text-sm">AI Weather Analytics</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">
+            AI-powered weather analytics platform combining web development with artificial intelligence for intelligent weather insights and predictions.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded text-sm">AI</span>
+            <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded text-sm">Web</span>
+            <span class="px-2 py-1 bg-blue-900/50 text-blue-300 rounded text-sm">Analytics</span>
+          </div>
+          <a href="https://github.com/bhanu2006-24/atmosphere-ai" target="_blank" class="text-blue-400 hover:underline">
+            <i class="fab fa-github mr-2"></i>View on GitHub
+          </a>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-robot text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">ML Projects</h3>
+              <p class="text-slate-400 text-sm">Machine Learning Collection</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">
+            Repository containing various machine learning projects and experiments covering different ML algorithms and techniques.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-2 py-1 bg-green-900/50 text-green-300 rounded text-sm">ML</span>
+            <span class="px-2 py-1 bg-green-900/50 text-green-300 rounded text-sm">Python</span>
+          </div>
+          <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="text-green-400 hover:underline">
+            <i class="fab fa-github mr-2"></i>View on GitHub
+          </a>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-comments text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Smart Bhaluu</h3>
+              <p class="text-slate-400 text-sm">Conversational AI</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">
+            Experimental chatbot project exploring conversational AI and natural language processing techniques.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-2 py-1 bg-orange-900/50 text-orange-300 rounded text-sm">Chatbot</span>
+            <span class="px-2 py-1 bg-orange-900/50 text-orange-300 rounded text-sm">NLP</span>
+          </div>
+          <a href="https://github.com/bhanu2006-24/smart-bhaluu" target="_blank" class="text-orange-400 hover:underline">
+            <i class="fab fa-github mr-2"></i>View on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-20 px-4 bg-slate-800/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12">
+        <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Skills & Technologies</span>
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glow-card p-6 rounded-xl text-center">
+          <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-code text-3xl text-purple-400"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Programming</h3>
+          <p class="text-slate-400">Python, SQL, PostgreSQL</p>
+        </div>
+        <div class="glow-card p-6 rounded-xl text-center">
+          <div class="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-brain text-3xl text-blue-400"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Machine Learning</h3>
+          <p class="text-slate-400">Scikit-learn, Sentiment Analysis, Statistical Modeling</p>
+        </div>
+        <div class="glow-card p-6 rounded-xl text-center">
+          <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-chart-pie text-3xl text-green-400"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Visualization</h3>
+          <p class="text-slate-400">Plotly, Matplotlib, Tableau, Streamlit</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section class="py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12">
+        <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Education</span>
+      </h2>
+      <div class="glow-card p-8 rounded-xl">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+            <i class="fas fa-graduation-cap text-2xl text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold">Indian Institute of Technology, Madras</h3>
+            <p class="text-purple-400">B.Sc. in Data Science (2025-2028)</p>
+          </div>
+        </div>
+        <p class="text-slate-300">
+          One of India's premier institutions for engineering and data science, offering rigorous training in statistics, machine learning, and analytics.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-4 bg-slate-800/30">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-6">
+        <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Get In Touch</span>
+      </h2>
+      <p class="text-slate-300 mb-8">Interested in collaboration or have questions? Reach out!</p>
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href="mailto:bhanupsaini2024@gmail.com" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
+          <i class="fas fa-envelope text-purple-400"></i>
+          <span>bhanupsaini2024@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
+          <i class="fab fa-linkedin text-purple-400"></i>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://github.com/bhanu2006-24" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
+          <i class="fab fa-github text-purple-400"></i>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 px-4 border-t border-slate-800 text-center text-slate-500">
+    <p>&copy; 2025 Bhanu Pratap Saini. All rights reserved.</p>
+    <p class="mt-2">
+      <a href="../index.html" class="text-purple-400 hover:underline">← Back to Main Portfolio</a>
+    </p>
+  </footer>
+
+  <script>
+    // Initialize Three.js Neural Network Background
+    const initThree = () => {
+      const container = document.getElementById('three-container');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+
+      // Create neural network-like points
+      const pointsGeometry = new THREE.BufferGeometry();
+      const pointsCount = 500;
+      const posArray = new Float32Array(pointsCount * 3);
+      for (let i = 0; i < pointsCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 20;
+      }
+      pointsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const pointsMaterial = new THREE.PointsMaterial({
+        color: 0xa855f7,
+        size: 0.1,
+        transparent: true,
+        opacity: 0.6
+      });
+      const points = new THREE.Points(pointsGeometry, pointsMaterial);
+      scene.add(points);
+
+      // Add connecting lines
+      const lineGeometry = new THREE.BufferGeometry();
+      const linePositions = new Float32Array(300 * 3);
+      for (let i = 0; i < 300 * 3; i++) {
+        linePositions[i] = (Math.random() - 0.5) * 15;
+      }
+      lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+      const lineMaterial = new THREE.LineBasicMaterial({ color: 0xec4899, transparent: true, opacity: 0.2 });
+      const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+      scene.add(lines);
+
+      camera.position.z = 10;
+
+      const animate = () => {
+        requestAnimationFrame(animate);
+        points.rotation.y += 0.001;
+        points.rotation.x += 0.0005;
+        lines.rotation.y -= 0.0005;
+        renderer.render(scene, camera);
+      };
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', initThree);
+  </script>
+</body>
+</html>

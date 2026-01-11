@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bhanu Saini | Game Developer</title>
+  <meta name="description" content="Game Development portfolio of Bhanu Pratap Saini">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/197176166?v=4">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+    .glow-card {
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    .glow-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(236, 72, 153, 0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    .neon-text { text-shadow: 0 0 10px rgba(236, 72, 153, 0.5), 0 0 20px rgba(236, 72, 153, 0.3); }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🎮</span>
+        <span class="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Game Developer</span>
+      </a>
+      <div class="flex gap-4">
+        <a href="#games" class="text-slate-300 hover:text-white">Games</a>
+        <a href="#contact" class="text-slate-300 hover:text-white">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="min-h-screen flex items-center justify-center px-4 pt-16 bg-gradient-to-b from-slate-900 via-purple-900/20 to-slate-900">
+    <div class="text-center max-w-3xl mx-auto">
+      <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-pink-500/50">
+        <img src="https://avatars.githubusercontent.com/u/197176166?v=4" alt="Bhanu" class="w-full h-full object-cover">
+      </div>
+      <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent neon-text">Bhanu Saini</h1>
+      <p class="mt-4 text-lg text-slate-300">Game Developer | IIT Madras</p>
+      <p class="mt-2 text-slate-400 max-w-2xl mx-auto">Crafting immersive browser games with JavaScript, HTML5 Canvas, and Three.js.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="#games" class="px-6 py-3 bg-pink-600 hover:bg-pink-700 rounded-lg font-medium"><i class="fas fa-gamepad mr-2"></i>View Games</a>
+        <a href="https://github.com/bhanu2006-24" target="_blank" class="px-6 py-3 border border-pink-500 text-pink-400 hover:bg-pink-900/30 rounded-lg"><i class="fab fa-github mr-2"></i>GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="games" class="py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12"><span class="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Games</span></h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-purple-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-crosshairs text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Antigravity Game</h3>
+              <p class="text-slate-400 text-sm">Top-down Shooter</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">Fast-paced top-down shooter with dash, dodge, waves, and boss battles.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-2 py-1 bg-pink-900/50 text-pink-300 rounded text-sm">JavaScript</span>
+            <span class="px-2 py-1 bg-pink-900/50 text-pink-300 rounded text-sm">Canvas</span>
+          </div>
+          <a href="https://github.com/bhanu2006-24/antigravity-game" target="_blank" class="text-pink-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
+        </div>
+
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-cube text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Neon Maze</h3>
+              <p class="text-slate-400 text-sm">3D Maze Escape</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">First-person 3D maze with cyberpunk visuals, orbs, and laser traps.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded text-sm">Three.js</span>
+            <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded text-sm">Procedural</span>
+          </div>
+          <a href="https://github.com/bhanu2006-24/neon-maze" target="_blank" class="text-cyan-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
+        </div>
+
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-bomb text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Bomber Legends</h3>
+              <p class="text-slate-400 text-sm">Arcade Bomber</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">Classic arcade-style bomber with grid levels, bombs, and power-ups.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-2 py-1 bg-orange-900/50 text-orange-300 rounded text-sm">React</span>
+            <span class="px-2 py-1 bg-orange-900/50 text-orange-300 rounded text-sm">TypeScript</span>
+          </div>
+          <a href="https://github.com/bhanu2006-24/bomber-legends" target="_blank" class="text-orange-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
+        </div>
+
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-bullseye text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Echo Shooter</h3>
+              <p class="text-slate-400 text-sm">Shooting Game</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">Browser-based shooting game with canvas graphics.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-2 py-1 bg-green-900/50 text-green-300 rounded text-sm">JavaScript</span>
+            <span class="px-2 py-1 bg-green-900/50 text-green-300 rounded text-sm">Canvas</span>
+          </div>
+          <a href="https://github.com/bhanu2006-24/Echo-shooter" target="_blank" class="text-green-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
+        </div>
+
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-dungeon text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Portal Nexus</h3>
+              <p class="text-slate-400 text-sm">RPG</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">RPG with procedural generation.</p>
+          <a href="https://github.com/bhanu2006-24/portal-nexus" target="_blank" class="text-purple-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
+        </div>
+
+        <div class="glow-card p-6 rounded-xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-slate-500 to-zinc-500 rounded-lg flex items-center justify-center">
+              <i class="fas fa-city text-2xl text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Neon City</h3>
+              <p class="text-slate-400 text-sm">Cyberpunk RPG</p>
+            </div>
+          </div>
+          <p class="text-slate-300 mb-4">Neon City: Undead Rising - Cyberpunk RPG adventure.</p>
+          <a href="https://github.com/bhanu2006-24/neon-city" target="_blank" class="text-slate-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-20 px-4 bg-gradient-to-b from-slate-900 via-pink-900/10 to-slate-900">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-6"><span class="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Contact</span></h2>
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href="mailto:bhanupsaini2024@gmail.com" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg"><i class="fas fa-envelope text-pink-400"></i>Email</a>
+        <a href="https://www.linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg"><i class="fab fa-linkedin text-pink-400"></i>LinkedIn</a>
+        <a href="https://github.com/bhanu2006-24" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg"><i class="fab fa-github text-pink-400"></i>GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8 px-4 border-t border-slate-800 text-center text-slate-500">
+    <p>&copy; 2025 Bhanu Pratap Saini</p>
+    <p class="mt-2"><a href="../index.html" class="text-pink-400 hover:underline">← Back to Main Portfolio</a></p>
+  </footer>
+</body>
+</html>
