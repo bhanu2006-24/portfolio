@@ -1,48 +1,33 @@
-# 🔬 Bhanu Saini | Data Science Portfolio
+# 🔬 Bhanu Saini | Data Scientist Portfolio
 
-> Portfolio showcasing data science projects focused on machine learning, AI, and advanced analytics.
+> **🌐 Live Demo:** [https://bhanu-thedatascientist.pages.dev/](https://bhanu-thedatascientist.pages.dev/)
 
-## 🌟 Deploy This
+Modern portfolio showcasing data science projects focused on machine learning, AI, and advanced analytics.
 
-This folder is designed to be deployed as a **standalone website**. Simply deploy the contents to any static hosting service like:
+## ✨ Features
 
-- GitHub Pages
-- Vercel
-- Netlify
-- Cloudflare Pages
+- **Interactive Neural Network Background** - Mouse-reactive particle animation
+- **Dark/Light Mode Toggle** - System-aware theme switching
+- **Typing Animation** - Dynamic role showcase
+- **3D Tilt Cards** - Interactive project cards
+- **Scroll Reveal Animations** - Smooth content appearance
+- **Glassmorphism UI** - Modern translucent design
 
 ## 🛠️ Tech Stack
 
 - **Languages:** Python, SQL
-- **ML/AI:** Machine Learning, Sentiment Analysis, Data Modeling
-- **Libraries:** pandas, numpy, scikit-learn, Jupyter Notebooks
+- **ML/AI:** Scikit-learn, XGBoost, TensorFlow, NLP
+- **Libraries:** pandas, numpy, Jupyter Notebooks
 - **Visualization:** Streamlit, Plotly, Matplotlib
 
 ## 🏆 Featured Projects
 
-### 1. Trader Sentiment Analysis
-
-Data science project studying how Bitcoin market sentiment relates to trader performance.
-
-- **GitHub:** [bhanu2006-24/trader-sentiment-analysis](https://github.com/bhanu2006-24/trader-sentiment-analysis)
-
-### 2. Atmosphere AI
-
-AI-powered weather analytics platform combining web development with AI.
-
-- **GitHub:** [bhanu2006-24/atmosphere-ai](https://github.com/bhanu2006-24/atmosphere-ai)
-
-### 3. ML Projects Collection
-
-Repository containing various machine learning projects and experiments.
-
-- **GitHub:** [bhanu2006-24/ML-projects](https://github.com/bhanu2006-24/ML-projects)
-
-### 4. Smart Bhaluu
-
-Experimental chatbot project exploring conversational AI.
-
-- **GitHub:** [bhanu2006-24/smart-bhaluu](https://github.com/bhanu2006-24/smart-bhaluu)
+| Project                    | Accuracy  | Description                               |
+| -------------------------- | --------- | ----------------------------------------- |
+| **Fake News Detection**    | 97.9%     | NLP-based text classification with TF-IDF |
+| **House Price Prediction** | 82.87% R² | XGBoost regression on California housing  |
+| **Trader Sentiment**       | Research  | Bitcoin Fear & Greed Index analysis       |
+| **Rock vs Mine**           | 76%       | SONAR signal classification               |
 
 ## 📄 Resume
 
@@ -54,12 +39,13 @@ Experimental chatbot project exploring conversational AI.
 
 - B.Sc. in Data Science (2025-2028)
 
-## ▶️ Running Locally
+## 🚀 Deployment
+
+This folder is deployed as a standalone website on Cloudflare Pages.
 
 ```bash
+# Local development
 cd data-science
-python -m http.server 8000
-# OR
 npx serve .
 ```
 

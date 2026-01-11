@@ -1,15 +1,15 @@
 # 📊 Bhanu Saini | Data Analyst Portfolio
 
-> Interactive portfolio showcasing data analysis projects using Python, SQL, and visualization tools.
+> **🌐 Live Demo:** [https://bhanu-thedataanalyst.pages.dev/](https://bhanu-thedataanalyst.pages.dev/)
 
-## 🌟 Deploy This
+Interactive portfolio showcasing data analysis projects using Python, SQL, and visualization tools.
 
-This folder is designed to be deployed as a **standalone website**. Simply deploy the contents to any static hosting service like:
+## ✨ Features
 
-- GitHub Pages
-- Vercel
-- Netlify
-- Cloudflare Pages
+- **Three.js Globe Background** - Interactive 3D visualization
+- **Project Showcase** - Featured data analysis dashboards
+- **Skills Section** - Technical competencies
+- **Mini-game Easter Egg** - Hidden interactive element
 
 ## 🛠️ Tech Stack
 
@@ -20,51 +20,24 @@ This folder is designed to be deployed as a **standalone website**. Simply deplo
 
 ## 🏆 Featured Projects
 
-### 1. Crypto Analysis Suite
-
-A dynamic Streamlit dashboard that fetches live cryptocurrency data from the CoinGecko API.
-
-- **Live Demo:** [bs-crypto-analysis.streamlit.app](https://bs-crypto-analysis.streamlit.app)
-- **GitHub:** [bhanu2006-24/crypto-analysis](https://github.com/bhanu2006-24/crypto-analysis)
-
-### 2. IMDb Analytics Dashboard
-
-Interactive dashboard analyzing IMDb movie data across movies, cast, and genres.
-
-- **GitHub:** [bhanu2006-24/imdb-analysis](https://github.com/bhanu2006-24/imdb-analysis)
-
-### 3. Steam Games Analytics Dashboard
-
-End-to-end pipeline that scrapes Steam store data and explores gaming trends.
-
-- **GitHub:** [bhanu2006-24/steam-analysis](https://github.com/bhanu2006-24/steam-analysis)
-
-### 4. Tableau Public Visualizations
-
-Interactive dashboards showcasing advanced visualization skills.
-
-- **View:** [Tableau Public Profile](https://public.tableau.com/app/profile/bhanu.saini6988/vizzes)
+| Project                   | Description                   | Link                                                                            |
+| ------------------------- | ----------------------------- | ------------------------------------------------------------------------------- |
+| **Crypto Analysis Suite** | Live cryptocurrency dashboard | [Live](https://bs-crypto-analysis.streamlit.app)                                |
+| **IMDb Analytics**        | Movie data visualization      | [GitHub](https://github.com/bhanu2006-24/imdb-analysis)                         |
+| **Steam Games Analytics** | Gaming trends pipeline        | [GitHub](https://github.com/bhanu2006-24/steam-analysis)                        |
+| **Tableau Dashboards**    | Advanced visualizations       | [Tableau Public](https://public.tableau.com/app/profile/bhanu.saini6988/vizzes) |
 
 ## 📄 Resume
 
 **Data Analyst Resume:** [View Resume](https://bhanu2006-24.github.io/Resume/analyst-resume.html)
 
-## 📁 Files
+## 🚀 Deployment
 
-| File         | Description                                                |
-| ------------ | ---------------------------------------------------------- |
-| `index.html` | Main portfolio page with Three.js background and mini-game |
-| `README.md`  | This documentation file                                    |
-
-## ▶️ Running Locally
+This folder is deployed as a standalone website on Cloudflare Pages.
 
 ```bash
-# Clone and cd into the folder
+# Local development
 cd data-analyst
-
-# Serve locally
-python -m http.server 8000
-# OR
 npx serve .
 ```
 

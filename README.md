@@ -1,118 +1,100 @@
-# 🚀 Bhanu Pratap Saini | Portfolio
+# 🚀 Bhanu Saini | Portfolio Collection
 
-> 🎓 IIT Madras BS Student | 🌐 Web Developer | 🤖 Aspiring Gen AI Engineer | 📊 Data Analyst | 🎮 Game Developer
+> A collection of interactive, themed portfolios showcasing my work across multiple domains.
 
-A modern, interactive portfolio showcasing my skills across **Web Development**, **Data Analysis**, **Data Science**, and **Game Development**. Features a terminal-style interface built with HTML, CSS, and JavaScript.
+## 🌐 Live Portfolios
 
-## 🌟 Live Demo
+| Portfolio             | Domain                | Live URL                                                                      |
+| --------------------- | --------------------- | ----------------------------------------------------------------------------- |
+| 🎮 **Game Developer** | Browser Games & 3D    | [bhanu-thegamedev.pages.dev](https://bhanu-thegamedev.pages.dev/)             |
+| 🌐 **Web Developer**  | Full-Stack & Frontend | [bhanu-thewebdev.pages.dev](https://bhanu-thewebdev.pages.dev/)               |
+| 🔬 **Data Scientist** | ML & AI               | [bhanu-thedatascientist.pages.dev](https://bhanu-thedatascientist.pages.dev/) |
+| 📊 **Data Analyst**   | Analytics & Viz       | [bhanu-thedataanalyst.pages.dev](https://bhanu-thedataanalyst.pages.dev/)     |
 
-🔗 **[View Portfolio](https://bhanu2006-24.github.io/portfolio/)**
-
-## ✨ Features
-
-- **Terminal-Style Interface** - Unique command-line inspired design
-- **Multiple Specialized Portfolios** - Separate sections for each skill domain
-- **Responsive Design** - Works on all devices
-- **Interactive Commands** - Type commands to explore projects and skills
-- **Modern UI/UX** - Clean, professional aesthetic
-
-## 🛠️ Tech Stack
-
-- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
-- **Styling:** Custom CSS with CSS Variables
-- **Design:** Terminal/CLI inspired interface
-- **Hosting:** GitHub Pages
-
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
 portfolio/
-├── index.html          # Main terminal portfolio
-├── script.js           # Terminal logic and commands
-├── styles.css          # Terminal styling
-├── README.md           # This file
-├── assets/             # Resume PDFs and images
-│   ├── Analyst-Resume.pdf
-│   ├── DataScience-Resume.pdf
-│   ├── Game-Resume.pdf
-│   ├── Web-Resume.pdf
-│   └── logo.png
-├── data-analyst/       # Data Analyst specialized portfolio
-├── data-science/       # Data Science specialized portfolio
-├── game-dev/           # Game Development specialized portfolio
-└── web-dev/            # Web Development specialized portfolio
+├── index.html          # 🖥️ Main Terminal Portfolio
+├── script.js           # ⚙️ Terminal logic & commands
+├── styles.css          # 🎨 Terminal styling
+├── README.md           # 📖 This file
+│
+├── game-dev/           # 🎮 3D Solarpunk Game Dev Portfolio
+│   ├── index.html
+│   └── README.md
+│
+├── web-dev/            # 🌐 Dark Premium Web Dev Portfolio
+│   ├── index.html
+│   └── README.md
+│
+├── data-science/       # 🔬 Neural Network Data Science Portfolio
+│   ├── index.html
+│   └── README.md
+│
+├── data-analyst/       # 📊 Globe Analytics Portfolio
+│   ├── index.html
+│   └── README.md
+│
+└── assets/             # 📂 Shared assets (PDFs, images)
 ```
 
-## ⌨️ Terminal Commands
+## 🖥️ Terminal Portfolio Commands
 
-| Command     | Description                      |
-| ----------- | -------------------------------- |
-| `help`      | Show all available commands      |
-| `about`     | Info about Bhanu Pratap Saini    |
-| `skills`    | List of technical skills         |
-| `webdev`    | Web Development projects         |
-| `data`      | Data Analysis & Science projects |
-| `games`     | Game Development projects        |
-| `edu`       | Education information            |
-| `portfolio` | Links to specialized portfolios  |
-| `links`     | Important links & socials        |
-| `quote`     | Print a motivational quote       |
-| `clear`     | Clear the screen                 |
+The main terminal interface (`index.html`) supports these commands:
 
-## 🏆 Featured Projects
+| Command     | Description                           |
+| ----------- | ------------------------------------- |
+| `help`      | List all available commands           |
+| `about`     | Display personal information          |
+| `skills`    | Show technical skills by domain       |
+| `webdev`    | View web development projects         |
+| `data`      | View data analysis & science projects |
+| `games`     | View game development projects        |
+| `edu`       | Display education information         |
+| `portfolio` | Links to all specialized portfolios   |
+| `links`     | Contact & social links                |
+| `clear`     | Clear the terminal screen             |
+| `quote`     | Display a random motivational quote   |
 
-### 🌐 Web Development
+## 🔗 Other Portfolios
 
-- **GSOC Planner** - GSoC toolkit with AI-powered proposal drafting
-- **GrooveWave** - SaaS music platform
-- **Bhanu OS Portfolio** - MacOS-inspired interactive portfolio
-- **MacBook Landing** - Apple landing page clone with GSAP animations
+- **OS Portfolio:** [bhanu2006-24.github.io/bhanu2006-24/](https://bhanu2006-24.github.io/bhanu2006-24/)
+- **Resume Hub:** [bhanu2006-24.github.io/Resume/](https://bhanu2006-24.github.io/Resume/)
 
-### 📊 Data Analysis & Science
+## 📄 Resumes
 
-- **Crypto Analysis Suite** - Live cryptocurrency dashboard
-- **IMDb Analytics** - Movie data analysis dashboard
-- **Steam Games Analytics** - Gaming trends analysis
-- **Trader Sentiment Analysis** - Bitcoin sentiment correlation
+| Domain         | Resume Link                                                                              |
+| -------------- | ---------------------------------------------------------------------------------------- |
+| Data Analyst   | [analyst-resume.html](https://bhanu2006-24.github.io/Resume/analyst-resume.html)         |
+| Data Scientist | [datascience-resume.html](https://bhanu2006-24.github.io/Resume/datascience-resume.html) |
+| Web Developer  | [webdev-resume.html](https://bhanu2006-24.github.io/Resume/webdev-resume.html)           |
+| Game Developer | [game-resume.html](https://bhanu2006-24.github.io/Resume/game-resume.html)               |
 
-### 🎮 Game Development
+## 🛠️ Tech Stack
 
-- **Antigravity Game** - Top-down shooter with boss battles
-- **Neon Maze** - 3D first-person maze escape
-- **Bomber Legends** - Classic arcade bomber game
-- **Echo Shooter** - Canvas-based shooting game
-
-## 🔗 Connect With Me
-
-| Platform        | Link                                                                            |
-| --------------- | ------------------------------------------------------------------------------- |
-| 📧 Email        | [bhanupsaini2024@gmail.com](mailto:bhanupsaini2024@gmail.com)                   |
-| 💼 LinkedIn     | [Bhanu Saini](https://www.linkedin.com/in/bhanu-saini-3bb251391)                |
-| 🐙 GitHub       | [@bhanu2006-24](https://github.com/bhanu2006-24)                                |
-| 📊 Tableau      | [Tableau Public](https://public.tableau.com/app/profile/bhanu.saini6988/vizzes) |
-| 🖥️ OS Portfolio | [Interactive Portfolio](https://bhanu2006-24.github.io/bhanu2006-24/)           |
-| 📄 Resume       | [Resume Portfolio](https://bhanu2006-24.github.io/Resume/)                      |
+- **Terminal:** HTML5, CSS3, Vanilla JavaScript
+- **Specialized Portfolios:** TailwindCSS, Three.js, Lucide Icons
+- **Deployment:** Cloudflare Pages, GitHub Pages
 
 ## ▶️ Running Locally
 
-1. Clone the repository:
+```bash
+# Clone the repository
+git clone https://github.com/bhanu2006-24/portfolio.git
+cd portfolio
 
-   ```bash
-   git clone https://github.com/bhanu2006-24/portfolio.git
-   cd portfolio
-   ```
+# Serve with any static server
+npx serve .
+# OR
+python -m http.server 8000
+```
 
-2. Open in browser:
+## 📧 Contact
 
-   ```bash
-   # Using Python
-   python -m http.server 8000
-
-   # Or using npm
-   npx serve .
-   ```
-
-3. Navigate to `http://localhost:8000`
+- **Email:** [bhanupsaini2024@gmail.com](mailto:bhanupsaini2024@gmail.com)
+- **LinkedIn:** [Bhanu Saini](https://www.linkedin.com/in/bhanu-saini-3bb251391)
+- **GitHub:** [@bhanu2006-24](https://github.com/bhanu2006-24)
 
 ## 📜 License & Attribution
 
@@ -124,5 +106,5 @@ This project is open source and available under the [MIT License](LICENSE).
 
 <p align="center">
   <b>Built with ❤️ by Bhanu Pratap Saini</b><br>
-  <sub>Original design credit: Quang Bui</sub>
+  <sub>Original terminal design credit: Quang Bui</sub>
 </p>

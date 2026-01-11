@@ -1,66 +1,45 @@
 # 🎮 Bhanu Saini | Game Developer Portfolio
 
-> Portfolio showcasing browser-based games built with JavaScript, HTML5 Canvas, and Three.js.
+> **🌐 Live Demo:** [https://bhanu-thegamedev.pages.dev/](https://bhanu-thegamedev.pages.dev/)
 
-## 🌟 Deploy This
+Interactive 3D Solarpunk portfolio showcasing browser-based games built with JavaScript, Three.js, and HTML5 Canvas.
 
-This folder is designed to be deployed as a **standalone website**. Simply deploy the contents to any static hosting service like:
+## ✨ Features
 
-- GitHub Pages
-- Vercel
-- Netlify
-- Cloudflare Pages
+- **3D World Exploration** - Drive around a procedurally generated city
+- **Interactive Project Buildings** - Each building represents a game project
+- **Real-time Physics** - Collision detection and hover car mechanics
+- **Mobile Support** - Touch joystick controls for mobile devices
+- **Traffic System** - Ambient NPC vehicles
 
 ## 🛠️ Tech Stack
 
+- **3D Engine:** Three.js, WebGL
 - **Languages:** JavaScript, TypeScript
-- **Graphics:** HTML5 Canvas, Three.js
-- **Frameworks:** React (for some projects)
+- **Graphics:** HTML5 Canvas, Procedural Generation
 - **Genres:** RPG, Arcade, Top-down shooters, Maze games
 
 ## 🏆 Featured Games
 
-### 1. Antigravity Game
-
-Fast-paced top-down shooter with dash, dodge, and boss battles.
-
-- **GitHub:** [bhanu2006-24/antigravity-game](https://github.com/bhanu2006-24/antigravity-game)
-
-### 2. Neon Maze
-
-First-person 3D maze escape with cyberpunk neon visuals.
-
-- **GitHub:** [bhanu2006-24/neon-maze](https://github.com/bhanu2006-24/neon-maze)
-
-### 3. Bomber Legends
-
-Classic arcade-style bomber game with power-ups.
-
-- **GitHub:** [bhanu2006-24/bomber-legends](https://github.com/bhanu2006-24/bomber-legends)
-
-### 4. Echo Shooter
-
-Browser-based shooting game with canvas graphics.
-
-- **GitHub:** [bhanu2006-24/Echo-shooter](https://github.com/bhanu2006-24/Echo-shooter)
-
-### 5. More Games
-
-- [Portal Nexus](https://github.com/bhanu2006-24/portal-nexus) - RPG with procedural gen
-- [Neon City](https://github.com/bhanu2006-24/neon-city) - Cyberpunk RPG
-- [Neon Runner](https://github.com/bhanu2006-24/neon-runner) - Running game
-- [Saranda Quest](https://github.com/bhanu2006-24/saranda-quest) - Adventure game
+| Game               | Description                             | Link                                                |
+| ------------------ | --------------------------------------- | --------------------------------------------------- |
+| **Echo Shooter**   | Neon arena shooter with wave survival   | [Play](https://echo-shooter.pages.dev)              |
+| **Portal Nexus**   | 100-room survival RPG labyrinth         | [Play](https://portal-nexus.pages.dev)              |
+| **Neon Maze**      | 3D procedural maze escape               | [GitHub](https://github.com/bhanu2006-24/neon-maze) |
+| **Antigravity**    | Top-down shooter with gravity mechanics | [Play](https://antigravity-game.pages.dev)          |
+| **Bomber Legends** | Classic arcade bomber remake            | [Play](https://bomber-legends.pages.dev)            |
 
 ## 📄 Resume
 
 **Game Developer Resume:** [View Resume](https://bhanu2006-24.github.io/Resume/game-resume.html)
 
-## ▶️ Running Locally
+## 🚀 Deployment
+
+This folder is deployed as a standalone website on Cloudflare Pages.
 
 ```bash
+# Local development
 cd game-dev
-python -m http.server 8000
-# OR
 npx serve .
 ```
 
