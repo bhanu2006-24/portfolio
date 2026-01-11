@@ -1,0 +1,145 @@
+:root {
+  --bg: #0b1020;
+  --panel: #0e1530;
+  --text: #d8dee9;
+  --muted: #7f8ca3;
+  --accent: #7aa2f7;
+  --green: #9ece6a;
+  --red: #f7768e;
+  --yellow: #e0af68;
+}
+
+html, body {
+    height: 100%; margin: 0;
+}
+
+body {
+  background: radial-gradient(1200px 600px at 50% -200px, #141b36 0%, var(--bg) 60%);
+  color: var(--text);
+  font: 14px/1.5 ui-monospace, monospace;
+  display: grid;
+  place-items: center;
+}
+
+.terminal {
+  width: min(960px, 96vw);
+  height: min(70vh, 640px);
+  background: linear-gradient(180deg, var(--panel), #0b122a);
+  border: 1px solid #1d2747;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.04);
+  display: grid;
+  grid-template-rows: 36px 1fr;
+  overflow: hidden;
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  background: linear-gradient(180deg, #121a38, #0d1330);
+  border-bottom: 1px solid #1b2446;
+  letter-spacing: .02em;
+  user-select: none;
+}
+
+.dots {
+    display: inline-flex; gap: 6px; margin-right: 8px;
+}
+
+.dot {
+    width: 10px; height: 10px; border-radius: 50%;
+}
+
+.dot.red {
+    background: #ff5f56;
+}
+
+.dot.yellow {
+    background: #ffbd2e;
+}
+
+.dot.green {
+    background: #27c93f;
+}
+
+.titlebar span {
+    color: var(--muted); font-size: 12px;
+}
+
+.screen {
+  padding: 14px 16px 16px 16px;
+  overflow: auto;
+}
+
+.line {
+    white-space: pre-wrap; word-break: break-word;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.green {
+    color: var(--green);
+}
+
+.red {
+    color: var(--red);
+}
+
+.yellow {
+    color: var(--yellow);
+}
+
+.accent {
+    color: var(--accent);
+}
+
+.prompt-line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 8px;
+}
+.prompt {
+  color: var(--green);
+}
+
+#cmd {
+  outline: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  caret-color: var(--accent);
+  min-height: 1em;
+}
+#cmd::selection {
+    background: rgba(122,162,247,.35);
+}
+
+.glow {
+    text-shadow: 0 0 8px rgba(122,162,247,.35);
+}
+
+.tree-branch { 
+    margin-left: 1.25em; 
+    color: var(--accent); 
+    font-weight: bold;
+}
+
+.tree-sub { 
+    margin-left: 2.5em; 
+    font-weight: normal;
+}
+
+.screen a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.screen a:hover {
+    text-decoration: underline;
+}
