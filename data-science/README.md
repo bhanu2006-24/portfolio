@@ -1,10 +1,15 @@
-# 🔬 Data Science Portfolio
+# 🔬 Bhanu Saini | Data Science Portfolio
 
 > Portfolio showcasing data science projects focused on machine learning, AI, and advanced analytics.
 
-## 🌟 Live Demo
+## 🌟 Deploy This
 
-🔗 **[View Portfolio](https://bhanu2006-24.github.io/portfolio/data-science/)**
+This folder is designed to be deployed as a **standalone website**. Simply deploy the contents to any static hosting service like:
+
+- GitHub Pages
+- Vercel
+- Netlify
+- Cloudflare Pages
 
 ## 🛠️ Tech Stack
 
@@ -12,7 +17,6 @@
 - **ML/AI:** Machine Learning, Sentiment Analysis, Data Modeling
 - **Libraries:** pandas, numpy, scikit-learn, Jupyter Notebooks
 - **Visualization:** Streamlit, Plotly, Matplotlib
-- **Tools:** Git, VS Code
 
 ## 🏆 Featured Projects
 
@@ -20,14 +24,12 @@
 
 Data science project studying how Bitcoin market sentiment relates to trader performance.
 
-- **Features:** Fear & Greed Index correlation, historical sentiment analysis
 - **GitHub:** [bhanu2006-24/trader-sentiment-analysis](https://github.com/bhanu2006-24/trader-sentiment-analysis)
 
 ### 2. Atmosphere AI
 
 AI-powered weather analytics platform combining web development with AI.
 
-- **Features:** AI analytics, Web integration
 - **GitHub:** [bhanu2006-24/atmosphere-ai](https://github.com/bhanu2006-24/atmosphere-ai)
 
 ### 3. ML Projects Collection
@@ -42,21 +44,24 @@ Experimental chatbot project exploring conversational AI.
 
 - **GitHub:** [bhanu2006-24/smart-bhaluu](https://github.com/bhanu2006-24/smart-bhaluu)
 
+## 📄 Resume
+
+**Data Scientist Resume:** [View Resume](https://bhanu2006-24.github.io/Resume/datascience-resume.html)
+
 ## 🎓 Education
 
 **Indian Institute of Technology, Madras**
 
 - B.Sc. in Data Science (2025-2028)
-- Rigorous training in statistics, machine learning, and analytics
 
-## 📊 Skills
+## ▶️ Running Locally
 
-| Category      | Technologies                                               |
-| ------------- | ---------------------------------------------------------- |
-| Programming   | Python, SQL, PostgreSQL                                    |
-| Data Science  | Machine Learning, Sentiment Analysis, Statistical Modeling |
-| Tools         | Jupyter Notebooks, Streamlit, Git                          |
-| Visualization | Plotly, Matplotlib, Tableau                                |
+```bash
+cd data-science
+python -m http.server 8000
+# OR
+npx serve .
+```
 
 ## 📧 Contact
 
@@ -67,5 +72,5 @@ Experimental chatbot project exploring conversational AI.
 ---
 
 <p align="center">
-  <b>Part of Bhanu Pratap Saini's Portfolio Collection</b>
+  <b>© 2025 Bhanu Pratap Saini</b>
 </p>

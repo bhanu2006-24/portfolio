@@ -1,10 +1,15 @@
-# 📊 Data Analyst Portfolio
+# 📊 Bhanu Saini | Data Analyst Portfolio
 
 > Interactive portfolio showcasing data analysis projects using Python, SQL, and visualization tools.
 
-## 🌟 Live Demo
+## 🌟 Deploy This
 
-🔗 **[View Portfolio](https://bhanu2006-24.github.io/portfolio/data-analyst/)**
+This folder is designed to be deployed as a **standalone website**. Simply deploy the contents to any static hosting service like:
+
+- GitHub Pages
+- Vercel
+- Netlify
+- Cloudflare Pages
 
 ## 🛠️ Tech Stack
 
@@ -19,7 +24,6 @@
 
 A dynamic Streamlit dashboard that fetches live cryptocurrency data from the CoinGecko API.
 
-- **Features:** Automated data cleaning, KPI cards, sidebar filters
 - **Live Demo:** [bs-crypto-analysis.streamlit.app](https://bs-crypto-analysis.streamlit.app)
 - **GitHub:** [bhanu2006-24/crypto-analysis](https://github.com/bhanu2006-24/crypto-analysis)
 
@@ -27,14 +31,12 @@ A dynamic Streamlit dashboard that fetches live cryptocurrency data from the Coi
 
 Interactive dashboard analyzing IMDb movie data across movies, cast, and genres.
 
-- **Features:** KPIs, genre frequency, cast analysis, yearly trends, correlation heatmaps
 - **GitHub:** [bhanu2006-24/imdb-analysis](https://github.com/bhanu2006-24/imdb-analysis)
 
 ### 3. Steam Games Analytics Dashboard
 
 End-to-end pipeline that scrapes Steam store data and explores gaming trends.
 
-- **Features:** Robust scraping, EDA notebooks, KPIs, genre analysis
 - **GitHub:** [bhanu2006-24/steam-analysis](https://github.com/bhanu2006-24/steam-analysis)
 
 ### 4. Tableau Public Visualizations
@@ -43,6 +45,10 @@ Interactive dashboards showcasing advanced visualization skills.
 
 - **View:** [Tableau Public Profile](https://public.tableau.com/app/profile/bhanu.saini6988/vizzes)
 
+## 📄 Resume
+
+**Data Analyst Resume:** [View Resume](https://bhanu2006-24.github.io/Resume/analyst-resume.html)
+
 ## 📁 Files
 
 | File         | Description                                                |
@@ -50,9 +56,17 @@ Interactive dashboards showcasing advanced visualization skills.
 | `index.html` | Main portfolio page with Three.js background and mini-game |
 | `README.md`  | This documentation file                                    |
 
-## 🎮 Bonus: Mini Game
+## ▶️ Running Locally
 
-The portfolio includes an interactive HTML5 Canvas mini-game demonstrating JavaScript skills!
+```bash
+# Clone and cd into the folder
+cd data-analyst
+
+# Serve locally
+python -m http.server 8000
+# OR
+npx serve .
+```
 
 ## 📧 Contact
 
@@ -63,5 +77,5 @@ The portfolio includes an interactive HTML5 Canvas mini-game demonstrating JavaS
 ---
 
 <p align="center">
-  <b>Part of Bhanu Pratap Saini's Portfolio Collection</b>
+  <b>© 2025 Bhanu Pratap Saini</b>
 </p>
