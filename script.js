@@ -131,18 +131,29 @@
       case "help":
         print(
           [
-            '<span class="yellow">Available commands</span>',
+            '<span class="yellow">━━━━━━━━━━━━━━━━ AVAILABLE COMMANDS ━━━━━━━━━━━━━━━━</span>',
+            "",
+            '<span class="accent">Navigation</span>',
             "  help             Show all commands",
             "  about            Info about Bhanu Pratap Saini",
+            "  portfolio        Open specialized portfolios (LIVE)",
+            "",
+            '<span class="accent">Skills & Projects</span>',
             "  skills           List of technical skills",
             "  webdev           Web Development projects",
             "  data             Data Analysis & Science projects",
             "  games            Game Development projects",
+            "",
+            '<span class="accent">Info & Downloads</span>',
             "  edu              Show education info",
-            "  portfolio        Open specialized portfolios",
+            "  resume           Download resumes (by domain)",
             "  links            Important links & socials",
+            "",
+            '<span class="accent">Utilities</span>',
             "  quote            Print a motivational quote",
             "  clear            Clear the screen",
+            "",
+            '<span class="yellow">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>',
           ].join("\n")
         );
         break;
@@ -352,31 +363,58 @@
         ]);
         break;
       case "portfolio":
-        print('<span class="yellow">Specialized Portfolios:</span>', "");
+        print('<span class="yellow">━━━━━━━━━━━━━━━━ LIVE PORTFOLIOS ━━━━━━━━━━━━━━━━</span>', "");
         print("", "");
         print(
-          '  📊 <a href="data-analyst/index.html" class="accent">Data Analyst Portfolio</a>',
+          '  📊 <a href="https://bhanu-thedataanalyst.pages.dev/" target="_blank" class="accent">Data Analyst Portfolio</a> <span class="muted">→ bhanu-thedataanalyst.pages.dev</span>',
           ""
         );
         print(
-          '  🔬 <a href="data-science/index.html" class="accent">Data Science Portfolio</a>',
+          '  🔬 <a href="https://bhanu-thedatascientist.pages.dev/" target="_blank" class="accent">Data Scientist Portfolio</a> <span class="muted">→ bhanu-thedatascientist.pages.dev</span>',
           ""
         );
         print(
-          '  🌐 <a href="web-dev/index.html" class="accent">Web Development Portfolio</a>',
+          '  🌐 <a href="https://bhanu-thewebdev.pages.dev/" target="_blank" class="accent">Web Developer Portfolio</a> <span class="muted">→ bhanu-thewebdev.pages.dev</span>',
           ""
         );
         print(
-          '  🎮 <a href="game-dev/index.html" class="accent">Game Development Portfolio</a>',
+          '  🎮 <a href="https://bhanu-thegamedev.pages.dev/" target="_blank" class="accent">Game Developer Portfolio</a> <span class="muted">→ bhanu-thegamedev.pages.dev</span>',
+          ""
+        );
+        print("", "");
+        print('<span class="yellow">━━━━━━━━━━━━━━━━ OTHER PORTFOLIOS ━━━━━━━━━━━━━━━━</span>', "");
+        print("", "");
+        print(
+          '  🖥️ <a href="https://bhanu2006-24.github.io/bhanu2006-24/" target="_blank" class="accent">Interactive OS Portfolio</a> <span class="muted">→ MacOS-style desktop UI</span>',
+          ""
+        );
+        print(
+          '  📄 <a href="https://bhanu2006-24.github.io/Resume/" target="_blank" class="accent">Resume Hub</a> <span class="muted">→ Edit & download resumes</span>',
+          ""
+        );
+        break;
+      case "resume":
+        print('<span class="yellow">━━━━━━━━━━━━━ DOWNLOAD RESUMES ━━━━━━━━━━━━━</span>', "");
+        print("", "");
+        print(
+          '  📊 <a href="https://bhanu2006-24.github.io/Resume/analyst-resume.html" target="_blank" class="accent">Data Analyst Resume</a>',
+          ""
+        );
+        print(
+          '  🔬 <a href="https://bhanu2006-24.github.io/Resume/datascience-resume.html" target="_blank" class="accent">Data Scientist Resume</a>',
+          ""
+        );
+        print(
+          '  🌐 <a href="https://bhanu2006-24.github.io/Resume/webdev-resume.html" target="_blank" class="accent">Web Developer Resume</a>',
+          ""
+        );
+        print(
+          '  🎮 <a href="https://bhanu2006-24.github.io/Resume/game-resume.html" target="_blank" class="accent">Game Developer Resume</a>',
           ""
         );
         print("", "");
         print(
-          '  🖥️ <a href="https://bhanu2006-24.github.io/bhanu2006-24/" target="_blank" class="accent">Interactive OS Portfolio</a>',
-          ""
-        );
-        print(
-          '  📄 <a href="https://bhanu2006-24.github.io/Resume/" target="_blank" class="accent">Resume Portfolio</a>',
+          '<span class="muted">Tip: Each resume can be edited and downloaded as PDF!</span>',
           ""
         );
         break;
