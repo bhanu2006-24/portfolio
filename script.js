@@ -1,71 +1,87 @@
 (function () {
-    const screen = document.getElementById('screen');
-    const state = {
-    user: 'quangbui',
-    host: 'local',
-    path: '~',
+  const screen = document.getElementById("screen");
+  const state = {
+    user: "bhanusaini",
+    host: "iitm",
+    path: "~",
     history: [],
-    historyIndex: -1
-};
+    historyIndex: -1,
+  };
 
-function renderAboutMe() {
-    print('┌─────────────────────────── ABOUT ───────────────────────────┐', '');
-    print('│ Name: <span class="accent">Quang Bui</span>                                             │', '');
-    print('│ Role: <span class="accent">Curious builder and learner</span>                           │', '');
-    print('│ Location: <span class="accent">Vienna, Austria          </span>                         │', '');
-    print('└─────────────────────────────────────────────────────────────┘', '');
+  function renderAboutMe() {
+    print(
+      "┌─────────────────────────── ABOUT ───────────────────────────┐",
+      ""
+    );
+    print(
+      '│ Name: <span class="accent">Bhanu Pratap Saini</span>                                    │',
+      ""
+    );
+    print(
+      '│ Role: <span class="accent">Web Developer | Data Analyst | Game Dev</span>              │',
+      ""
+    );
+    print(
+      '│ Location: <span class="accent">India (IIT Madras)</span>                              │',
+      ""
+    );
+    print(
+      "└─────────────────────────────────────────────────────────────┘",
+      ""
+    );
 
-    printBranch('Information', [
-        {
-        name: 'Strengths',
+    printBranch("Information", [
+      {
+        name: "About",
         descriptions: [
-            'Logical reasoning — able to think through problems with <span class="yellow">accuracy and ease</span>',
-            'Calmness — <span class="yellow">never overwhelmed</span> by heavy task difficult or load (I take it as a challenge)',
-            'Communication — communicate with team effectively to produce the <span class="yellow">best possible outcome</span>'
-        ]
-        },
-        {
-        name: 'Techstack',
+          'Passionate <span class="yellow">Web Developer</span> and Aspiring <span class="yellow">Gen AI Engineer</span>',
+          'Currently pursuing <span class="yellow">Data Science at IIT Madras</span>',
+          "Building modern, interactive web apps and exploring AI frontiers",
+        ],
+      },
+      {
+        name: "Tech Stack",
         descriptions: [
-            'Language: <span class="yellow">HTML, CSS, JavaScript, TypeScript, React, Python, and Java</span>',
-            'Tools: <span class="yellow">Git, PyTorch, TensorFlow, Jira/Confluence</span>',
-            'Creativity: <span class="yellow">Figma, Canva</span>'
-        ]
-        },
-        {
-        name: 'Interests',
+          'Web: <span class="yellow">HTML, CSS, JavaScript, TypeScript, React, Next.js, TailwindCSS</span>',
+          'Backend: <span class="yellow">Node.js, Flask, Python, PostgreSQL</span>',
+          'Data: <span class="yellow">pandas, numpy, Streamlit, Plotly, Tableau</span>',
+          'Game Dev: <span class="yellow">HTML5 Canvas, Three.js, JavaScript</span>',
+          'Tools: <span class="yellow">Git, GSAP, Figma, VS Code</span>',
+        ],
+      },
+      {
+        name: "Interests",
         descriptions: [
-            'Creating the <span class="yellow">best possible UI/UX</span> even for a technical product',
-            'Automating life with <span class="yellow">AI agents</span>',
-            '<span class="yellow">Teaching</span> through workshops, lessons, seminars, etc.'
-        ]
-        },
-        {
-        name: 'Working Principles',
+          'Creating the <span class="yellow">best possible UI/UX</span> even for technical products',
+          'Building <span class="yellow">AI-powered applications</span> and data dashboards',
+          'Crafting <span class="yellow">immersive browser games</span>',
+        ],
+      },
+      {
+        name: "Working Principles",
         descriptions: [
-            'MVP first - always prefer a usable product with <span class="yellow">minimum viable features</span> first',
-            'Perfectionist - a single box not aligned and the UI will be <span class="yellow">fixed within seconds</span>',
-            'Logic - decide features to build based on <span class="yellow">what will benefit users, not what will satisfy dev\'s eyes</span>'
-        ]
-        },
-        {
-        name: 'Contact',
+          'User-first - build features that <span class="yellow">benefit users, not just developers</span>',
+          'Clean code - write <span class="yellow">maintainable and readable code</span>',
+          'Continuous learning - always <span class="yellow">exploring new technologies</span>',
+        ],
+      },
+      {
+        name: "Contact",
         descriptions: [
-            'Email: quang.gateway@gmail.com',
-            'LinkedIn: <a href="https://www.linkedin.com/in/buiducquang/" target="_blank" class="accent">Duc Quang Bui</a>',
-            'GitHub: <a href="https://github.com/duckyquang" target="_blank" class="accent">Duck Quang</a>'
-        ]
-        }
+          'Email: <span class="accent">bhanupsaini2024@gmail.com</span>',
+          'LinkedIn: <a href="https://www.linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="accent">Bhanu Saini</a>',
+          'GitHub: <a href="https://github.com/bhanu2006-24" target="_blank" class="accent">bhanu2006-24</a>',
+        ],
+      },
     ]);
-    }
+  }
 
-
-function promptText() {
+  function promptText() {
     return `<span class="prompt glow">${state.user}@${state.host}</span>:<span class="accent">${state.path}</span>$`;
-}
+  }
 
-function focusCmd() {
-    const cmd = document.getElementById('cmd');
+  function focusCmd() {
+    const cmd = document.getElementById("cmd");
     if (cmd) {
       const range = document.createRange();
       const sel = window.getSelection();
@@ -77,9 +93,9 @@ function focusCmd() {
     }
   }
 
-function appendPrompt() {
-    const wrap = document.createElement('div');
-    wrap.className = 'line prompt-line';
+  function appendPrompt() {
+    const wrap = document.createElement("div");
+    wrap.className = "line prompt-line";
     wrap.innerHTML = `
       <div>${promptText()}</div>
       <div id="cmd" contenteditable="true" spellcheck="false"></div>
@@ -87,198 +103,392 @@ function appendPrompt() {
     screen.appendChild(wrap);
     screen.scrollTop = screen.scrollHeight;
     focusCmd();
-}
+  }
 
-function print(text, cls) {
-    const div = document.createElement('div');
-    div.className = 'line' + (cls ? ' ' + cls : '');
+  function print(text, cls) {
+    const div = document.createElement("div");
+    div.className = "line" + (cls ? " " + cls : "");
     div.innerHTML = text;
     screen.appendChild(div);
     screen.scrollTop = screen.scrollHeight;
-}
+  }
 
-function printBranch(title, items) {
-    print(title + ':', 'yellow');
-    print('', '');
+  function printBranch(title, items) {
+    print(title + ":", "yellow");
+    print("", "");
     items.forEach((obj) => {
-        print(obj.name, 'tree-branch');
-        obj.descriptions.forEach(d => {
-            print('- ' + d, 'tree-sub');
-        });
-        print('', '');
+      print(obj.name, "tree-branch");
+      obj.descriptions.forEach((d) => {
+        print("- " + d, "tree-sub");
+      });
+      print("", "");
     });
-}
+  }
 
-const CV_PATH = 'assets/QuangBui-CV.pdf';
-const CV_FILENAME = 'QuangBui-CV.pdf';
-
-function triggerDownload(url, filename) {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.rel = 'noopener';
-    a.target = '_blank';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-}
-
-function handleCommand(input) {
+  function handleCommand(input) {
     const cmd = input.trim().toLowerCase();
     switch (cmd) {
-        case 'help':
-            print(
-            [
-                '<span class="yellow">Available commands</span>',
-                '  help             Show all commands',
-                '  about            Info about Quang Bui',
-                '  proj             List of projects',
-                '  rs               List of researches',
-                '  ecs              List of extracurriculars',
-                '  aca              Show academic info',
-                '  awards           List of notable awards',
-                '  quote            Print a deep quote',
-                '  download         Download CV',
-            ].join('\n')
-            );
-            break;
-        case 'download':
-            print('Downloaded!', 'muted');
-            triggerDownload(CV_PATH, CV_FILENAME);
-            break;
-        case 'about':
-            renderAboutMe();
-            break;
-        case 'proj':
-            printBranch('Projects', [
-            { name: 'Rotten (2024 - 2025)', descriptions: [
-                'An AI-based translator for teachers to <span class="yellow">translate educational content into brainrot</span>',
-                'Trained the AI model with over <span class="yellow">300 brainrot terms and use cases</span>',
-                'Built it as a part of the <a href="https://docs.google.com/document/d/1bwLQNPkNM9e9gQBsdeFPXFcPsPpu6jjfSB3ueGwxJIs/edit?usp=sharing" target="_blank" class="accent">IB MYP Personal Project</a>'
-            ] },
-            { name: 'Huzzlingo (2025 - Present)', descriptions: [
-                '<span class="yellow">Duolingo for getting girls (huzz)</span>',
-                '<span class="yellow">Trained the final boss AI model</span> to challenge users and return a Huzzlingo score',
-                'Techstack: TypeScript, JSON, JavaScript, CSS, and HTML'
-            ] },
-            { name: 'BiPlus Learning (2025)', descriptions: [
-                'Solo-built the <a href="https://learning.biplus.com.vn" target="_blank" class="accent"><span class="yellow">course listing website</span></a> for BiPlus Software Solutions JSC',
-                'Techstack: TypeScript, JSON, Javascript, CSS, and HTML',
-            ] },
-            { name: 'Synthica (2025 - Present)', descriptions: [
-                '<span class="yellow">Making research approachable for all.</span>',
-            ] },
-            ]);
-            break;
-        case 'rs':
-            printBranch('Researches', [
-            { name: 'Solutions for prompt injections in AI browsers', descriptions: [
-                'Investigating on <span class="yellow">prompnt injections in AI browsers</span>',
-                'Proposed the <span class="yellow">Multicmodal Context Firewall (MCF) framework</span> which ensures only harmless context to enter the process',
-                'Aiming to submit to the ICML conference'
-            ] },
-            { name: 'Quantum vs. Classical Algorithms: Shortest Path Optimization Problem', descriptions: [
-                'Comparing <span class="yellow">Djikstra\'s algorithm to quantum algorithms</span> with different amount of qubits',
-                'Tech Stack: Python and <span class="yellow">Qiskit (IBM Quantum Coding Language)</span>',
-                'Currently being peer reviewed'
-            ] },
-            ]);
-            break;
-        case 'ecs':
-            printBranch('Extracurriculars', [
-            { name: 'Coding Club President (2024 - Present)', descriptions: [
-                'Planned a 30-lesson curriculum for 30+ members',
-                'Produced alumni with products helping the school community (i.e. <span class="yellow">Class Scheduler</span>)',
-                'Taught 20 beginners <span class="yellow">Python and Scratch</span> to introduce them to the basics of programming'
-            ] },
-            { name: 'TedX Speaker (2025)', descriptions: [
-                'Topic: "<span class="yellow">How can we ethically abuse AI?</span>"',
-                'Discussed about the uses of AI and how we can utilize it to benefit us',
-                'Encouraged the school board to <span class="yellow">allow AI usage</span>'
-            ] },
-            { name: 'Basketball Player (2022 - Present)', descriptions: [
-                'Varsity Player - won multiple 3x3 and 5x5 leagues as a starter',
-                'Nationals Player - played at the <span class="yellow">national level</span> for the Hanoi Basketball Team',
-                'Basketball Club Coordinator - organized <span class="yellow">free basketball summer camps</span> for children and raised awareness about basketball in the community'
-            ] },
-            ]);
-            break;
-        case 'aca':
-            printBranch('Academics', [
-            { name: 'American International School Vienna (2025 - 2027)', descriptions: [
-                'GPA: <span class="yellow">3.8 UW</span>',
-                'IB Diploma: N/A',
-            ] },
-            { name: 'The Dewey Schools (2023 - 2025)', descriptions: [
-                'GPA: <span class="yellow">4.67 W</span>',
-                'IB MYP Year 5: <span class="yellow">57/63</span<',
-            ] },
-            { name: 'Rigorous Courses', descriptions: [
-                'AP: Computer Science A (<span class="yellow">5</span>), Precalculus (<span class="yellow">5</span>), Physics 1 (<span class="yellow">4</span>)',
-                'SAT: First one this December',
-            ] },
-            ]);
-            break;
-        case 'awards':
-            printBranch('Notable Awards', [
-            { name: 'Mathematics', descriptions: [
-                '<span class="yellow">Top 0.5% Contestant</span>, International Kangaroo Mathematics Competition, 2019 - 2024',
-                '<span class="yellow">Silver Medal</span>, Asian Science and Mathematics Olympiad, 2019 - 2023',
-                '<span class="yellow">Bronze Medal</span>, Thailand International Mathematics Olympiad, 2022'
-            ] },
-            { name: 'Robotics', descriptions: [
-                '<span class="yellow">Gold Medal</span>, World Robot Contest Festival International Finals, 2024',
-                '<span class="yellow">Bronze Medal</span>, Vietnam Robotics Open, 2024'
-            ] },
-            { name: 'Others', descriptions: [
-                '<span class="yellow">Best Debater</span>, "Should Vietnam use nuclear energy?", 2025',
-                '<span class="yellow">Outstanding Delegate</span>, Nguyen Sieu Model United Nations, 2024',
-                '<span class="yellow">Top 3 & Youngest-ever Participant</span>, International Trade Challenge, 2022',
-            ] },
-            ]);
-            break;
-        case 'quote':
-            print('"Nothing is impossible; literally, the word says I\'m possible" – Quang Bui, probably', 'muted');
-            break;
-        case '':
-            break;
-        default:
-            print(`command not found: <span class="red">${cmd}</span>`);
+      case "help":
+        print(
+          [
+            '<span class="yellow">Available commands</span>',
+            "  help             Show all commands",
+            "  about            Info about Bhanu Pratap Saini",
+            "  skills           List of technical skills",
+            "  webdev           Web Development projects",
+            "  data             Data Analysis & Science projects",
+            "  games            Game Development projects",
+            "  edu              Show education info",
+            "  portfolio        Open specialized portfolios",
+            "  links            Important links & socials",
+            "  quote            Print a motivational quote",
+            "  clear            Clear the screen",
+          ].join("\n")
+        );
+        break;
+      case "about":
+        renderAboutMe();
+        break;
+      case "skills":
+        printBranch("Technical Skills", [
+          {
+            name: "Web Development",
+            descriptions: [
+              '<span class="yellow">Frontend:</span> HTML5, CSS3, JavaScript, TypeScript, React, Next.js',
+              '<span class="yellow">Styling:</span> TailwindCSS, GSAP Animations, Three.js',
+              '<span class="yellow">Backend:</span> Node.js, Flask, Python',
+            ],
+          },
+          {
+            name: "Data Analysis & Science",
+            descriptions: [
+              '<span class="yellow">Languages:</span> Python, SQL, PostgreSQL',
+              '<span class="yellow">Libraries:</span> pandas, numpy, BeautifulSoup, Requests',
+              '<span class="yellow">Visualization:</span> Streamlit, Plotly, Tableau, Matplotlib',
+            ],
+          },
+          {
+            name: "Game Development",
+            descriptions: [
+              '<span class="yellow">Technologies:</span> HTML5 Canvas, JavaScript, Three.js',
+              '<span class="yellow">Genres:</span> RPG, Arcade, Top-down shooters, Maze games',
+            ],
+          },
+          {
+            name: "Tools & Platforms",
+            descriptions: [
+              '<span class="yellow">Version Control:</span> Git, GitHub',
+              '<span class="yellow">Design:</span> Figma, Canva',
+              '<span class="yellow">Deployment:</span> GitHub Pages, Vercel, Streamlit Cloud',
+            ],
+          },
+        ]);
+        break;
+      case "webdev":
+        printBranch("Web Development Projects", [
+          {
+            name: "GSOC Planner",
+            descriptions: [
+              "Frontend-first GSoC toolkit for discovering orgs and drafting proposals",
+              'Tech: <span class="yellow">React, GitHub API, AI Assistant</span>',
+              '<a href="https://github.com/bhanu2006-24/GSOC-planner" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "GrooveWave",
+            descriptions: [
+              "SaaS music platform with React and data visualization",
+              'Tech: <span class="yellow">React, SaaS, Data Viz</span>',
+              '<a href="https://github.com/bhanu2006-24/groovewave" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Bhanu OS Portfolio",
+            descriptions: [
+              "MacOS Sequoia-inspired interactive portfolio with desktop-style UI",
+              'Tech: <span class="yellow">React, TypeScript, macOS UI</span>',
+              '<a href="https://bhanu2006-24.github.io/bhanu2006-24/" target="_blank" class="accent">View Live →</a>',
+            ],
+          },
+          {
+            name: "Krishna Books",
+            descriptions: [
+              "E-commerce bookstore website",
+              'Tech: <span class="yellow">Web, E-commerce</span>',
+              '<a href="https://github.com/bhanu2006-24/krishna-books" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "RemoteNexus",
+            descriptions: [
+              "Remote work collaboration platform",
+              'Tech: <span class="yellow">React, Node.js</span>',
+              '<a href="https://github.com/bhanu2006-24/remotenexus" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "MacBook Landing",
+            descriptions: [
+              "Apple MacBook Pro landing page clone with 3D laptop and GSAP animations",
+              'Tech: <span class="yellow">React, Three.js, GSAP, TailwindCSS</span>',
+              '<a href="https://github.com/bhanu2006-24/Macbook_Landing" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+        ]);
+        break;
+      case "data":
+        printBranch("Data Analysis & Science Projects", [
+          {
+            name: "Crypto Analysis Suite",
+            descriptions: [
+              "Live cryptocurrency dashboard with CoinGecko API integration",
+              'Tech: <span class="yellow">Python, Streamlit, Plotly</span>',
+              '<a href="https://bs-crypto-analysis.streamlit.app" target="_blank" class="accent">Live Demo →</a> | <a href="https://github.com/bhanu2006-24/crypto-analysis" target="_blank" class="accent">GitHub →</a>',
+            ],
+          },
+          {
+            name: "IMDb Analytics Dashboard",
+            descriptions: [
+              "Interactive dashboard analyzing movies, cast, and genres",
+              'Tech: <span class="yellow">Python, Plotly, Data Analysis</span>',
+              '<a href="https://github.com/bhanu2006-24/imdb-analysis" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Steam Games Analytics",
+            descriptions: [
+              "End-to-end pipeline scraping Steam data with trend analysis",
+              'Tech: <span class="yellow">Python, Scraping, Streamlit</span>',
+              '<a href="https://github.com/bhanu2006-24/steam-analysis" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Trader Sentiment Analysis",
+            descriptions: [
+              "Bitcoin sentiment analysis correlating Fear & Greed Index with trader performance",
+              'Tech: <span class="yellow">Python, Jupyter, Streamlit</span>',
+              '<a href="https://github.com/bhanu2006-24/trader-sentiment-analysis" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Atmosphere AI",
+            descriptions: [
+              "AI-powered weather analytics platform",
+              'Tech: <span class="yellow">AI, Web, Analytics</span>',
+              '<a href="https://github.com/bhanu2006-24/atmosphere-ai" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+        ]);
+        break;
+      case "games":
+        printBranch("Game Development Projects", [
+          {
+            name: "Antigravity Game",
+            descriptions: [
+              "Fast-paced top-down shooter with dash, dodge, and boss battles",
+              'Tech: <span class="yellow">JavaScript, HTML5 Canvas, Arcade</span>',
+              '<a href="https://github.com/bhanu2006-24/antigravity-game" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Neon Maze",
+            descriptions: [
+              "First-person 3D maze escape with cyberpunk neon visuals",
+              'Tech: <span class="yellow">JavaScript, Three.js, Procedural Gen</span>',
+              '<a href="https://github.com/bhanu2006-24/neon-maze" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Bomber Legends",
+            descriptions: [
+              "Classic arcade-style bomber game with power-ups",
+              'Tech: <span class="yellow">React, TypeScript, Grid-based</span>',
+              '<a href="https://github.com/bhanu2006-24/bomber-legends" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Echo Shooter",
+            descriptions: [
+              "Browser-based shooting game with canvas graphics",
+              'Tech: <span class="yellow">JavaScript, Canvas</span>',
+              '<a href="https://github.com/bhanu2006-24/Echo-shooter" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Portal Nexus",
+            descriptions: [
+              "RPG with procedural generation",
+              'Tech: <span class="yellow">RPG, Procedural Gen</span>',
+              '<a href="https://github.com/bhanu2006-24/portal-nexus" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Neon City: Undead Rising",
+            descriptions: [
+              "Cyberpunk RPG adventure game",
+              'Tech: <span class="yellow">RPG, Cyberpunk</span>',
+              '<a href="https://github.com/bhanu2006-24/neon-city" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+        ]);
+        break;
+      case "edu":
+        printBranch("Education", [
+          {
+            name: "Indian Institute of Technology, Madras",
+            descriptions: [
+              'B.Sc. in <span class="yellow">Data Science</span> (2025-2028)',
+              "One of India's premier institutions for engineering and data science",
+              "Rigorous training in statistics, machine learning, and analytics",
+            ],
+          },
+          {
+            name: "Kendriya Vidyalaya No. 2, Jaipur",
+            descriptions: [
+              "Secondary Education",
+              "Central government school with strong STEM preparation",
+            ],
+          },
+        ]);
+        break;
+      case "portfolio":
+        print('<span class="yellow">Specialized Portfolios:</span>', "");
+        print("", "");
+        print(
+          '  📊 <a href="data-analyst/index.html" class="accent">Data Analyst Portfolio</a>',
+          ""
+        );
+        print(
+          '  🔬 <a href="data-science/index.html" class="accent">Data Science Portfolio</a>',
+          ""
+        );
+        print(
+          '  🌐 <a href="web-dev/index.html" class="accent">Web Development Portfolio</a>',
+          ""
+        );
+        print(
+          '  🎮 <a href="game-dev/index.html" class="accent">Game Development Portfolio</a>',
+          ""
+        );
+        print("", "");
+        print(
+          '  🖥️ <a href="https://bhanu2006-24.github.io/bhanu2006-24/" target="_blank" class="accent">Interactive OS Portfolio</a>',
+          ""
+        );
+        print(
+          '  📄 <a href="https://bhanu2006-24.github.io/Resume/" target="_blank" class="accent">Resume Portfolio</a>',
+          ""
+        );
+        break;
+      case "links":
+        print('<span class="yellow">Important Links:</span>', "");
+        print("", "");
+        print(
+          '  📧 Email: <a href="mailto:bhanupsaini2024@gmail.com" class="accent">bhanupsaini2024@gmail.com</a>',
+          ""
+        );
+        print(
+          '  💼 LinkedIn: <a href="https://www.linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="accent">Bhanu Saini</a>',
+          ""
+        );
+        print(
+          '  🐙 GitHub: <a href="https://github.com/bhanu2006-24" target="_blank" class="accent">bhanu2006-24</a>',
+          ""
+        );
+        print(
+          '  📊 Tableau: <a href="https://public.tableau.com/app/profile/bhanu.saini6988/vizzes" target="_blank" class="accent">Tableau Public</a>',
+          ""
+        );
+        print(
+          '  🖥️ OS Portfolio: <a href="https://bhanu2006-24.github.io/bhanu2006-24/" target="_blank" class="accent">Interactive Portfolio</a>',
+          ""
+        );
+        break;
+      case "quote":
+        const quotes = [
+          '"The only way to do great work is to love what you do." – Steve Jobs',
+          '"Code is like humor. When you have to explain it, it\'s bad." – Cory House',
+          '"First, solve the problem. Then, write the code." – John Johnson',
+          '"Building intelligent systems with data, code, and curiosity." – Bhanu Saini',
+          '"The best way to predict the future is to create it." – Peter Drucker',
+        ];
+        print(quotes[Math.floor(Math.random() * quotes.length)], "muted");
+        break;
+      case "clear":
+        while (screen.firstChild) {
+          screen.removeChild(screen.firstChild);
+        }
+        break;
+      case "":
+        break;
+      default:
+        print(
+          `command not found: <span class="red">${cmd}</span>. Type <span class="yellow">help</span> for available commands.`
+        );
     }
   }
 
-    function lockLine(lineEl) {
-        const input = lineEl.querySelector('#cmd');
-        if (!input) return;
-        const value = input.textContent;
-        const frozen = document.createElement('div');
-        frozen.className = 'line';
-        frozen.innerHTML = `${promptText()} ${escapeHtml(value)}`;
-        lineEl.replaceWith(frozen);
-        return value;
-    }
+  function lockLine(lineEl) {
+    const input = lineEl.querySelector("#cmd");
+    if (!input) return;
+    const value = input.textContent;
+    const frozen = document.createElement("div");
+    frozen.className = "line";
+    frozen.innerHTML = `${promptText()} ${escapeHtml(value)}`;
+    lineEl.replaceWith(frozen);
+    return value;
+  }
 
   function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
-    }[c]));
+    return s.replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;",
+        }[c])
+    );
   }
 
-  screen.addEventListener('keydown', (e) => {
-    const cmd = document.getElementById('cmd');
+  screen.addEventListener("keydown", (e) => {
+    const cmd = document.getElementById("cmd");
     if (!cmd) return;
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        const line = cmd.closest('.prompt-line');
-        const value = cmd.textContent;
-        state.history.unshift(value);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const line = cmd.closest(".prompt-line");
+      const value = cmd.textContent;
+      state.history.unshift(value);
+      state.historyIndex = -1;
+      const frozenValue = lockLine(line);
+      handleCommand(frozenValue);
+      appendPrompt();
+    }
+    // Arrow up for history
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (state.historyIndex < state.history.length - 1) {
+        state.historyIndex++;
+        cmd.textContent = state.history[state.historyIndex];
+        focusCmd();
+      }
+    }
+    // Arrow down for history
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (state.historyIndex > 0) {
+        state.historyIndex--;
+        cmd.textContent = state.history[state.historyIndex];
+        focusCmd();
+      } else {
         state.historyIndex = -1;
-        const frozenValue = lockLine(line);
-        handleCommand(frozenValue);
-        appendPrompt();
+        cmd.textContent = "";
+      }
     }
   });
 
-  screen.addEventListener('mousedown', () => setTimeout(focusCmd, 0));
+  screen.addEventListener("mousedown", () => setTimeout(focusCmd, 0));
   appendPrompt();
 })();
