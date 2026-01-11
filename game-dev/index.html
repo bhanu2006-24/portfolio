@@ -43,9 +43,19 @@
         .profile-card h1 { font-weight: 900; font-size: 1.5rem; letter-spacing: -0.5px; color: #0f172a; margin-bottom: 5px; }
         .profile-card p { color: var(--c-primary); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
 
+        .score-display {
+            background: var(--c-bg-ui); padding: 10px 20px; border-radius: 30px;
+            font-weight: 900; font-size: 1.2rem; color: #0f172a;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid #2563eb;
+            display: flex; align-items: center; gap: 10px;
+            animation: slideDown 0.8s 0.1s backwards;
+        }
+        .score-icon { color: #2563eb; }
+
         .nav-pills {
             display: flex; gap: 10px; flex-direction: column; align-items: flex-end;
-            animation: slideDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s backwards;
+            margin-top: 15px;
+            animation: slideDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards;
         }
         .nav-pill {
             background: var(--c-bg-ui); padding: 8px 16px; border-radius: 30px;
@@ -127,6 +137,14 @@
             border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;
         }
 
+        /* Floating Text FX */
+        .float-text {
+            position: absolute; color: #2563eb; font-weight: 900; 
+            font-size: 1.2rem; pointer-events: none; text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            animation: floatUp 1s forwards;
+        }
+        @keyframes floatUp { 0% { opacity:1; transform:translateY(0); } 100% { opacity:0; transform:translateY(-50px); } }
+
         /* Mobile */
         #mobile-ui { display: none; pointer-events: none; position: absolute; inset: 0; }
         .joystick-zone { position: absolute; bottom: 40px; left: 40px; width: 140px; height: 140px; pointer-events: auto; background: rgba(255,255,255,0.2); border-radius: 50%; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.4); }
@@ -161,15 +179,25 @@
 
     <div id="ui-layer">
         <div class="hud-top">
-            <div class="profile-card">
-                <h1>BHANU SAINI</h1>
-                <p>Interactive Portfolio v5.1</p>
+            <div>
+                <div class="profile-card">
+                    <h1>BHANU SAINI</h1>
+                    <p>Interactive Portfolio v6.0</p>
+                </div>
             </div>
-            <div class="nav-pills">
-                <div class="nav-pill" style="color: #1e293b; background: white;"><div class="dot" style="background:#1e293b"></div> HQ (Center)</div>
-                <div class="nav-pill" style="color: #db2777"><div class="dot" style="background:#db2777"></div> GAMES (North)</div>
-                <div class="nav-pill" style="color: #2563eb"><div class="dot" style="background:#2563eb"></div> WEB (West)</div>
-                <div class="nav-pill" style="color: #ca8a04"><div class="dot" style="background:#ca8a04"></div> DATA (East)</div>
+            
+            <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                <div class="score-display">
+                    <span class="score-icon">✦</span>
+                    <span id="score-val">0</span> MB
+                </div>
+                
+                <div class="nav-pills">
+                    <div class="nav-pill" style="color: #1e293b; background: white;"><div class="dot" style="background:#1e293b"></div> HQ (Center)</div>
+                    <div class="nav-pill" style="color: #db2777"><div class="dot" style="background:#db2777"></div> GAMES (North)</div>
+                    <div class="nav-pill" style="color: #2563eb"><div class="dot" style="background:#2563eb"></div> WEB (West)</div>
+                    <div class="nav-pill" style="color: #ca8a04"><div class="dot" style="background:#ca8a04"></div> DATA (East)</div>
+                </div>
             </div>
         </div>
 
@@ -219,31 +247,31 @@
             { title: "Bhanu's HQ", desc: "Welcome to my central command. Connect with me or view my resume.", tech: ["Resume", "Contact", "About"], link: "#", type: "HQ", pos: {x: 0, z: 0}, isContact: true },
             
             // --- GAMES (North, -Z) ---
-            { title: "Echo Shooter", desc: "Neon arena shooter. Survive waves, use overdrive abilities, and score combos.", tech: ["JS", "Canvas", "Action"], link: "https://echo-shooter.pages.dev", type: "GAMES", pos: {x: 35, z: -50} },
-            { title: "Portal Nexus", desc: "Survival RPG in a 100-room labyrinth with shifting portals and secrets.", tech: ["React", "TypeScript", "RPG"], link: "https://portal-nexus.pages.dev", type: "GAMES", pos: {x: -35, z: -70} },
-            { title: "Neon Maze", desc: "3D Procedural maze escape with time limits and laser traps.", tech: ["Three.js", "WebGL"], link: "https://bhanu2006-24.github.io/neon-maze", type: "GAMES", pos: {x: 35, z: -90} },
-            { title: "Antigravity", desc: "Top-down shooter experimenting with gravity mechanics and boss AI.", tech: ["Physics", "Canvas"], link: "https://antigravity-game.pages.dev", type: "GAMES", pos: {x: -25, z: -110} },
-            { title: "Bomber Legends", desc: "Classic arcade bomber remake with destructible grid environments.", tech: ["React", "Grid Logic"], link: "https://bomber-legends.pages.dev", type: "GAMES", pos: {x: 25, z: -130} },
+            { title: "Echo Shooter", desc: "Neon arena shooter. Survive waves, use overdrive abilities, and score combos.", tech: ["JS", "Canvas", "Action"], link: "https://echo-shooter.pages.dev", type: "GAMES", pos: {x: 45, z: -50} },
+            { title: "Portal Nexus", desc: "Survival RPG in a 100-room labyrinth with shifting portals and secrets.", tech: ["React", "TypeScript", "RPG"], link: "https://portal-nexus.pages.dev", type: "GAMES", pos: {x: -45, z: -70} },
+            { title: "Neon Maze", desc: "3D Procedural maze escape with time limits and laser traps.", tech: ["Three.js", "WebGL"], link: "https://bhanu2006-24.github.io/neon-maze", type: "GAMES", pos: {x: 45, z: -90} },
+            { title: "Antigravity", desc: "Top-down shooter experimenting with gravity mechanics and boss AI.", tech: ["Physics", "Canvas"], link: "https://antigravity-game.pages.dev", type: "GAMES", pos: {x: -35, z: -110} },
+            { title: "Bomber Legends", desc: "Classic arcade bomber remake with destructible grid environments.", tech: ["React", "Grid Logic"], link: "https://bomber-legends.pages.dev", type: "GAMES", pos: {x: 35, z: -130} },
 
             // --- WEB (West, -X) ---
-            { title: "NovaNews", desc: "Modern news aggregator with clean UI and smart categorization.", tech: ["React 19", "Vite", "API"], link: "https://github.com/bhanu2006-24/novanews", type: "WEB", pos: {x: -60, z: 30} },
-            { title: "GrooveWave", desc: "Music analytics SaaS dashboard with real-time visualization.", tech: ["SaaS", "Data Viz"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -90, z: -30} },
-            { title: "Atmosphere AI", desc: "Environmental monitoring dashboard powered by AI predictions.", tech: ["AI", "Analytics"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -120, z: 30} },
-            { title: "RemoteNexus", desc: "Job portal connecting professionals with premium remote work.", tech: ["React", "Node.js"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -150, z: -30} },
-            { title: "Krishna Books", desc: "Online bookstore and library management system.", tech: ["E-commerce", "Web"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -90, z: 55} },
+            { title: "NovaNews", desc: "Modern news aggregator with clean UI and smart categorization.", tech: ["React 19", "Vite", "API"], link: "https://github.com/bhanu2006-24/novanews", type: "WEB", pos: {x: -70, z: 30} },
+            { title: "GrooveWave", desc: "Music analytics SaaS dashboard with real-time visualization.", tech: ["SaaS", "Data Viz"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -100, z: -30} },
+            { title: "Atmosphere AI", desc: "Environmental monitoring dashboard powered by AI predictions.", tech: ["AI", "Analytics"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -130, z: 30} },
+            { title: "RemoteNexus", desc: "Job portal connecting professionals with premium remote work.", tech: ["React", "Node.js"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -160, z: -30} },
+            { title: "Krishna Books", desc: "Online bookstore and library management system.", tech: ["E-commerce", "Web"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -100, z: 65} },
 
             // --- DATA (East, +X) ---
-            { title: "Crypto Pulse", desc: "Live cryptocurrency market tracker with portfolio management.", tech: ["React", "Finance API"], link: "https://github.com/bhanu2006-24/crypto-pulse", type: "DATA", pos: {x: 60, z: -30} },
-            { title: "IMDb Analytics", desc: "Data dashboard analyzing movie trends and correlations.", tech: ["Python", "Plotly"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 90, z: 30} },
-            { title: "Img Toolkit", desc: "Browser-based image processing tools (remove bg, filters).", tech: ["Streamlit", "CV"], link: "https://github.com/bhanu2006-24/img-toolkit", type: "DATA", pos: {x: 120, z: -30} },
-            { title: "T-Shirt Gen", desc: "Procedural design generator for apparel using computer vision.", tech: ["Python", "OpenCV"], link: "https://github.com/bhanu2006-24/tshirtgen", type: "DATA", pos: {x: 150, z: 30} },
-            { title: "Steam Analytics", desc: "End-to-end pipeline scraping Steam data for market trends.", tech: ["Scraping", "Pandas"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 90, z: 55} }
+            { title: "Crypto Pulse", desc: "Live cryptocurrency market tracker with portfolio management.", tech: ["React", "Finance API"], link: "https://github.com/bhanu2006-24/crypto-pulse", type: "DATA", pos: {x: 70, z: -30} },
+            { title: "IMDb Analytics", desc: "Data dashboard analyzing movie trends and correlations.", tech: ["Python", "Plotly"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 100, z: 30} },
+            { title: "Img Toolkit", desc: "Browser-based image processing tools (remove bg, filters).", tech: ["Streamlit", "CV"], link: "https://github.com/bhanu2006-24/img-toolkit", type: "DATA", pos: {x: 130, z: -30} },
+            { title: "T-Shirt Gen", desc: "Procedural design generator for apparel using computer vision.", tech: ["Python", "OpenCV"], link: "https://github.com/bhanu2006-24/tshirtgen", type: "DATA", pos: {x: 160, z: 30} },
+            { title: "Steam Analytics", desc: "End-to-end pipeline scraping Steam data for market trends.", tech: ["Scraping", "Pandas"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 100, z: 65} }
         ];
 
         // --- THREE.JS SETUP ---
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0xe0f2fe);
-        scene.fog = new THREE.Fog(0xe0f2fe, 30, 150);
+        scene.fog = new THREE.Fog(0xe0f2fe, 30, 160);
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 300);
         camera.position.set(0, 40, 50);
@@ -268,7 +296,7 @@
         scene.add(dirLight);
 
         // --- WORLD GEN ---
-        const groundGeo = new THREE.PlaneGeometry(400, 400);
+        const groundGeo = new THREE.PlaneGeometry(500, 500);
         const groundMat = new THREE.MeshLambertMaterial({ color: 0xf1f5f9 });
         const ground = new THREE.Mesh(groundGeo, groundMat);
         ground.rotation.x = -Math.PI/2;
@@ -280,31 +308,31 @@
         const roadMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.8 });
         
         // Z-Axis Road (North/South) - Width increased to 26
-        const roadZ = new THREE.Mesh(new THREE.PlaneGeometry(26, 400), roadMat);
+        const roadZ = new THREE.Mesh(new THREE.PlaneGeometry(30, 500), roadMat);
         roadZ.rotation.x = -Math.PI/2; roadZ.position.y = 0.05; roadZ.receiveShadow = true;
         roadGroup.add(roadZ);
         
         // X-Axis Road (East/West) - Width increased to 26
-        const roadX = new THREE.Mesh(new THREE.PlaneGeometry(400, 26), roadMat);
+        const roadX = new THREE.Mesh(new THREE.PlaneGeometry(500, 30), roadMat);
         roadX.rotation.x = -Math.PI/2; roadX.position.y = 0.06; roadX.receiveShadow = true;
         roadGroup.add(roadX);
 
         // Dashed lines
-        const lineGeo = new THREE.PlaneGeometry(1, 4);
+        const lineGeo = new THREE.PlaneGeometry(1, 6);
         const lineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const lines = new THREE.InstancedMesh(lineGeo, lineMat, 200);
+        const lines = new THREE.InstancedMesh(lineGeo, lineMat, 300);
         lines.rotation.x = -Math.PI/2; lines.position.y = 0.08;
         
         let dummy = new THREE.Object3D();
         let idx = 0;
         // Z-road lines
-        for(let i=-190; i<190; i+=10) {
+        for(let i=-240; i<240; i+=12) {
             dummy.position.set(0, 0, i);
             dummy.rotation.set(0,0,0);
             dummy.updateMatrix(); lines.setMatrixAt(idx++, dummy.matrix);
         }
         // X-road lines
-        for(let i=-190; i<190; i+=10) {
+        for(let i=-240; i<240; i+=12) {
             dummy.position.set(i, 0, 0);
             dummy.rotation.set(0,0,Math.PI/2);
             dummy.updateMatrix(); lines.setMatrixAt(idx++, dummy.matrix);
@@ -313,11 +341,11 @@
 
         scene.add(roadGroup);
 
-        // HQ Plaza Base
-        const plazaGeo = new THREE.CylinderGeometry(14, 14, 0.2, 32);
+        // HQ Plaza Base (Larger)
+        const plazaGeo = new THREE.CylinderGeometry(20, 22, 0.4, 64);
         const plazaMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0 });
         const plaza = new THREE.Mesh(plazaGeo, plazaMat);
-        plaza.position.y = 0.1;
+        plaza.position.y = 0.2;
         plaza.receiveShadow = true;
         scene.add(plaza);
 
@@ -340,12 +368,12 @@
         }
 
         // Add lamps along roads - moved further out
-        for(let i=-180; i<=180; i+=40) {
-            if(Math.abs(i) > 25) {
-                scene.add(createLamp(15, i)); // Right of Z road
-                scene.add(createLamp(-15, i)); // Left of Z road
-                scene.add(createLamp(i, 15)); // Top of X road
-                scene.add(createLamp(i, -15)); // Bottom of X road
+        for(let i=-200; i<=200; i+=50) {
+            if(Math.abs(i) > 30) {
+                scene.add(createLamp(18, i)); // Right of Z road
+                scene.add(createLamp(-18, i)); // Left of Z road
+                scene.add(createLamp(i, 18)); // Top of X road
+                scene.add(createLamp(i, -18)); // Bottom of X road
             }
         }
 
@@ -366,12 +394,12 @@
             return grp;
         }
 
-        for(let i=0; i<100; i++) {
-            const x = (Math.random()-0.5)*350;
-            const z = (Math.random()-0.5)*350;
+        for(let i=0; i<150; i++) {
+            const x = (Math.random()-0.5)*400;
+            const z = (Math.random()-0.5)*400;
             
-            // NO TREES ON ROAD (Road Width is 26, keep clear of +/- 16)
-            if(Math.abs(x) < 16 || Math.abs(z) < 16) continue;
+            // NO TREES ON ROAD (Road Width is 30, keep clear of +/- 20)
+            if(Math.abs(x) < 20 || Math.abs(z) < 20) continue;
             
             scene.add(createTree(x, z));
         }
@@ -394,12 +422,44 @@
                 puff.scale.setScalar(2 + Math.random());
                 grp.add(puff);
             }
-            grp.position.set((Math.random()-0.5)*400, 30 + Math.random()*20, (Math.random()-0.5)*400);
+            grp.position.set((Math.random()-0.5)*450, 40 + Math.random()*20, (Math.random()-0.5)*450);
             scene.add(grp);
             clouds.push({ mesh: grp, speed: 0.02 + Math.random()*0.03 });
         }
 
-        for(let i=0; i<30; i++) createCloud();
+        for(let i=0; i<40; i++) createCloud();
+
+        // --- COLLECTIBLES ---
+        const collectibles = [];
+        const gemGeo = new THREE.OctahedronGeometry(1.5, 0);
+        const gemMat = new THREE.MeshStandardMaterial({ color: 0x00ffff, emissive: 0x0088ff, emissiveIntensity: 0.8, metalness: 0.8, roughness: 0.1 });
+        
+        function spawnCollectible(x, z) {
+            const gem = new THREE.Mesh(gemGeo, gemMat);
+            gem.position.set(x, 2, z);
+            gem.castShadow = true;
+            
+            // Floating animation helper
+            gem.userData = { 
+                baseY: 2, 
+                offset: Math.random() * Math.PI, 
+                speed: 0.002 + Math.random()*0.002 
+            };
+            
+            scene.add(gem);
+            collectibles.push(gem);
+        }
+
+        // Spawn random crystals
+        for(let i=0; i<20; i++) {
+            let cx, cz;
+            do {
+                cx = (Math.random()-0.5)*350;
+                cz = (Math.random()-0.5)*350;
+            } while(Math.abs(cx)<25 && Math.abs(cz)<25); // Don't spawn inside HQ
+            
+            spawnCollectible(cx, cz);
+        }
 
         // --- TRAFFIC SYSTEM ---
         const trafficCars = [];
@@ -412,8 +472,8 @@
             car.position.y = 1;
             
             let posVal = (Math.random()-0.5) * 380;
-            // Lane offset: +/- 8 units from center to clear HQ (size 10)
-            const laneOffset = 8; 
+            // Lane offset: +/- 10 units from center (since road is wider)
+            const laneOffset = 10; 
             
             if(axis === 'x') {
                 car.position.set(posVal, 1, dir * laneOffset); 
@@ -424,29 +484,29 @@
             }
             
             scene.add(car);
-            // MUCH SLOWER SPEED: 0.15 base + rand
-            return { mesh: car, axis: axis, dir: dir, speed: 0.15 + Math.random()*0.1 };
+            return { mesh: car, axis: axis, dir: dir, speed: 0.2 + Math.random()*0.15 };
         }
 
-        for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('x', 1));
-        for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('x', -1));
-        for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('z', 1));
-        for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('z', -1));
+        for(let i=0; i<20; i++) trafficCars.push(createTrafficCar('x', 1));
+        for(let i=0; i<20; i++) trafficCars.push(createTrafficCar('x', -1));
+        for(let i=0; i<20; i++) trafficCars.push(createTrafficCar('z', 1));
+        for(let i=0; i<20; i++) trafficCars.push(createTrafficCar('z', -1));
 
         // --- PARTICLE SYSTEM ---
         const particles = [];
         const partGeo = new THREE.BoxGeometry(0.3, 0.3, 0.3);
         const partMat = new THREE.MeshBasicMaterial({ color: 0x60a5fa });
 
-        function spawnParticles(pos) {
-            for(let i=0; i<3; i++) {
-                const p = new THREE.Mesh(partGeo, partMat);
+        function spawnParticles(pos, count=3, color=0x60a5fa) {
+            const mat = color === 0x60a5fa ? partMat : new THREE.MeshBasicMaterial({color: color});
+            for(let i=0; i<count; i++) {
+                const p = new THREE.Mesh(partGeo, mat);
                 p.position.copy(pos);
                 p.position.x += (Math.random()-0.5);
                 p.position.y += (Math.random()-0.5)*0.5;
                 p.position.z += (Math.random()-0.5);
                 scene.add(p);
-                particles.push({ mesh: p, life: 1.0 });
+                particles.push({ mesh: p, life: 1.0, vel: new THREE.Vector3((Math.random()-0.5)*0.2, Math.random()*0.2, (Math.random()-0.5)*0.2) });
             }
         }
 
@@ -461,6 +521,7 @@
             ctx.fillStyle = color;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
+            ctx.shadowBlur = 5; ctx.shadowColor = "rgba(0,0,0,0.5)";
             ctx.fillText(text, 256, 64);
             const tex = new THREE.CanvasTexture(canvas);
             const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true }));
@@ -474,30 +535,41 @@
             group.position.set(p.pos.x, 0, p.pos.z);
 
             let mesh;
-            let collisionRadius = 5; // Default building radius
+            let collisionRadius = 5; 
             
             if (p.type === 'HQ') {
-                collisionRadius = 9;
-                // Main Tower
-                const geo = new THREE.BoxGeometry(10, 20, 10);
-                const mat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2 });
-                mesh = new THREE.Mesh(geo, mat);
-                mesh.position.y = 10;
+                collisionRadius = 15;
+                // --- HQ REDESIGN ---
                 
-                // Antenna
-                const ant = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 10), new THREE.MeshStandardMaterial({color: 0x94a3b8}));
-                ant.position.y = 25;
-                group.add(ant);
-                
-                // Hologram Ring
-                const ring = new THREE.Mesh(new THREE.TorusGeometry(8, 0.5, 16, 32), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
-                ring.rotation.x = Math.PI/2; ring.position.y = 15;
-                
-                // Pulse Animation Helper
-                ring.userData = { pulse: 0 };
-                group.userData = { isHQ: true, ring: ring };
+                // 1. Central Spire
+                const spireGeo = new THREE.CylinderGeometry(6, 9, 30, 8);
+                const spireMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2, metalness: 0.5 });
+                const spire = new THREE.Mesh(spireGeo, spireMat);
+                spire.position.y = 15;
+                group.add(spire);
 
-                group.add(ring);
+                // 2. Floating Rings
+                const r1 = new THREE.Mesh(new THREE.TorusGeometry(12, 0.5, 16, 64), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
+                r1.rotation.x = Math.PI/2; r1.position.y = 10;
+                group.add(r1);
+
+                const r2 = new THREE.Mesh(new THREE.TorusGeometry(15, 0.5, 16, 64), new THREE.MeshBasicMaterial({ color: 0x2563eb }));
+                r2.rotation.x = Math.PI/2.2; r2.position.y = 20;
+                group.add(r2);
+
+                // 3. Floating Satellites
+                for(let k=0; k<4; k++) {
+                    const sat = new THREE.Mesh(new THREE.BoxGeometry(2,2,2), new THREE.MeshStandardMaterial({color: 0xffffff}));
+                    sat.position.set(Math.cos(k*Math.PI/2)*18, 25, Math.sin(k*Math.PI/2)*18);
+                    group.add(sat);
+                }
+
+                // 4. Top Beacon
+                const beacon = new THREE.Mesh(new THREE.OctahedronGeometry(3), new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true }));
+                beacon.position.y = 35;
+                group.add(beacon);
+
+                group.userData = { isHQ: true, r1: r1, r2: r2, beacon: beacon };
             }
             else if(p.type === 'GAMES') {
                 const geo = new THREE.BoxGeometry(4, 6, 4);
@@ -507,6 +579,8 @@
                 const screen = new THREE.Mesh(new THREE.PlaneGeometry(3, 2), new THREE.MeshBasicMaterial({ color: config.color }));
                 screen.position.set(0, 4.5, 2.05);
                 group.add(screen);
+                mesh.castShadow = true;
+                group.add(mesh);
             } 
             else if(p.type === 'WEB') {
                 const geo = new THREE.BoxGeometry(6, 10, 6);
@@ -516,28 +590,28 @@
                 const core = new THREE.Mesh(new THREE.BoxGeometry(3, 8, 3), new THREE.MeshLambertMaterial({ color: config.color }));
                 core.position.y = 5;
                 group.add(core);
+                mesh.castShadow = true;
+                group.add(mesh);
             } 
             else { // DATA
                 const geo = new THREE.CylinderGeometry(4, 4, 7, 6);
                 const mat = new THREE.MeshStandardMaterial({ color: 0xfffbeb });
                 mesh = new THREE.Mesh(geo, mat);
                 mesh.position.y = 3.5;
+                mesh.castShadow = true;
+                group.add(mesh);
             }
 
-            mesh.castShadow = true; mesh.receiveShadow = true;
-            group.add(mesh);
-
             const label = createTextSprite(p.title, config.hex);
-            label.position.set(0, p.type==='HQ' ? 25 : 10, 0);
+            label.position.set(0, p.type==='HQ' ? 40 : 12, 0);
             group.add(label);
 
             scene.add(group);
             
-            // Store collision data separately
             interactables.push({ 
                 pos: p.pos, 
-                radius: p.type==='HQ'? 14 : 8, // Interaction radius
-                collisionRad: collisionRadius, // Physical size
+                radius: p.type==='HQ'? 22 : 9, 
+                collisionRad: collisionRadius, 
                 data: p, 
                 config: config, 
                 mesh: group 
@@ -546,35 +620,40 @@
 
         // --- PLAYER CAR ---
         const car = new THREE.Group();
+        // Sleek body
         const bodyGeo = new THREE.BoxGeometry(2.2, 0.6, 4.5);
-        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.5 });
+        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.6 });
         const body = new THREE.Mesh(bodyGeo, bodyMat);
         body.position.y = 1; body.castShadow = true;
         car.add(body);
 
-        const cockpit = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.5, 2.5), new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.1 }));
+        const cockpit = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.5, 2.5), new THREE.MeshStandardMaterial({ color: 0x1e3a8a, roughness: 0.1, metalness: 0.9 }));
         cockpit.position.set(0, 1.5, -0.2);
         car.add(cockpit);
         
-        // Engines
-        const engineGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 16);
-        const engineMat = new THREE.MeshBasicMaterial({ color: 0x60a5fa });
-        [[-1, 1.5], [1, 1.5], [-1, -1.5], [1, -1.5]].forEach(p => {
+        // Thrusters
+        const engineGeo = new THREE.CylinderGeometry(0.5, 0.4, 0.5, 16);
+        const engineMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6 });
+        [[-1.2, 1.5], [1.2, 1.5], [-1.2, -1.5], [1.2, -1.5]].forEach(p => {
             const e = new THREE.Mesh(engineGeo, engineMat);
+            e.rotation.z = Math.PI/2;
             e.position.set(p[0], 0.6, p[1]); car.add(e);
         });
         
-        // Brake Lights
-        const brakeMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
-        const bl = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.2, 0.1), brakeMat);
-        bl.position.set(-0.6, 1, 2.25); car.add(bl);
-        const br = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.2, 0.1), brakeMat);
-        br.position.set(0.6, 1, 2.25); car.add(br);
+        // Rear Afterburner
+        const burnGeo = new THREE.ConeGeometry(0.5, 2, 8);
+        const burnMat = new THREE.MeshBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.8 });
+        const burner = new THREE.Mesh(burnGeo, burnMat);
+        burner.rotation.x = Math.PI/2;
+        burner.position.set(0, 1, 3.5);
+        burner.visible = false;
+        car.add(burner);
+        car.userData = { burner: burner };
 
         scene.add(car);
 
         // --- PHYSICS ---
-        const player = { pos: new THREE.Vector3(0, 0, 40), vel: new THREE.Vector3(), dir: Math.PI, speed: 0, hoverOffset: 0 };
+        const player = { pos: new THREE.Vector3(0, 0, 50), vel: new THREE.Vector3(), dir: Math.PI, speed: 0, hoverOffset: 0, score: 0 };
         const keys = { w:false, a:false, s:false, d:false, space:false };
         const joystick = { x:0, y:0, active:false };
 
@@ -587,7 +666,6 @@
             if(keys.hasOwnProperty(k) || e.code==='Space') keys[e.code==='Space'?'space':k] = false;
         });
 
-        // Touch
         const stickZone = document.getElementById('joystick-zone');
         const stickNub = document.getElementById('stick-nub');
         const boostBtn = document.getElementById('boost-btn');
@@ -609,14 +687,14 @@
 
         // --- GAME LOOP ---
         function update() {
-            // 1. Player Physics
+            // 1. Player Physics - INCREASED SPEED
             let gas = joystick.active ? -joystick.y : (keys.w ? 1 : (keys.s ? -1 : 0));
             let turn = joystick.active ? -joystick.x : (keys.a ? 1 : (keys.d ? -1 : 0));
             
-            // REDUCED SPEEDS
-            const MAX = keys.space ? 1.4 : 0.7; // Lower top speed
-            const ACC = 0.02; // Slower acceleration
-            const FRICTION = 0.95;
+            // FASTER SETTINGS
+            const MAX = keys.space ? 2.5 : 1.2; 
+            const ACC = 0.05; 
+            const FRICTION = 0.96;
 
             player.speed += gas * ACC;
             player.speed *= FRICTION;
@@ -624,31 +702,23 @@
             if(player.speed < -MAX/2) player.speed = -MAX/2;
 
             if(Math.abs(player.speed) > 0.01) {
-                player.dir += turn * 0.07 * Math.sign(player.speed);
+                player.dir += turn * 0.06 * Math.sign(player.speed);
             }
 
             player.vel.set(Math.sin(player.dir) * player.speed, 0, Math.cos(player.dir) * player.speed);
-            
-            // Check potential new position
             const nextPos = player.pos.clone().add(player.vel);
             
-            // 2. COLLISION DETECTION
+            // 2. COLLISION
             let hasCollision = false;
-            const playerRad = 2.5; // Car size approximation
+            const playerRad = 2.5;
 
             interactables.forEach(obj => {
                 const objPos = new THREE.Vector3(obj.pos.x, 0, obj.pos.z);
-                const dist = nextPos.distanceTo(objPos);
-                
-                // If hitting a building
-                if(dist < (obj.collisionRad + playerRad)) {
+                if(nextPos.distanceTo(objPos) < (obj.collisionRad + playerRad)) {
                     hasCollision = true;
-                    // Bounce calculation
                     const pushVec = player.pos.clone().sub(objPos).normalize();
-                    // Move slightly out
-                    player.pos.add(pushVec.multiplyScalar(0.5));
-                    // Invert speed (bounce)
-                    player.speed *= -0.4;
+                    player.pos.add(pushVec.multiplyScalar(1));
+                    player.speed *= -0.5;
                 }
             });
 
@@ -657,64 +727,102 @@
             }
 
             // Bounds
-            if(Math.abs(player.pos.x) > 190) player.pos.x = Math.sign(player.pos.x)*190;
-            if(Math.abs(player.pos.z) > 190) player.pos.z = Math.sign(player.pos.z)*190;
+            const LIMIT = 240;
+            if(Math.abs(player.pos.x) > LIMIT) player.pos.x = Math.sign(player.pos.x)*LIMIT;
+            if(Math.abs(player.pos.z) > LIMIT) player.pos.z = Math.sign(player.pos.z)*LIMIT;
 
-            // Hover bob
-            player.hoverOffset = Math.sin(Date.now() * 0.005) * 0.2;
+            // Visuals
+            player.hoverOffset = Math.sin(Date.now() * 0.008) * 0.2;
             car.position.copy(player.pos);
             car.position.y = 1 + player.hoverOffset;
             car.rotation.y = player.dir;
-            car.rotation.z = -turn * 0.2 * Math.min(Math.abs(player.speed), 1);
-            car.rotation.x = -player.speed * 0.15;
+            car.rotation.z = -turn * 0.3 * Math.min(Math.abs(player.speed), 1); // More bank
+            car.rotation.x = -player.speed * 0.1; // Pitch forward
+
+            // Afterburner FX
+            car.userData.burner.visible = keys.space && Math.abs(player.speed) > 1;
+            car.userData.burner.scale.setScalar(0.8 + Math.random()*0.4);
 
             // Particles
-            if(keys.space && Math.abs(player.speed) > 0.5) spawnParticles(player.pos);
+            if(keys.space && Math.abs(player.speed) > 0.5) spawnParticles(player.pos, 2);
+            // Drift Sparks
+            if(Math.abs(turn) > 0.8 && Math.abs(player.speed) > 0.8) spawnParticles(player.pos, 1, 0xffff00);
+
             for(let i=particles.length-1; i>=0; i--) {
                 const p = particles[i];
                 p.life -= 0.05;
+                p.mesh.position.add(p.vel);
                 p.mesh.scale.setScalar(p.life);
                 p.mesh.material.opacity = p.life;
-                if(p.life <= 0) {
-                    scene.remove(p.mesh);
-                    particles.splice(i, 1);
+                if(p.life <= 0) { scene.remove(p.mesh); particles.splice(i, 1); }
+            }
+
+            // 3. COLLECTIBLES LOGIC
+            for(let i=collectibles.length-1; i>=0; i--) {
+                const c = collectibles[i];
+                c.rotation.y += 0.02;
+                c.position.y = c.userData.baseY + Math.sin(Date.now()*c.userData.speed + c.userData.offset)*0.5;
+                
+                if(player.pos.distanceTo(c.position) < 4) {
+                    // Collected!
+                    scene.remove(c);
+                    collectibles.splice(i, 1);
+                    player.score += 100;
+                    document.getElementById('score-val').innerText = player.score;
+                    
+                    // FX
+                    spawnParticles(c.position, 10, 0x00ffff);
+                    
+                    // Floating Text
+                    const div = document.createElement('div');
+                    div.className = 'float-text';
+                    div.innerText = "+100 MB";
+                    div.style.left = (window.innerWidth/2) + 'px';
+                    div.style.top = (window.innerHeight/2 - 50) + 'px';
+                    document.body.appendChild(div);
+                    setTimeout(() => div.remove(), 1000);
                 }
             }
 
-            // 3. Environment Updates
-            // Clouds
+            // 4. ENV UPDATES
             clouds.forEach(c => {
                 c.mesh.position.x += c.speed;
                 if(c.mesh.position.x > 250) c.mesh.position.x = -250;
             });
-            // Traffic
             trafficCars.forEach(t => {
                 if(t.axis === 'x') {
                     t.mesh.position.x += t.speed * t.dir;
-                    if(Math.abs(t.mesh.position.x) > 200) t.mesh.position.x = -200 * t.dir;
+                    if(Math.abs(t.mesh.position.x) > 250) t.mesh.position.x = -250 * t.dir;
                 } else {
                     t.mesh.position.z += t.speed * t.dir;
-                    if(Math.abs(t.mesh.position.z) > 200) t.mesh.position.z = -200 * t.dir;
+                    if(Math.abs(t.mesh.position.z) > 250) t.mesh.position.z = -250 * t.dir;
                 }
             });
 
-            // 4. Camera
-            const camOff = new THREE.Vector3(0, 25, -35);
+            // 5. Camera Shake & Follow
+            const camOff = new THREE.Vector3(0, 30, -40);
             camOff.applyAxisAngle(new THREE.Vector3(0,1,0), player.dir);
             const camTarget = player.pos.clone().add(camOff);
-            camera.position.lerp(camTarget, 0.08);
+            // Shake
+            if(keys.space) {
+                camTarget.x += (Math.random()-0.5)*0.5;
+                camTarget.y += (Math.random()-0.5)*0.5;
+                camTarget.z += (Math.random()-0.5)*0.5;
+            }
+            camera.position.lerp(camTarget, 0.1);
             camera.lookAt(player.pos);
 
-            // 5. Interactions
+            // 6. Interactions & Animations
             checkModals();
             interactables.forEach(i => {
                 const lbl = i.mesh.children[i.mesh.children.length-1];
-                if(lbl.isSprite) lbl.position.y = (i.data.type==='HQ'?25:10) + Math.sin(Date.now()*0.003)*0.5;
+                if(lbl.isSprite) lbl.position.y = (i.data.type==='HQ'?40:12) + Math.sin(Date.now()*0.003)*0.5;
                 
-                // HQ Pulse
+                // HQ Animations
                 if(i.mesh.userData.isHQ) {
-                    i.mesh.userData.ring.rotation.x += 0.01;
-                    i.mesh.userData.ring.rotation.y += 0.01;
+                    i.mesh.userData.r1.rotation.z += 0.005;
+                    i.mesh.userData.r2.rotation.z -= 0.003;
+                    i.mesh.userData.beacon.rotation.y += 0.05;
                 }
             });
 
@@ -722,7 +830,7 @@
             requestAnimationFrame(update);
         }
 
-        // --- MODAL SYSTEM ---
+        // --- MODAL ---
         const modal = document.getElementById('modal');
         const mTitle = document.getElementById('modal-title');
         const mDesc = document.getElementById('modal-desc');
@@ -736,7 +844,6 @@
         function checkModals() {
             let nearby = null;
             interactables.forEach(i => {
-                // Use interaction radius, not collision radius
                 const d = player.pos.distanceTo(new THREE.Vector3(i.pos.x, 0, i.pos.z));
                 if(d < i.radius + 4) nearby = i;
             });
@@ -779,7 +886,6 @@
             modal.classList.add('active');
         }
 
-        // Init
         setTimeout(() => {
             document.getElementById('loader').style.opacity = 0;
             setTimeout(() => { document.getElementById('loader').remove(); update(); }, 600);
