@@ -52,6 +52,41 @@
             overflow-x: hidden;
         }
         
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #030303;
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        .loader-content {
+            text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: #222;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .loader-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: #00D2FF;
+            transition: width 0.2s;
+            box-shadow: 0 0 10px #00D2FF;
+        }
+
         /* Custom Cursor */
         .cursor-dot, .cursor-outline {
             position: fixed;
@@ -86,9 +121,28 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .glass-nav {
-            background: rgba(3, 3, 3, 0.7);
+            background: rgba(3, 3, 3, 0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Spotlight Effect */
+        .spotlight-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
+            z-index: 3;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .spotlight-card:hover::before {
+            opacity: 1;
         }
 
         /* 3D Tilt Card Styles */
@@ -97,7 +151,7 @@
             transform: perspective(1000px);
         }
         .tilt-content {
-            transform: translateZ(20px);
+            transform: translateZ(30px);
         }
 
         /* Text Gradients */
@@ -105,6 +159,42 @@
             background: linear-gradient(135deg, #00D2FF 0%, #9D00FF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* Glitch Effect */
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch-wrapper:hover::before,
+        .glitch-wrapper:hover::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030303;
+        }
+        .glitch-wrapper:hover::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-1 5s infinite linear alternate-reverse;
+        }
+        .glitch-wrapper:hover::after {
+            left: -2px;
+            text-shadow: -1px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-2 5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(30px, 9999px, 10px, 0); }
+            100% { clip: rect(70px, 9999px, 90px, 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(10px, 9999px, 80px, 0); }
+            100% { clip: rect(90px, 9999px, 10px, 0); }
         }
         
         /* Grid Background */
@@ -137,32 +227,50 @@
         .marquee-mask {
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
+        
+        /* Magnetic Button */
+        .magnetic {
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-black">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <h1 class="text-4xl font-bold font-display tracking-tight mb-2">
+                BS<span class="text-cyan-400">.</span>
+            </h1>
+            <p class="text-zinc-500 text-sm font-mono">INITIALIZING SYSTEM...</p>
+            <div class="loader-bar">
+                <div class="loader-progress" id="loader-progress"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Cursor -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-outline hidden md:block"></div>
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent h-20 flex items-center">
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent h-24 flex items-center">
         <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
-            <a href="#" class="text-2xl font-display font-bold tracking-tighter group flex items-center gap-1">
+            <a href="#" class="text-2xl font-display font-bold tracking-tighter group flex items-center gap-1 magnetic">
                 <span class="text-gradient">BS</span><span class="text-white group-hover:rotate-12 transition-transform duration-300">.</span>
             </a>
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
-                <button onclick="scrollToSection('about')" class="hover:text-white hover:text-shadow-glow transition-all">About</button>
-                <button onclick="scrollToSection('tech')" class="hover:text-white hover:text-shadow-glow transition-all">Stack</button>
-                <button onclick="scrollToSection('projects')" class="hover:text-white hover:text-shadow-glow transition-all">Projects</button>
-                <button onclick="scrollToSection('contact')" class="hover:text-white hover:text-shadow-glow transition-all">Contact</button>
+                <button onclick="scrollToSection('about')" class="hover:text-white hover:text-shadow-glow transition-all magnetic px-2 py-1">About</button>
+                <button onclick="scrollToSection('tech')" class="hover:text-white hover:text-shadow-glow transition-all magnetic px-2 py-1">Stack</button>
+                <button onclick="scrollToSection('projects')" class="hover:text-white hover:text-shadow-glow transition-all magnetic px-2 py-1">Projects</button>
+                <button onclick="scrollToSection('contact')" class="hover:text-white hover:text-shadow-glow transition-all magnetic px-2 py-1">Contact</button>
             </div>
 
             <!-- CTA & Mobile Toggle -->
             <div class="flex items-center gap-4">
-                <a href="./Web-Resume.pdf" download class="hidden md:flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-widest bg-white text-black rounded-full hover:bg-cyan-400 transition-colors">
+                <a href="./Web-Resume.pdf" download class="hidden md:flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-widest bg-white text-black rounded-full hover:bg-cyan-400 transition-colors magnetic">
                     <i data-lucide="download" class="w-3 h-3"></i> Resume
                 </a>
                 
@@ -175,16 +283,16 @@
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 transform translate-x-full transition-transform duration-300 flex items-center justify-center">
-        <button id="close-menu-btn" class="absolute top-6 right-6 text-zinc-400 hover:text-white">
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 transform translate-x-full transition-transform duration-300 flex items-center justify-center backdrop-blur-xl">
+        <button id="close-menu-btn" class="absolute top-6 right-6 text-zinc-400 hover:text-white p-2">
             <i data-lucide="x" class="w-8 h-8"></i>
         </button>
-        <div class="flex flex-col gap-8 text-center text-2xl font-display font-bold">
+        <div class="flex flex-col gap-8 text-center text-3xl font-display font-bold">
             <button onclick="mobileNavClick('about')" class="hover:text-cyan-400 transition-colors">About</button>
             <button onclick="mobileNavClick('tech')" class="hover:text-cyan-400 transition-colors">Stack</button>
             <button onclick="mobileNavClick('projects')" class="hover:text-cyan-400 transition-colors">Projects</button>
             <button onclick="mobileNavClick('contact')" class="hover:text-cyan-400 transition-colors">Contact</button>
-            <a href="./Web-Resume.pdf" download class="text-base font-sans text-cyan-400 border border-cyan-400/30 px-6 py-3 rounded-full mt-4">Download Resume</a>
+            <a href="./Web-Resume.pdf" download class="text-base font-sans text-cyan-400 border border-cyan-400/30 px-8 py-4 rounded-full mt-4">Download Resume</a>
         </div>
     </div>
 
@@ -194,17 +302,17 @@
         <canvas id="hero-canvas" class="absolute inset-0 w-full h-full z-0 opacity-40"></canvas>
         
         <!-- Gradient Blobs -->
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-blob"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-blob mix-blend-screen"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[100px] animate-blob animation-delay-2000 mix-blend-screen"></div>
         
         <div class="max-w-6xl mx-auto px-6 text-center z-10 relative">
-            <div class="inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-cyan-300 text-xs font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+            <div class="inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-cyan-300 text-xs font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(6,182,212,0.15)] hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] transition-shadow duration-500">
                 <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                 Available for Hire
             </div>
             
             <h1 class="text-5xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[1.1]">
-                Bridging Logic <br/> & <span id="typewriter" class="text-gradient"></span>
+                Bridging Logic <br/> & <span class="glitch-wrapper text-gradient" data-text="Creative Vibes">Creative Vibes</span>
             </h1>
             
             <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed font-light">
@@ -212,46 +320,46 @@
             </p>
             
             <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-                <button onclick="scrollToSection('projects')" class="group relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden transition-all hover:scale-105">
+                <button onclick="scrollToSection('projects')" class="magnetic group relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden transition-all hover:scale-105">
                     <span class="relative z-10 flex items-center gap-2">View Projects <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i></span>
                     <div class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
-                <a href="https://github.com/bhanu2006-24" target="_blank" class="px-8 py-4 glass text-white font-bold rounded-full hover:bg-white/10 transition-all hover:scale-105 flex items-center gap-2">
+                <a href="https://github.com/bhanu2006-24" target="_blank" class="magnetic px-8 py-4 glass text-white font-bold rounded-full hover:bg-white/10 transition-all hover:scale-105 flex items-center gap-2">
                     <i data-lucide="github" class="w-5 h-5"></i> GitHub Profile
                 </a>
             </div>
         </div>
 
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50 text-zinc-500">
             <i data-lucide="chevrons-down" class="w-6 h-6"></i>
         </div>
     </section>
 
     <!-- Infinite Tech Stack Marquee -->
-    <section id="tech" class="py-12 border-y border-white/5 bg-black/50 relative overflow-hidden">
+    <section id="tech" class="py-12 border-y border-white/5 bg-black/50 relative overflow-hidden backdrop-blur-sm">
         <div class="marquee-mask relative w-full overflow-hidden">
-            <div class="flex w-[200%] animate-scroll">
+            <div class="flex w-[200%] animate-scroll hover:[animation-play-state:paused]">
                 <!-- Tech Items (Duplicated for infinite scroll) -->
                 <div class="flex w-1/2 justify-around items-center gap-8 px-4">
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="atom" class="text-cyan-400"></i> React</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="file-code" class="text-blue-500"></i> TypeScript</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="server" class="text-green-500"></i> Node.js</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="database" class="text-blue-300"></i> PostgreSQL</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="wind" class="text-teal-400"></i> Tailwind</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="box" class="text-orange-500"></i> Python</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="cpu" class="text-purple-500"></i> Pyodide</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="cloud" class="text-yellow-500"></i> Cloudflare</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="atom" class="text-cyan-400 group-hover:scale-110 transition-transform"></i> React</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="file-code" class="text-blue-500 group-hover:scale-110 transition-transform"></i> TypeScript</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="server" class="text-green-500 group-hover:scale-110 transition-transform"></i> Node.js</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="database" class="text-blue-300 group-hover:scale-110 transition-transform"></i> PostgreSQL</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="wind" class="text-teal-400 group-hover:scale-110 transition-transform"></i> Tailwind</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="box" class="text-orange-500 group-hover:scale-110 transition-transform"></i> Python</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="cpu" class="text-purple-500 group-hover:scale-110 transition-transform"></i> Pyodide</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="cloud" class="text-yellow-500 group-hover:scale-110 transition-transform"></i> Cloudflare</div>
                 </div>
                 <div class="flex w-1/2 justify-around items-center gap-8 px-4">
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="atom" class="text-cyan-400"></i> React</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="file-code" class="text-blue-500"></i> TypeScript</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="server" class="text-green-500"></i> Node.js</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="database" class="text-blue-300"></i> PostgreSQL</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="wind" class="text-teal-400"></i> Tailwind</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="box" class="text-orange-500"></i> Python</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="cpu" class="text-purple-500"></i> Pyodide</div>
-                    <div class="flex items-center gap-2 text-zinc-400 font-display font-bold text-xl"><i data-lucide="cloud" class="text-yellow-500"></i> Cloudflare</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="atom" class="text-cyan-400 group-hover:scale-110 transition-transform"></i> React</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="file-code" class="text-blue-500 group-hover:scale-110 transition-transform"></i> TypeScript</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="server" class="text-green-500 group-hover:scale-110 transition-transform"></i> Node.js</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="database" class="text-blue-300 group-hover:scale-110 transition-transform"></i> PostgreSQL</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="wind" class="text-teal-400 group-hover:scale-110 transition-transform"></i> Tailwind</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="box" class="text-orange-500 group-hover:scale-110 transition-transform"></i> Python</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="cpu" class="text-purple-500 group-hover:scale-110 transition-transform"></i> Pyodide</div>
+                    <div class="flex items-center gap-3 text-zinc-400 font-display font-bold text-xl group hover:text-white transition-colors"><i data-lucide="cloud" class="text-yellow-500 group-hover:scale-110 transition-transform"></i> Cloudflare</div>
                 </div>
             </div>
         </div>
@@ -270,15 +378,15 @@
                         Currently pursuing a <strong class="text-white">B.Sc. in Data Science at IIT Madras</strong>, I combine rigorous analytical training with creative frontend engineering.
                     </p>
                     <p class="text-zinc-400 text-lg leading-relaxed">
-                        My approach, which I call "Vibe Coding", prioritizes user experience above all. I build applications that are not only functional but also intuitive, responsive, and visually engaging.
+                        My approach, which I call <strong class="text-cyan-400">"Vibe Coding"</strong>, prioritizes user experience above all. I build applications that are not only functional but also intuitive, responsive, and visually engaging.
                     </p>
                     
                     <div class="flex gap-4 pt-4">
-                        <div class="glass p-6 rounded-2xl flex-1 text-center hover:bg-white/5 transition-colors">
+                        <div class="glass p-6 rounded-2xl flex-1 text-center hover:bg-white/5 transition-colors spotlight-card">
                             <h3 class="text-3xl font-bold text-white mb-1">10+</h3>
                             <p class="text-xs text-zinc-500 uppercase tracking-widest">Live Projects</p>
                         </div>
-                        <div class="glass p-6 rounded-2xl flex-1 text-center hover:bg-white/5 transition-colors">
+                        <div class="glass p-6 rounded-2xl flex-1 text-center hover:bg-white/5 transition-colors spotlight-card">
                             <h3 class="text-3xl font-bold text-white mb-1">2028</h3>
                             <p class="text-xs text-zinc-500 uppercase tracking-widest">Graduation</p>
                         </div>
@@ -286,9 +394,9 @@
                 </div>
 
                 <!-- GitHub Heatmap Simulation -->
-                <div class="reveal glass p-8 rounded-3xl border border-white/10 relative overflow-hidden group">
+                <div class="reveal glass p-8 rounded-3xl border border-white/10 relative overflow-hidden group spotlight-card">
                     <div class="absolute top-0 right-0 p-4 opacity-50">
-                        <i data-lucide="github" class="w-24 h-24 text-white/5"></i>
+                        <i data-lucide="github" class="w-24 h-24 text-white/5 group-hover:text-white/10 transition-colors"></i>
                     </div>
                     <div class="flex justify-between items-end mb-6">
                         <div>
@@ -325,17 +433,17 @@
                 </div>
                 <!-- Filter Tabs -->
                 <div class="flex gap-2 mt-8 md:mt-0 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
-                    <button onclick="filterProjects('all')" class="filter-btn active px-6 py-2 rounded-full border border-white/10 text-sm hover:bg-white hover:text-black transition-all bg-white text-black font-bold shadow-[0_0_15px_rgba(255,255,255,0.3)]" data-filter="all">All</button>
-                    <button onclick="filterProjects('ai')" class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm hover:bg-white hover:text-black transition-all text-zinc-400 bg-zinc-900" data-filter="ai">AI & Data</button>
-                    <button onclick="filterProjects('saas')" class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm hover:bg-white hover:text-black transition-all text-zinc-400 bg-zinc-900" data-filter="saas">SaaS</button>
-                    <button onclick="filterProjects('commerce')" class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm hover:bg-white hover:text-black transition-all text-zinc-400 bg-zinc-900" data-filter="commerce">E-Commerce</button>
+                    <button onclick="filterProjects('all')" class="filter-btn active px-6 py-2 rounded-full border border-white/10 text-sm hover:bg-white hover:text-black transition-all bg-white text-black font-bold shadow-[0_0_15px_rgba(255,255,255,0.3)] magnetic" data-filter="all">All</button>
+                    <button onclick="filterProjects('ai')" class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm hover:bg-white hover:text-black transition-all text-zinc-400 bg-zinc-900 magnetic" data-filter="ai">AI & Data</button>
+                    <button onclick="filterProjects('saas')" class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm hover:bg-white hover:text-black transition-all text-zinc-400 bg-zinc-900 magnetic" data-filter="saas">SaaS</button>
+                    <button onclick="filterProjects('commerce')" class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm hover:bg-white hover:text-black transition-all text-zinc-400 bg-zinc-900 magnetic" data-filter="commerce">E-Commerce</button>
                 </div>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
                 
                 <!-- Project 1: AniGlitch -->
-                <div class="tilt-card group h-full reveal" data-category="ai">
+                <div class="tilt-card spotlight-card group h-full reveal" data-category="ai">
                     <div class="glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(147,51,234,0.2)]">
                         <div class="h-56 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
                             <!-- Simulated UI mockup -->
@@ -368,7 +476,7 @@
                 </div>
 
                 <!-- Project 2: OPPE Platform -->
-                <div class="tilt-card group h-full reveal" data-category="saas">
+                <div class="tilt-card spotlight-card group h-full reveal" data-category="saas">
                     <div class="glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
                         <div class="h-56 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
                              <div class="absolute inset-4 bg-zinc-900 rounded-xl border border-white/5 shadow-2xl overflow-hidden flex items-center justify-center">
@@ -400,7 +508,7 @@
                 </div>
 
                 <!-- Project 3: GrooveWave -->
-                <div class="tilt-card group h-full reveal" data-category="saas">
+                <div class="tilt-card spotlight-card group h-full reveal" data-category="saas">
                     <div class="glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:border-green-500/50 hover:shadow-[0_0_30px_rgba(34,197,94,0.2)]">
                         <div class="h-56 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
                              <div class="absolute inset-4 bg-zinc-900 rounded-xl border border-white/5 shadow-2xl overflow-hidden flex items-center justify-center">
@@ -431,7 +539,7 @@
                 </div>
 
                 <!-- Project 4: Deepen Your Faith -->
-                <div class="tilt-card group h-full reveal" data-category="commerce">
+                <div class="tilt-card spotlight-card group h-full reveal" data-category="commerce">
                     <div class="glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:border-orange-500/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)]">
                         <div class="h-56 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
                              <div class="absolute inset-4 bg-zinc-900 rounded-xl border border-white/5 shadow-2xl overflow-hidden flex items-center justify-center">
@@ -462,7 +570,7 @@
                 </div>
 
                 <!-- Project 5: Remote Nexus -->
-                <div class="tilt-card group h-full reveal" data-category="saas">
+                <div class="tilt-card spotlight-card group h-full reveal" data-category="saas">
                     <div class="glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:border-cyan-500/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]">
                         <div class="h-56 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
                              <div class="absolute inset-4 bg-zinc-900 rounded-xl border border-white/5 shadow-2xl overflow-hidden flex items-center justify-center">
@@ -493,7 +601,7 @@
                 </div>
 
                 <!-- Project 6: Krishna Books -->
-                <div class="tilt-card group h-full reveal" data-category="saas">
+                <div class="tilt-card spotlight-card group h-full reveal" data-category="saas">
                     <div class="glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:border-yellow-500/50 hover:shadow-[0_0_30px_rgba(234,179,8,0.2)]">
                         <div class="h-56 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
                              <div class="absolute inset-4 bg-zinc-900 rounded-xl border border-white/5 shadow-2xl overflow-hidden flex items-center justify-center">
@@ -530,7 +638,7 @@
     <!-- Contact Section -->
     <section id="contact" class="py-32 relative overflow-hidden">
         <div class="max-w-4xl mx-auto px-6 relative z-10">
-            <div class="glass p-10 md:p-16 rounded-[3rem] border border-white/10 text-center relative overflow-hidden group">
+            <div class="glass p-10 md:p-16 rounded-[3rem] border border-white/10 text-center relative overflow-hidden group spotlight-card">
                 <!-- Background Glow -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-full blur-[100px] pointer-events-none group-hover:opacity-100 opacity-50 transition-opacity duration-700"></div>
 
@@ -538,10 +646,10 @@
                 <p class="text-xl text-zinc-400 mb-12 relative z-10">Open for Freelance & Internships.</p>
                 
                 <div class="flex flex-col md:flex-row gap-6 justify-center items-center relative z-10">
-                    <a href="mailto:bhanupsaini2024@gmail.com" class="px-10 py-5 bg-white text-black font-bold text-lg rounded-full hover:scale-105 transition-transform flex items-center gap-2">
+                    <a href="mailto:bhanupsaini2024@gmail.com" class="magnetic px-10 py-5 bg-white text-black font-bold text-lg rounded-full hover:scale-105 transition-transform flex items-center gap-2">
                         <i data-lucide="mail" class="w-5 h-5"></i> Send Email
                     </a>
-                    <a href="https://linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="px-10 py-5 glass text-white font-bold text-lg rounded-full hover:bg-white/10 hover:scale-105 transition-all flex items-center gap-2">
+                    <a href="https://linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="magnetic px-10 py-5 glass text-white font-bold text-lg rounded-full hover:bg-white/10 hover:scale-105 transition-all flex items-center gap-2">
                         <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn
                     </a>
                 </div>
@@ -551,6 +659,9 @@
 
     <footer class="py-8 text-center text-zinc-600 text-sm border-t border-white/5 bg-black relative z-10">
         <p>&copy; <span id="year"></span> Bhanu Saini. Built with <i data-lucide="heart" class="w-3 h-3 inline text-red-500"></i> & Code.</p>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="mt-4 p-3 rounded-full bg-zinc-900 hover:bg-zinc-800 text-white transition-colors">
+            <i data-lucide="arrow-up" class="w-4 h-4"></i>
+        </button>
     </footer>
 
     <!-- JS -->
@@ -559,7 +670,29 @@
         lucide.createIcons();
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // 1. Canvas Animation (Constellation Effect)
+        // 1. Preloader Logic
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const progress = document.getElementById('loader-progress');
+            
+            // Simulate loading
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.visibility = 'hidden';
+                    }, 500);
+                } else {
+                    width += Math.random() * 10;
+                    if(width > 100) width = 100;
+                    progress.style.width = width + '%';
+                }
+            }, 100);
+        });
+
+        // 2. Canvas Animation (Constellation Effect)
         const canvas = document.getElementById('hero-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -623,37 +756,6 @@
         }
         animateCanvas();
 
-        // 2. Typewriter Effect
-        const words = ["Innovation.", "Creativity.", "Vibe Coding."];
-        let i = 0;
-        let timer;
-        function typeWriter() {
-            const heading = document.getElementById("typewriter");
-            const word = words[i];
-            let j = 0;
-            let isDeleting = false;
-            function loop() {
-                heading.innerHTML = word.substring(0, j);
-                if (!isDeleting && j < word.length) {
-                    j++;
-                    timer = setTimeout(loop, 100);
-                } else if (isDeleting && j > 0) {
-                    j--;
-                    timer = setTimeout(loop, 50);
-                } else {
-                    isDeleting = !isDeleting;
-                    if (!isDeleting) {
-                        i = (i + 1) % words.length;
-                        setTimeout(typeWriter, 1500);
-                        return;
-                    }
-                    timer = setTimeout(loop, 1000);
-                }
-            }
-            loop();
-        }
-        typeWriter();
-
         // 3. GitHub Heatmap Generation
         const heatmap = document.getElementById('heatmap');
         const levels = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
@@ -701,9 +803,33 @@
                 left: `${posX}px`,
                 top: `${posY}px`
             }, { duration: 500, fill: "forwards" });
+
+            // Spotlight Effect update
+            const spotlightCards = document.querySelectorAll('.spotlight-card');
+            spotlightCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
         });
 
-        // 6. 3D Tilt Effect
+        // 6. Magnetic Buttons
+        const magnets = document.querySelectorAll('.magnetic');
+        magnets.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                 btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // 7. 3D Tilt Effect
         const cards = document.querySelectorAll('.tilt-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -725,7 +851,7 @@
             });
         });
 
-        // 7. Filtering & Scroll Reveal
+        // 8. Filtering & Scroll Reveal
         window.addEventListener('scroll', () => {
             // Reveal elements
             const reveals = document.querySelectorAll('.reveal');

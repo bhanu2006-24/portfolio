@@ -34,23 +34,19 @@
                             500: '#3b82f6',
                             600: '#2563eb',
                         },
-                        accent: {
-                            500: '#10b981',
-                            600: '#059669',
-                        }
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'pulse-glow': 'pulseGlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' },
                         },
-                        glow: {
-                            '0%': { boxShadow: '0 0 5px #3b82f6' },
-                            '100%': { boxShadow: '0 0 20px #10b981' },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 1, boxShadow: '0 0 10px #3b82f6' },
+                            '50%': { opacity: .5, boxShadow: '0 0 20px #10b981' },
                         }
                     }
                 }
@@ -89,20 +85,69 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Card 3D Effect */
+        /* Glitch Effect */
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #020617; /* Matches dark bg */
+            opacity: 0.8;
+            display: none;
+        }
+        .dark .glitch-text::before,
+        .dark .glitch-text::after {
+            background: #020617;
+        }
+        .glitch-wrapper:hover .glitch-text::before {
+            display: block;
+            left: 2px;
+            text-shadow: -1px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+        .glitch-wrapper:hover .glitch-text::after {
+            display: block;
+            left: -2px;
+            text-shadow: -1px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+            animation-delay: 1s;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(14px, 9999px, 127px, 0); }
+            20% { clip: rect(63px, 9999px, 81px, 0); }
+            40% { clip: rect(104px, 9999px, 12px, 0); }
+            60% { clip: rect(25px, 9999px, 95px, 0); }
+            80% { clip: rect(46px, 9999px, 19px, 0); }
+            100% { clip: rect(89px, 9999px, 2px, 0); }
+        }
+
+        /* 3D Tilt Card */
         .tilt-card {
             transform-style: preserve-3d;
             transform: perspective(1000px);
         }
         .tilt-card-inner {
             transform: translateZ(20px);
+            transition: transform 0.1s ease;
         }
 
-        /* Scroll Reveal Animation */
+        /* Scroll Reveal */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active {
             opacity: 1;
@@ -113,71 +158,64 @@
         .cursor {
             display: inline-block;
             width: 3px;
+            height: 1em;
             background-color: #3b82f6;
-            animation: blink 1s infinite;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
         }
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
 
-        /* Neon Glow Text */
-        .neon-text {
-            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-        }
-
-        /* Gradient Borders */
-        .gradient-border {
+        /* Navigation Pill Animation */
+        .nav-link {
             position: relative;
-            background: #fff;
-            border-radius: 0.75rem;
+            z-index: 10;
         }
-        .dark .gradient-border {
-            background: #1e293b;
-        }
-        .gradient-border::before {
-            content: "";
+        .nav-pill {
             position: absolute;
-            inset: -2px;
-            border-radius: 0.85rem;
-            background: linear-gradient(45deg, #3b82f6, #10b981, #6366f1);
-            z-index: -1;
+            height: 100%;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 9999px;
+            z-index: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
-            transition: opacity 0.3s ease;
         }
-        .gradient-border:hover::before {
-            opacity: 1;
+        .dark .nav-pill {
+            background: rgba(59, 130, 246, 0.2);
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 selection:bg-blue-500 selection:text-white">
 
-    <!-- Neural Network Background Canvas -->
-    <canvas id="neural-canvas" class="fixed top-0 left-0 w-full h-full -z-10 opacity-30 pointer-events-none"></canvas>
+    <!-- Interactive Neural Network Background -->
+    <canvas id="neural-canvas" class="fixed top-0 left-0 w-full h-full -z-10 opacity-40 pointer-events-none"></canvas>
 
     <!-- Navigation -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="glass rounded-full px-6 py-3 flex items-center justify-between shadow-lg shadow-blue-500/5">
+            <div class="glass rounded-full px-6 py-3 flex items-center justify-between shadow-lg shadow-blue-500/5 backdrop-blur-md">
                 <!-- Logo -->
                 <div class="flex-shrink-0 font-bold text-2xl tracking-tighter cursor-pointer group" onclick="window.scrollTo(0,0)">
-                    <span class="bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent group-hover:neon-text transition-all duration-300">BS.</span>
+                    <span class="bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all duration-300">BS.</span>
                 </div>
                 
-                <!-- Desktop Menu -->
-                <div class="hidden md:block">
-                    <div class="flex items-baseline space-x-1">
-                        <a href="#home" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">Home</a>
-                        <a href="#about" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">About</a>
-                        <a href="#skills" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">Skills</a>
-                        <a href="#projects" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">Projects</a>
-                        <a href="#contact" class="nav-link px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500">Contact</a>
+                <!-- Desktop Menu with Sliding Pill -->
+                <div class="hidden md:block relative">
+                    <div id="nav-pill" class="nav-pill"></div>
+                    <div class="flex items-baseline space-x-1 nav-links-container">
+                        <a href="#home" class="nav-link px-5 py-2 rounded-full text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400">Home</a>
+                        <a href="#about" class="nav-link px-5 py-2 rounded-full text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400">About</a>
+                        <a href="#skills" class="nav-link px-5 py-2 rounded-full text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400">Skills</a>
+                        <a href="#projects" class="nav-link px-5 py-2 rounded-full text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400">Projects</a>
+                        <a href="#contact" class="nav-link px-5 py-2 rounded-full text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400">Contact</a>
                     </div>
                 </div>
 
                 <!-- Theme Toggle & Mobile Menu -->
                 <div class="flex items-center gap-3">
-                    <button id="theme-toggle" class="p-2 rounded-full transition-all hover:scale-110 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-yellow-400 shadow-sm border border-slate-200 dark:border-slate-700">
+                    <button id="theme-toggle" class="p-2 rounded-full transition-all hover:scale-110 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-yellow-400 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-blue-500/20">
                         <i data-lucide="moon" class="block dark:hidden w-5 h-5"></i>
                         <i data-lucide="sun" class="hidden dark:block w-5 h-5"></i>
                     </button>
@@ -202,7 +240,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20">
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
             
             <!-- Floating Badge -->
@@ -211,14 +249,16 @@
                 IIT Madras Data Scientist
             </div>
             
-            <!-- Main Title with Gradient -->
-            <h1 class="reveal text-6xl md:text-8xl font-bold tracking-tight mb-6 leading-tight">
-                Hi, I'm <span class="bg-gradient-to-r from-blue-500 via-emerald-500 to-blue-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Bhanu Saini</span>
-            </h1>
+            <!-- Main Title with Glitch Effect -->
+            <div class="reveal mb-6 relative z-20">
+                <h1 class="text-6xl md:text-8xl font-bold tracking-tight leading-tight glitch-wrapper">
+                    Hi, I'm <span class="bg-gradient-to-r from-blue-500 via-emerald-500 to-blue-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient glitch-text" data-text="Bhanu Saini">Bhanu Saini</span>
+                </h1>
+            </div>
             
             <!-- Typing Effect Container -->
-            <div class="reveal h-12 mb-8 text-xl md:text-3xl text-slate-500 dark:text-slate-400 font-light">
-                I am <span id="typewriter" class="text-slate-800 dark:text-slate-200 font-semibold"></span><span class="cursor">&nbsp;</span>
+            <div class="reveal h-12 mb-8 text-xl md:text-3xl text-slate-500 dark:text-slate-400 font-light flex items-center justify-center">
+                <span>I am </span>&nbsp;<span id="typewriter" class="text-slate-800 dark:text-slate-200 font-semibold"></span><span class="cursor"></span>
             </div>
 
             <!-- CTA Buttons -->
@@ -234,8 +274,8 @@
         </div>
         
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div class="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center p-1">
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
+            <div class="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center p-1 opacity-70 hover:opacity-100 transition-opacity">
                 <div class="w-1 h-2 bg-slate-400 rounded-full animate-[scroll_1.5s_infinite]"></div>
             </div>
         </div>
@@ -253,7 +293,7 @@
                     <h2 class="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">Decoding Data,<br>Building Intelligence.</h2>
                     
                     <div class="space-y-6 text-lg text-slate-600 dark:text-slate-300">
-                        <p class="leading-relaxed border-l-4 border-blue-500 pl-4">
+                        <p class="leading-relaxed border-l-4 border-blue-500 pl-4 bg-gradient-to-r from-blue-500/5 to-transparent py-2 rounded-r-lg">
                             Currently reading for a <strong class="text-blue-600 dark:text-blue-400">B.Sc. in Data Science</strong> at <strong class="text-slate-900 dark:text-white">IIT Madras</strong>.
                         </p>
                         <p>
@@ -262,13 +302,13 @@
                     </div>
 
                     <div class="mt-10 grid grid-cols-2 gap-6">
-                        <div class="p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
-                            <i data-lucide="book-open" class="w-8 h-8 text-blue-500 mb-3"></i>
+                        <div class="group p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <i data-lucide="book-open" class="w-8 h-8 text-blue-500 mb-3 group-hover:scale-110 transition-transform"></i>
                             <div class="font-bold text-slate-900 dark:text-white">Continuous Learner</div>
                             <div class="text-sm text-slate-500 mt-1">Exploring LLMs & NLP</div>
                         </div>
-                        <div class="p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
-                            <i data-lucide="code" class="w-8 h-8 text-emerald-500 mb-3"></i>
+                        <div class="group p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <i data-lucide="code" class="w-8 h-8 text-emerald-500 mb-3 group-hover:scale-110 transition-transform"></i>
                             <div class="font-bold text-slate-900 dark:text-white">Problem Solver</div>
                             <div class="text-sm text-slate-500 mt-1">Optimizing Algorithms</div>
                         </div>
@@ -277,7 +317,7 @@
                 
                 <div class="reveal relative group perspective-1000">
                     <div class="absolute -inset-2 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-                    <div class="relative bg-slate-900 rounded-2xl p-6 shadow-2xl border border-slate-800 transform transition-transform duration-500 hover:rotate-1">
+                    <div class="relative bg-slate-900 rounded-2xl p-6 shadow-2xl border border-slate-800 transform transition-transform duration-500 group-hover:rotate-1">
                         <!-- Terminal Header -->
                         <div class="flex items-center gap-2 mb-4 border-b border-slate-800 pb-4">
                             <div class="w-3 h-3 rounded-full bg-red-500"></div>
@@ -308,7 +348,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-24 bg-slate-100/50 dark:bg-slate-900/50">
+    <section id="skills" class="py-24 bg-slate-100/50 dark:bg-slate-900/50 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
                 <span class="text-blue-500 font-semibold tracking-wider uppercase text-sm">Expertise</span>
@@ -317,25 +357,28 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Skill Card 1 -->
-                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300">
-                    <div class="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6">
+                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 group bg-white dark:bg-slate-900">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6 group-hover:scale-110 transition-transform duration-300">
                         <i data-lucide="code-2" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Languages</h3>
-                    <ul class="space-y-2 text-slate-600 dark:text-slate-400">
-                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>Python (Advanced)</li>
+                    <ul class="space-y-3 text-slate-600 dark:text-slate-400">
+                        <li class="flex items-center gap-2">
+                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6]"></div>
+                            <span>Python <span class="text-xs text-blue-500 ml-1 font-mono bg-blue-100 dark:bg-blue-900/30 px-1 rounded">Advanced</span></span>
+                        </li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>SQL</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>JavaScript</li>
                     </ul>
                 </div>
 
                 <!-- Skill Card 2 -->
-                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-100">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6">
+                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-100 group bg-white dark:bg-slate-900">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform duration-300">
                         <i data-lucide="brain-circuit" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">ML & AI</h3>
-                    <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                    <ul class="space-y-3 text-slate-600 dark:text-slate-400">
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>Scikit-learn & XGBoost</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>Deep Learning (TF)</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>NLP (NLTK, TF-IDF)</li>
@@ -343,12 +386,12 @@
                 </div>
 
                 <!-- Skill Card 3 -->
-                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-200">
-                    <div class="w-14 h-14 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-6">
+                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-200 group bg-white dark:bg-slate-900">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-6 group-hover:scale-110 transition-transform duration-300">
                         <i data-lucide="database" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Data Ops</h3>
-                    <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                    <ul class="space-y-3 text-slate-600 dark:text-slate-400">
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>Pandas & NumPy</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>Feature Engineering</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>Data Visualization</li>
@@ -356,12 +399,12 @@
                 </div>
 
                 <!-- Skill Card 4 -->
-                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-300">
-                    <div class="w-14 h-14 rounded-2xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 mb-6">
+                <div class="reveal gradient-border p-6 shadow-lg hover:-translate-y-2 transition-transform duration-300 delay-300 group bg-white dark:bg-slate-900">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 mb-6 group-hover:scale-110 transition-transform duration-300">
                         <i data-lucide="wrench" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-4">Tools</h3>
-                    <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                    <ul class="space-y-3 text-slate-600 dark:text-slate-400">
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>Jupyter & Colab</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>Git & GitHub</li>
                         <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>Streamlit Deployment</li>
@@ -402,10 +445,10 @@
                                 Distinguished between real and fake news with high precision. Implemented TF-IDF vectorization and Text Classification algorithms.
                             </p>
                             <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">NLP</span>
-                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Python</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500 border border-slate-200 dark:border-slate-700">NLP</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500 border border-slate-200 dark:border-slate-700">Python</span>
                             </div>
-                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group-hover:border-blue-500/30">
                                 <i data-lucide="github" class="w-4 h-4"></i> View Code
                             </a>
                         </div>
@@ -428,10 +471,10 @@
                                 Engineered an advanced regression model for California housing. Leveraged XGBoost to handle complex non-linear relationships.
                             </p>
                             <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">XGBoost</span>
-                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Regression</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500 border border-slate-200 dark:border-slate-700">XGBoost</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500 border border-slate-200 dark:border-slate-700">Regression</span>
                             </div>
-                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group-hover:border-blue-500/30">
                                 <i data-lucide="github" class="w-4 h-4"></i> View Code
                             </a>
                         </div>
@@ -454,10 +497,10 @@
                                 A specialized research project analyzing the "Fear & Greed Index" against Bitcoin trader performance using Time Series data.
                             </p>
                             <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Time Series</span>
-                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Finance</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500 border border-slate-200 dark:border-slate-700">Time Series</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500 border border-slate-200 dark:border-slate-700">Finance</span>
                             </div>
-                            <a href="https://github.com/bhanu2006-24/trader-sentiment-analysis" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                            <a href="https://github.com/bhanu2006-24/trader-sentiment-analysis" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group-hover:border-purple-500/30">
                                 <i data-lucide="github" class="w-4 h-4"></i> View Code
                             </a>
                         </div>
@@ -480,10 +523,10 @@
                                 Binary classifier trained on SONAR signals to detect underwater mines. Used Logistic Regression for efficient boundary detection.
                             </p>
                             <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">Logistic Reg</span>
-                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">SONAR</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500 border border-slate-200 dark:border-slate-700">Logistic Reg</span>
+                                <span class="text-xs font-mono px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-slate-500 border border-slate-200 dark:border-slate-700">SONAR</span>
                             </div>
-                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                            <a href="https://github.com/bhanu2006-24/ML-projects" target="_blank" class="w-full py-2 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group-hover:border-orange-500/30">
                                 <i data-lucide="github" class="w-4 h-4"></i> View Code
                             </a>
                         </div>
@@ -499,9 +542,15 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 class="reveal text-4xl md:text-5xl font-bold mb-8">Ready to Collaborate?</h2>
             
-            <div class="reveal glass rounded-3xl p-10 md:p-14 shadow-2xl">
+            <div class="reveal glass rounded-3xl p-10 md:p-14 shadow-2xl relative overflow-hidden group">
+                 <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                
                 <p class="text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
-                    I'm actively seeking <span class="text-blue-500 font-bold">internship opportunities</span> where I can apply my ML skills to real-world data problems. Let's build something intelligent together.
+                    I'm actively seeking <span class="text-blue-500 font-bold relative inline-block">internship opportunities
+                        <svg class="absolute w-full h-2 bottom-0 left-0 text-blue-300 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                             <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="3" fill="none" />
+                        </svg>
+                    </span> where I can apply my ML skills to real-world data problems. Let's build something intelligent together.
                 </p>
                 
                 <div class="flex flex-col sm:flex-row justify-center gap-6">
@@ -557,11 +606,23 @@
             localStorage.theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
         });
 
-        // --- 3. Neural Network Background Animation ---
+        // --- 3. Interactive Neural Network Background Animation ---
         const canvas = document.getElementById('neural-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
+        
+        // Mouse interaction object
+        let mouse = {
+            x: null,
+            y: null,
+            radius: 150
+        };
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
 
         function resizeCanvas() {
             width = window.innerWidth;
@@ -577,14 +638,38 @@
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.size = Math.random() * 2 + 1;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 30) + 1;
             }
 
             update() {
+                // Movement
                 this.x += this.vx;
                 this.y += this.vy;
 
+                // Bounce off edges
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Mouse Interaction
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                
+                if (distance < mouse.radius) {
+                    const forceDirectionX = dx / distance;
+                    const forceDirectionY = dy / distance;
+                    const maxDistance = mouse.radius;
+                    const force = (maxDistance - distance) / maxDistance;
+                    const directionX = forceDirectionX * force * this.density;
+                    const directionY = forceDirectionY * force * this.density;
+                    
+                    if (distance < mouse.radius) {
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
             }
 
             draw() {
@@ -597,7 +682,7 @@
 
         function initParticles() {
             particles = [];
-            const particleCount = Math.min(Math.floor(window.innerWidth / 15), 100); // Responsive count
+            const particleCount = Math.min(Math.floor(window.innerWidth / 12), 120); 
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
@@ -607,7 +692,6 @@
             ctx.clearRect(0, 0, width, height);
             
             // Draw connections first
-            ctx.strokeStyle = htmlElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.05)' : 'rgba(59, 130, 246, 0.1)';
             ctx.lineWidth = 1;
 
             for (let i = 0; i < particles.length; i++) {
@@ -619,8 +703,11 @@
                     let p2 = particles[j];
                     let distance = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
 
-                    if (distance < 150) {
+                    if (distance < 120) {
                         ctx.beginPath();
+                        ctx.strokeStyle = htmlElement.classList.contains('dark') 
+                            ? `rgba(255, 255, 255, ${1 - distance/120 * 0.8})` 
+                            : `rgba(59, 130, 246, ${1 - distance/120 * 0.8})`;
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
                         ctx.stroke();
@@ -750,6 +837,28 @@
                     mobileMenu.classList.add('hidden');
                 }, 200);
             });
+        });
+
+        // --- 8. Navigation Pill Animation ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navPill = document.getElementById('nav-pill');
+        const navContainer = document.querySelector('.nav-links-container');
+
+        function movePill(target) {
+            const rect = target.getBoundingClientRect();
+            const containerRect = navContainer.getBoundingClientRect();
+            
+            navPill.style.width = `${rect.width}px`;
+            navPill.style.left = `${rect.left - containerRect.left}px`;
+            navPill.style.opacity = '1';
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => movePill(e.target));
+        });
+
+        navContainer.addEventListener('mouseleave', () => {
+             navPill.style.opacity = '0';
         });
 
     </script>

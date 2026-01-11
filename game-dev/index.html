@@ -163,7 +163,7 @@
         <div class="hud-top">
             <div class="profile-card">
                 <h1>BHANU SAINI</h1>
-                <p>Interactive Portfolio v4.5</p>
+                <p>Interactive Portfolio v5.0</p>
             </div>
             <div class="nav-pills">
                 <div class="nav-pill" style="color: #1e293b; background: white;"><div class="dot" style="background:#1e293b"></div> HQ (Center)</div>
@@ -218,26 +218,29 @@
             // --- HQ ---
             { title: "Bhanu's HQ", desc: "Welcome to my central command. Connect with me or view my resume.", tech: ["Resume", "Contact", "About"], link: "#", type: "HQ", pos: {x: 0, z: 0}, isContact: true },
             
-            // --- GAMES ---
-            { title: "Echo Shooter", desc: "Neon arena shooter. Survive waves, use overdrive abilities, and score combos.", tech: ["JS", "Canvas", "Action"], link: "https://echo-shooter.pages.dev", type: "GAMES", pos: {x: 0, z: -40} },
-            { title: "Portal Nexus", desc: "Survival RPG in a 100-room labyrinth with shifting portals and secrets.", tech: ["React", "TypeScript", "RPG"], link: "https://portal-nexus.pages.dev", type: "GAMES", pos: {x: -30, z: -60} },
-            { title: "Neon Maze", desc: "3D Procedural maze escape with time limits and laser traps.", tech: ["Three.js", "WebGL"], link: "https://bhanu2006-24.github.io/neon-maze", type: "GAMES", pos: {x: 30, z: -60} },
-            { title: "Antigravity", desc: "Top-down shooter experimenting with gravity mechanics and boss AI.", tech: ["Physics", "Canvas"], link: "https://antigravity-game.pages.dev", type: "GAMES", pos: {x: -15, z: -80} },
-            { title: "Bomber Legends", desc: "Classic arcade bomber remake with destructible grid environments.", tech: ["React", "Grid Logic"], link: "https://bomber-legends.pages.dev", type: "GAMES", pos: {x: 15, z: -80} },
+            // --- GAMES (North, -Z) ---
+            // Adjusted X to avoid z=0 road overlap
+            { title: "Echo Shooter", desc: "Neon arena shooter. Survive waves, use overdrive abilities, and score combos.", tech: ["JS", "Canvas", "Action"], link: "https://echo-shooter.pages.dev", type: "GAMES", pos: {x: 25, z: -40} },
+            { title: "Portal Nexus", desc: "Survival RPG in a 100-room labyrinth with shifting portals and secrets.", tech: ["React", "TypeScript", "RPG"], link: "https://portal-nexus.pages.dev", type: "GAMES", pos: {x: -35, z: -60} },
+            { title: "Neon Maze", desc: "3D Procedural maze escape with time limits and laser traps.", tech: ["Three.js", "WebGL"], link: "https://bhanu2006-24.github.io/neon-maze", type: "GAMES", pos: {x: 35, z: -60} },
+            { title: "Antigravity", desc: "Top-down shooter experimenting with gravity mechanics and boss AI.", tech: ["Physics", "Canvas"], link: "https://antigravity-game.pages.dev", type: "GAMES", pos: {x: -25, z: -90} },
+            { title: "Bomber Legends", desc: "Classic arcade bomber remake with destructible grid environments.", tech: ["React", "Grid Logic"], link: "https://bomber-legends.pages.dev", type: "GAMES", pos: {x: 25, z: -90} },
 
-            // --- WEB ---
-            { title: "NovaNews", desc: "Modern news aggregator with clean UI and smart categorization.", tech: ["React 19", "Vite", "API"], link: "https://github.com/bhanu2006-24/novanews", type: "WEB", pos: {x: -50, z: 0} },
-            { title: "GrooveWave", desc: "Music analytics SaaS dashboard with real-time visualization.", tech: ["SaaS", "Data Viz"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -75, z: 20} },
-            { title: "Atmosphere AI", desc: "Environmental monitoring dashboard powered by AI predictions.", tech: ["AI", "Analytics"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -75, z: -20} },
-            { title: "RemoteNexus", desc: "Job portal connecting professionals with premium remote work.", tech: ["React", "Node.js"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -100, z: 0} },
-            { title: "Krishna Books", desc: "Online bookstore and library management system.", tech: ["E-commerce", "Web"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -50, z: 35} },
+            // --- WEB (West, -X) ---
+            // Adjusted Z to avoid x=0 road overlap
+            { title: "NovaNews", desc: "Modern news aggregator with clean UI and smart categorization.", tech: ["React 19", "Vite", "API"], link: "https://github.com/bhanu2006-24/novanews", type: "WEB", pos: {x: -50, z: 25} },
+            { title: "GrooveWave", desc: "Music analytics SaaS dashboard with real-time visualization.", tech: ["SaaS", "Data Viz"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -80, z: 25} },
+            { title: "Atmosphere AI", desc: "Environmental monitoring dashboard powered by AI predictions.", tech: ["AI", "Analytics"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -80, z: -25} },
+            { title: "RemoteNexus", desc: "Job portal connecting professionals with premium remote work.", tech: ["React", "Node.js"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -110, z: -25} },
+            { title: "Krishna Books", desc: "Online bookstore and library management system.", tech: ["E-commerce", "Web"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -50, z: -25} },
 
-            // --- DATA ---
-            { title: "Crypto Pulse", desc: "Live cryptocurrency market tracker with portfolio management.", tech: ["React", "Finance API"], link: "https://github.com/bhanu2006-24/crypto-pulse", type: "DATA", pos: {x: 50, z: 0} },
-            { title: "IMDb Analytics", desc: "Data dashboard analyzing movie trends and correlations.", tech: ["Python", "Plotly"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 75, z: 20} },
-            { title: "Img Toolkit", desc: "Browser-based image processing tools (remove bg, filters).", tech: ["Streamlit", "CV"], link: "https://github.com/bhanu2006-24/img-toolkit", type: "DATA", pos: {x: 75, z: -20} },
-            { title: "T-Shirt Gen", desc: "Procedural design generator for apparel using computer vision.", tech: ["Python", "OpenCV"], link: "https://github.com/bhanu2006-24/tshirtgen", type: "DATA", pos: {x: 100, z: 0} },
-            { title: "Steam Analytics", desc: "End-to-end pipeline scraping Steam data for market trends.", tech: ["Scraping", "Pandas"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 50, z: 35} }
+            // --- DATA (East, +X) ---
+            // Adjusted Z to avoid x=0 road overlap
+            { title: "Crypto Pulse", desc: "Live cryptocurrency market tracker with portfolio management.", tech: ["React", "Finance API"], link: "https://github.com/bhanu2006-24/crypto-pulse", type: "DATA", pos: {x: 50, z: -25} },
+            { title: "IMDb Analytics", desc: "Data dashboard analyzing movie trends and correlations.", tech: ["Python", "Plotly"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 80, z: 25} },
+            { title: "Img Toolkit", desc: "Browser-based image processing tools (remove bg, filters).", tech: ["Streamlit", "CV"], link: "https://github.com/bhanu2006-24/img-toolkit", type: "DATA", pos: {x: 80, z: -25} },
+            { title: "T-Shirt Gen", desc: "Procedural design generator for apparel using computer vision.", tech: ["Python", "OpenCV"], link: "https://github.com/bhanu2006-24/tshirtgen", type: "DATA", pos: {x: 110, z: 25} },
+            { title: "Steam Analytics", desc: "End-to-end pipeline scraping Steam data for market trends.", tech: ["Scraping", "Pandas"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 50, z: 25} }
         ];
 
         // --- THREE.JS SETUP ---
@@ -289,6 +292,40 @@
 
         scene.add(roadGroup);
 
+        // Street Lamps
+        const lampGeo = new THREE.CylinderGeometry(0.2, 0.2, 8);
+        const lampMat = new THREE.MeshStandardMaterial({ color: 0x64748b });
+        const lightGeo = new THREE.SphereGeometry(0.8);
+        const lightMat = new THREE.MeshBasicMaterial({ color: 0xffedd5 });
+
+        function createLamp(x, z) {
+            const grp = new THREE.Group();
+            const pole = new THREE.Mesh(lampGeo, lampMat);
+            pole.position.y = 4;
+            const bulb = new THREE.Mesh(lightGeo, lightMat);
+            bulb.position.y = 8;
+            grp.add(pole); grp.add(bulb);
+            
+            // Subtle point light
+            // const pl = new THREE.PointLight(0xffedd5, 0.5, 20);
+            // pl.position.y = 8;
+            // grp.add(pl); 
+            // Disabled real light to save performance, bulb glow is enough visual cue
+            
+            grp.position.set(x, 0, z);
+            return grp;
+        }
+
+        // Add lamps along roads
+        for(let i=-180; i<=180; i+=40) {
+            if(Math.abs(i) > 20) {
+                scene.add(createLamp(10, i)); // Right of Z road
+                scene.add(createLamp(-10, i)); // Left of Z road
+                scene.add(createLamp(i, 10)); // Top of X road
+                scene.add(createLamp(i, -10)); // Bottom of X road
+            }
+        }
+
         // Trees
         const treeGeo = new THREE.ConeGeometry(1.5, 4, 8);
         const trunkGeo = new THREE.CylinderGeometry(0.3, 0.4, 1, 8);
@@ -306,12 +343,14 @@
             return grp;
         }
 
-        for(let i=0; i<80; i++) {
+        for(let i=0; i<100; i++) {
             const x = (Math.random()-0.5)*350;
             const z = (Math.random()-0.5)*350;
-            if(Math.abs(x) > 15 && Math.abs(z) > 15) {
-                scene.add(createTree(x, z));
-            }
+            
+            // NO TREES ON ROAD (Road Width is ~16, so keep clear of +/- 12)
+            if(Math.abs(x) < 12 || Math.abs(z) < 12) continue;
+            
+            scene.add(createTree(x, z));
         }
 
         // --- CLOUDS ---
@@ -359,7 +398,7 @@
             }
             
             scene.add(car);
-            return { mesh: car, axis: axis, dir: dir, speed: 0.4 + Math.random()*0.3 };
+            return { mesh: car, axis: axis, dir: dir, speed: 0.3 + Math.random()*0.2 };
         }
 
         for(let i=0; i<15; i++) trafficCars.push(createTrafficCar('x', 1));
@@ -408,8 +447,10 @@
             group.position.set(p.pos.x, 0, p.pos.z);
 
             let mesh;
+            let collisionRadius = 5; // Default building radius
             
             if (p.type === 'HQ') {
+                collisionRadius = 9;
                 // Main Tower
                 const geo = new THREE.BoxGeometry(10, 20, 10);
                 const mat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2 });
@@ -459,7 +500,16 @@
             group.add(label);
 
             scene.add(group);
-            interactables.push({ pos: p.pos, radius: p.type==='HQ'? 12 : 8, data: p, config: config, mesh: group });
+            
+            // Store collision data separately
+            interactables.push({ 
+                pos: p.pos, 
+                radius: p.type==='HQ'? 12 : 8, // Interaction radius (larger)
+                collisionRad: collisionRadius, // Physical size
+                data: p, 
+                config: config, 
+                mesh: group 
+            });
         });
 
         // --- PLAYER CAR ---
@@ -531,9 +581,10 @@
             let gas = joystick.active ? -joystick.y : (keys.w ? 1 : (keys.s ? -1 : 0));
             let turn = joystick.active ? -joystick.x : (keys.a ? 1 : (keys.d ? -1 : 0));
             
-            const MAX = keys.space ? 2.2 : 1.2;
-            const ACC = 0.05;
-            const FRICTION = 0.94;
+            // REDUCED SPEEDS
+            const MAX = keys.space ? 1.4 : 0.7; // Lower top speed
+            const ACC = 0.02; // Slower acceleration
+            const FRICTION = 0.95;
 
             player.speed += gas * ACC;
             player.speed *= FRICTION;
@@ -545,7 +596,33 @@
             }
 
             player.vel.set(Math.sin(player.dir) * player.speed, 0, Math.cos(player.dir) * player.speed);
-            player.pos.add(player.vel);
+            
+            // Check potential new position
+            const nextPos = player.pos.clone().add(player.vel);
+            
+            // 2. COLLISION DETECTION
+            let hasCollision = false;
+            const playerRad = 2.5; // Car size approximation
+
+            interactables.forEach(obj => {
+                const objPos = new THREE.Vector3(obj.pos.x, 0, obj.pos.z);
+                const dist = nextPos.distanceTo(objPos);
+                
+                // If hitting a building
+                if(dist < (obj.collisionRad + playerRad)) {
+                    hasCollision = true;
+                    // Bounce calculation
+                    const pushVec = player.pos.clone().sub(objPos).normalize();
+                    // Move slightly out
+                    player.pos.add(pushVec.multiplyScalar(0.5));
+                    // Invert speed (bounce)
+                    player.speed *= -0.4;
+                }
+            });
+
+            if(!hasCollision) {
+                player.pos.add(player.vel);
+            }
 
             // Bounds
             if(Math.abs(player.pos.x) > 190) player.pos.x = Math.sign(player.pos.x)*190;
@@ -572,7 +649,7 @@
                 }
             }
 
-            // 2. Environment Updates
+            // 3. Environment Updates
             // Clouds
             clouds.forEach(c => {
                 c.mesh.position.x += c.speed;
@@ -589,14 +666,14 @@
                 }
             });
 
-            // 3. Camera
+            // 4. Camera
             const camOff = new THREE.Vector3(0, 25, -35);
             camOff.applyAxisAngle(new THREE.Vector3(0,1,0), player.dir);
             const camTarget = player.pos.clone().add(camOff);
             camera.position.lerp(camTarget, 0.08);
             camera.lookAt(player.pos);
 
-            // 4. Interactions
+            // 5. Interactions
             checkModals();
             interactables.forEach(i => {
                 const lbl = i.mesh.children[i.mesh.children.length-1];
@@ -621,6 +698,7 @@
         function checkModals() {
             let nearby = null;
             interactables.forEach(i => {
+                // Use interaction radius, not collision radius
                 const d = player.pos.distanceTo(new THREE.Vector3(i.pos.x, 0, i.pos.z));
                 if(d < i.radius + 4) nearby = i;
             });
