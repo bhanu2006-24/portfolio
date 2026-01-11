@@ -1,184 +1,709 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bhanu Saini | Game Developer</title>
-  <meta name="description" content="Game Development portfolio of Bhanu Pratap Saini">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/197176166?v=4">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-    .glow-card {
-      background: rgba(30, 41, 59, 0.5);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-    .glow-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(236, 72, 153, 0.5);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-    .neon-text { text-shadow: 0 0 10px rgba(236, 72, 153, 0.5), 0 0 20px rgba(236, 72, 153, 0.3); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bhanu Saini | Cyber City Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --c-accent: #00ffcc; --c-bg: #050505; }
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+        body { overflow: hidden; background: var(--c-bg); font-family: 'Rajdhani', sans-serif; color: white; }
+        
+        #canvas-container { position: absolute; inset: 0; z-index: 1; }
+        
+        /* UI Layer */
+        #ui-layer {
+            position: absolute; inset: 0; z-index: 10; pointer-events: none;
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 20px;
+        }
+
+        /* HUD */
+        .hud-top {
+            display: flex; justify-content: space-between; align-items: flex-start;
+        }
+        .profile-card {
+            background: rgba(0,0,0,0.8); border-left: 4px solid var(--c-accent);
+            padding: 15px 25px; backdrop-filter: blur(5px);
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+            animation: slideInLeft 1s ease-out;
+        }
+        .profile-card h1 { font-family: 'Press Start 2P'; font-size: 1.2rem; margin-bottom: 5px; color: #fff; }
+        .profile-card p { color: var(--c-accent); font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; }
+
+        .zone-indicator {
+            text-align: right; text-shadow: 0 0 10px currentColor;
+            font-family: 'Press Start 2P'; font-size: 0.8rem; line-height: 1.5;
+            animation: slideInRight 1s ease-out;
+        }
+        .zone-games { color: #ff0055; }
+        .zone-web { color: #00ccff; }
+        .zone-data { color: #ffaa00; }
+
+        /* Controls Hint */
+        .controls-hint {
+            position: absolute; bottom: 30px; right: 30px;
+            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px; border-radius: 8px; text-align: right;
+            transform: skewX(-10deg);
+        }
+        .key {
+            display: inline-block; background: #fff; color: #000;
+            padding: 4px 8px; border-radius: 4px; font-family: 'Press Start 2P'; font-size: 10px;
+            margin: 2px; box-shadow: 0 2px 0 #999; transform: skewX(10deg);
+        }
+
+        /* Modal */
+        #modal {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%; max-width: 600px;
+            background: rgba(10, 10, 15, 0.98);
+            border: 1px solid var(--c-accent);
+            opacity: 0; pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 20; display: flex; flex-direction: column;
+            box-shadow: 0 0 50px rgba(0, 255, 204, 0.2);
+            border-radius: 4px;
+        }
+        #modal.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+        
+        .modal-banner { height: 10px; background: var(--c-accent); width: 100%; }
+        .modal-body { padding: 30px; text-align: center; }
+        
+        #modal-title { 
+            font-family: 'Press Start 2P'; font-size: 1.4rem; color: #fff; margin-bottom: 15px; 
+            text-transform: uppercase; line-height: 1.4;
+        }
+        #modal-desc { color: #ccc; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; }
+        
+        .tags-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 25px; }
+        .tag { 
+            background: rgba(255,255,255,0.05); color: var(--c-accent); padding: 6px 14px; 
+            border-radius: 2px; font-size: 0.8rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .action-btn {
+            display: inline-block; background: var(--c-accent); color: #000;
+            padding: 15px 40px; font-family: 'Press Start 2P'; font-size: 0.9rem;
+            text-decoration: none; clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .action-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* Loader */
+        #loader {
+            position: fixed; inset: 0; background: #000; z-index: 100;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            transition: opacity 0.5s;
+        }
+        .scanline {
+            width: 100%; height: 2px; background: rgba(0,255,204,0.5);
+            position: absolute; animation: scan 2s linear infinite;
+        }
+        @keyframes scan { 0% {top:0} 100% {top:100%} }
+        
+        /* Mobile Controls */
+        #mobile-ui { display: none; pointer-events: none; position: absolute; inset: 0; }
+        .joystick-zone { position: absolute; bottom: 40px; left: 40px; width: 140px; height: 140px; pointer-events: auto; }
+        .boost-btn {
+            position: absolute; bottom: 60px; right: 40px; width: 80px; height: 80px;
+            background: rgba(255, 0, 85, 0.2); border: 2px solid #ff0055; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; pointer-events: auto;
+            color: #ff0055; font-family: 'Press Start 2P'; font-size: 10px;
+        }
+        .boost-btn:active { background: #ff0055; color: #000; }
+
+        @media (max-width: 768px) {
+            .controls-hint { display: none; }
+            #mobile-ui { display: block; }
+            .profile-card { padding: 10px 15px; }
+            .profile-card h1 { font-size: 0.9rem; }
+            .profile-card p { font-size: 0.7rem; }
+        }
+
+        @keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100">
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-slate-800">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
-        <span class="text-2xl">🎮</span>
-        <span class="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Game Developer</span>
-      </a>
-      <div class="flex gap-4">
-        <a href="#games" class="text-slate-300 hover:text-white">Games</a>
-        <a href="#contact" class="text-slate-300 hover:text-white">Contact</a>
-      </div>
+<body>
+
+    <div id="loader">
+        <div style="font-family: 'Press Start 2P'; color: #00ffcc; margin-bottom: 20px;">SYSTEM BOOT...</div>
+        <div style="width: 200px; height: 4px; background: #333;"><div id="load-bar" style="width:0%; height:100%; background:#00ffcc; transition:width 0.5s;"></div></div>
+        <div class="scanline"></div>
     </div>
-  </nav>
 
-  <section class="min-h-screen flex items-center justify-center px-4 pt-16 bg-gradient-to-b from-slate-900 via-purple-900/20 to-slate-900">
-    <div class="text-center max-w-3xl mx-auto">
-      <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-pink-500/50">
-        <img src="https://avatars.githubusercontent.com/u/197176166?v=4" alt="Bhanu" class="w-full h-full object-cover">
-      </div>
-      <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent neon-text">Bhanu Saini</h1>
-      <p class="mt-4 text-lg text-slate-300">Game Developer | IIT Madras</p>
-      <p class="mt-2 text-slate-400 max-w-2xl mx-auto">Crafting immersive browser games with JavaScript, HTML5 Canvas, and Three.js.</p>
-      <div class="mt-8 flex flex-wrap justify-center gap-4">
-        <a href="#games" class="px-6 py-3 bg-pink-600 hover:bg-pink-700 rounded-lg font-medium"><i class="fas fa-gamepad mr-2"></i>View Games</a>
-        <a href="https://github.com/bhanu2006-24" target="_blank" class="px-6 py-3 border border-pink-500 text-pink-400 hover:bg-pink-900/30 rounded-lg"><i class="fab fa-github mr-2"></i>GitHub</a>
-        <a href="https://bhanu2006-24.github.io/Resume/game-resume.html" target="_blank" class="px-6 py-3 border border-slate-600 text-slate-300 hover:bg-slate-800 rounded-lg"><i class="fas fa-file-alt mr-2"></i>Resume</a>
-      </div>
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
+        <div class="hud-top">
+            <div class="profile-card">
+                <h1>BHANU SAINI</h1>
+                <p>DEV_PORTFOLIO_V3.0</p>
+            </div>
+            <div class="zone-indicator">
+                <div class="zone-games">NORTH: GAMES</div>
+                <div class="zone-web">WEST: WEB DEV</div>
+                <div class="zone-data">EAST: DATA SCI</div>
+            </div>
+        </div>
+
+        <div class="controls-hint">
+            <div style="margin-bottom:8px; color:#aaa;">NAVIGATION SYSTEM</div>
+            <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> to Drive<br>
+            <span class="key" style="width: 60px; margin-top:5px;">SHIFT</span> to Boost
+        </div>
+
+        <div id="mobile-ui">
+            <div class="joystick-zone" id="joystick-zone"></div>
+            <div class="boost-btn" id="boost-btn">BOOST</div>
+        </div>
     </div>
-  </section>
 
-  <section id="games" class="py-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-12"><span class="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Games</span></h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="glow-card p-6 rounded-xl">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-purple-500 rounded-lg flex items-center justify-center">
-              <i class="fas fa-crosshairs text-2xl text-white"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold">Antigravity Game</h3>
-              <p class="text-slate-400 text-sm">Top-down Shooter</p>
-            </div>
-          </div>
-          <p class="text-slate-300 mb-4">Fast-paced top-down shooter with dash, dodge, waves, and boss battles.</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="px-2 py-1 bg-pink-900/50 text-pink-300 rounded text-sm">JavaScript</span>
-            <span class="px-2 py-1 bg-pink-900/50 text-pink-300 rounded text-sm">Canvas</span>
-          </div>
-          <a href="https://github.com/bhanu2006-24/antigravity-game" target="_blank" class="text-pink-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
+    <div id="modal">
+        <div class="modal-banner" id="modal-banner"></div>
+        <div class="modal-body">
+            <h2 id="modal-title">PROJECT TITLE</h2>
+            <div class="tags-container" id="modal-tags"></div>
+            <p id="modal-desc">Description text goes here.</p>
+            <a href="#" target="_blank" class="action-btn" id="modal-link">ACCESS TERMINAL</a>
+            <div style="margin-top:15px; font-size: 0.7rem; color: #555;">MOVE VEHICLE TO DISCONNECT</div>
         </div>
-
-        <div class="glow-card p-6 rounded-xl">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
-              <i class="fas fa-cube text-2xl text-white"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold">Neon Maze</h3>
-              <p class="text-slate-400 text-sm">3D Maze Escape</p>
-            </div>
-          </div>
-          <p class="text-slate-300 mb-4">First-person 3D maze with cyberpunk visuals, orbs, and laser traps.</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded text-sm">Three.js</span>
-            <span class="px-2 py-1 bg-cyan-900/50 text-cyan-300 rounded text-sm">Procedural</span>
-          </div>
-          <a href="https://github.com/bhanu2006-24/neon-maze" target="_blank" class="text-cyan-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
-        </div>
-
-        <div class="glow-card p-6 rounded-xl">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-              <i class="fas fa-bomb text-2xl text-white"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold">Bomber Legends</h3>
-              <p class="text-slate-400 text-sm">Arcade Bomber</p>
-            </div>
-          </div>
-          <p class="text-slate-300 mb-4">Classic arcade-style bomber with grid levels, bombs, and power-ups.</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="px-2 py-1 bg-orange-900/50 text-orange-300 rounded text-sm">React</span>
-            <span class="px-2 py-1 bg-orange-900/50 text-orange-300 rounded text-sm">TypeScript</span>
-          </div>
-          <a href="https://github.com/bhanu2006-24/bomber-legends" target="_blank" class="text-orange-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
-        </div>
-
-        <div class="glow-card p-6 rounded-xl">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
-              <i class="fas fa-bullseye text-2xl text-white"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold">Echo Shooter</h3>
-              <p class="text-slate-400 text-sm">Shooting Game</p>
-            </div>
-          </div>
-          <p class="text-slate-300 mb-4">Browser-based shooting game with canvas graphics.</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="px-2 py-1 bg-green-900/50 text-green-300 rounded text-sm">JavaScript</span>
-            <span class="px-2 py-1 bg-green-900/50 text-green-300 rounded text-sm">Canvas</span>
-          </div>
-          <a href="https://github.com/bhanu2006-24/Echo-shooter" target="_blank" class="text-green-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
-        </div>
-
-        <div class="glow-card p-6 rounded-xl">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center">
-              <i class="fas fa-dungeon text-2xl text-white"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold">Portal Nexus</h3>
-              <p class="text-slate-400 text-sm">RPG</p>
-            </div>
-          </div>
-          <p class="text-slate-300 mb-4">RPG with procedural generation.</p>
-          <a href="https://github.com/bhanu2006-24/portal-nexus" target="_blank" class="text-purple-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
-        </div>
-
-        <div class="glow-card p-6 rounded-xl">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-slate-500 to-zinc-500 rounded-lg flex items-center justify-center">
-              <i class="fas fa-city text-2xl text-white"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold">Neon City</h3>
-              <p class="text-slate-400 text-sm">Cyberpunk RPG</p>
-            </div>
-          </div>
-          <p class="text-slate-300 mb-4">Neon City: Undead Rising - Cyberpunk RPG adventure.</p>
-          <a href="https://github.com/bhanu2006-24/neon-city" target="_blank" class="text-slate-400 hover:underline"><i class="fab fa-github mr-2"></i>GitHub</a>
-        </div>
-      </div>
     </div>
-  </section>
 
-  <section id="contact" class="py-20 px-4 bg-gradient-to-b from-slate-900 via-pink-900/10 to-slate-900">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-6"><span class="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">Contact</span></h2>
-      <div class="flex flex-wrap justify-center gap-6">
-        <a href="mailto:bhanupsaini2024@gmail.com" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg"><i class="fas fa-envelope text-pink-400"></i>Email</a>
-        <a href="https://www.linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg"><i class="fab fa-linkedin text-pink-400"></i>LinkedIn</a>
-        <a href="https://github.com/bhanu2006-24" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg"><i class="fab fa-github text-pink-400"></i>GitHub</a>
-      </div>
-    </div>
-  </section>
+    <script>
+        // --- DATA MATRIX ---
+        const ZONES = {
+            GAMES: { color: 0xff0055, name: "GAME DISTRICT" },
+            WEB: { color: 0x00ccff, name: "WEB SECTOR" },
+            DATA: { color: 0xffaa00, name: "DATA LABS" }
+        };
 
-  <footer class="py-8 px-4 border-t border-slate-800 text-center text-slate-500">
-    <p>&copy; 2025 Bhanu Pratap Saini. All rights reserved.</p>
-    <div class="mt-2 flex justify-center gap-4">
-      <a href="https://bhanu2006-24.github.io/Resume/game-resume.html" target="_blank" class="text-pink-400 hover:underline">Resume</a>
-      <a href="https://github.com/bhanu2006-24" target="_blank" class="text-pink-400 hover:underline">GitHub</a>
-    </div>
-  </footer>
+        const PROJECTS = [
+            // GAME DEV (North - Z Negative)
+            {
+                title: "Echo Shooter",
+                desc: "Fast-paced neon arena shooter. Survive endless waves, use Overdrive abilities, and stack combos.",
+                tech: ["JavaScript", "Canvas", "Action"],
+                link: "https://echo-shooter.pages.dev",
+                type: "GAME",
+                pos: { x: 0, z: -50 }
+            },
+            {
+                title: "Portal Nexus",
+                desc: "A dark survival-exploration RPG. Navigate 100 interconnected rooms with shifting portals.",
+                tech: ["React", "TypeScript", "RPG"],
+                link: "https://portal-nexus.pages.dev",
+                type: "GAME",
+                pos: { x: -30, z: -70 }
+            },
+            {
+                title: "Neon Maze",
+                desc: "First-person 3D procedural maze escape with laser traps and time limits.",
+                tech: ["Three.js", "WebGL", "Procedural"],
+                link: "https://bhanu2006-24.github.io/neon-maze",
+                type: "GAME",
+                pos: { x: 30, z: -70 }
+            },
+            {
+                title: "Antigravity",
+                desc: "Top-down shooter with unique physics mechanics and intense boss battles.",
+                tech: ["JS", "Physics", "Shooter"],
+                link: "https://antigravity-game.pages.dev",
+                type: "GAME",
+                pos: { x: 0, z: -90 }
+            },
+
+            // WEB DEV (West - X Negative)
+            {
+                title: "NovaNews",
+                desc: "Modern news aggregation platform with smart categorization and clean UI/UX.",
+                tech: ["React 19", "Vite", "API"],
+                link: "https://github.com/bhanu2006-24/novanews",
+                type: "WEB",
+                pos: { x: -60, z: 0 }
+            },
+            {
+                title: "GrooveWave",
+                desc: "SaaS platform for music analytics and distribution with real-time data visualization.",
+                tech: ["React", "SaaS", "Data Viz"],
+                link: "https://github.com/bhanu2006-24",
+                type: "WEB",
+                pos: { x: -90, z: 15 }
+            },
+            {
+                title: "Atmosphere AI",
+                desc: "Advanced AI-powered weather and environmental monitoring dashboard.",
+                tech: ["AI", "Web", "Analytics"],
+                link: "https://github.com/bhanu2006-24",
+                type: "WEB",
+                pos: { x: -90, z: -15 }
+            },
+
+            // DATA SCIENCE (East - X Positive)
+            {
+                title: "Crypto Pulse",
+                desc: "Professional cryptocurrency portal with live market data, portfolio tracking, and dark UI.",
+                tech: ["React", "Tailwind", "Finance"],
+                link: "https://github.com/bhanu2006-24/crypto-pulse",
+                type: "DATA",
+                pos: { x: 60, z: 0 }
+            },
+            {
+                title: "IMDb Analytics",
+                desc: "Interactive dashboard analyzing movie trends with correlation heatmaps.",
+                tech: ["Python", "Plotly", "Data"],
+                link: "https://github.com/bhanu2006-24",
+                type: "DATA",
+                pos: { x: 90, z: 15 }
+            },
+            {
+                title: "Img Toolkit",
+                desc: "Premium image processing toolkit with background removal and AI effects.",
+                tech: ["Python", "Streamlit", "CV"],
+                link: "https://github.com/bhanu2006-24/img-toolkit",
+                type: "DATA",
+                pos: { x: 90, z: -15 }
+            }
+        ];
+
+        // --- THREE.JS SETUP ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050505);
+        scene.fog = new THREE.FogExp2(0x050505, 0.015);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 300);
+        camera.position.set(0, 40, 40);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // --- WORLD GENERATION ---
+
+        // 1. Floor (Infinite Grid Illusion)
+        const gridHelper = new THREE.GridHelper(400, 100, 0x333333, 0x111111);
+        scene.add(gridHelper);
+        const floorGeo = new THREE.PlaneGeometry(400, 400);
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x080808, roughness: 0.8, metalness: 0.2 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI/2;
+        floor.receiveShadow = true;
+        floor.position.y = -0.1;
+        scene.add(floor);
+
+        // 2. Lighting
+        const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambient);
+        
+        // Dynamic lights for zones
+        function createZoneLight(x, z, color) {
+            const light = new THREE.PointLight(color, 2, 80);
+            light.position.set(x, 20, z);
+            scene.add(light);
+        }
+        createZoneLight(0, -60, ZONES.GAMES.color); // North
+        createZoneLight(-70, 0, ZONES.WEB.color);   // West
+        createZoneLight(70, 0, ZONES.DATA.color);   // East
+
+        // Main Sun
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(50, 100, 50);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.camera.left = -100; dirLight.shadow.camera.right = 100;
+        dirLight.shadow.camera.top = 100; dirLight.shadow.camera.bottom = -100;
+        scene.add(dirLight);
+
+        // --- ASSETS ---
+        const interactables = [];
+
+        // Helper: Text Texture
+        function createLabel(text, color) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512; canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            ctx.font = 'bold 70px "Rajdhani"';
+            ctx.fillStyle = '#' + color.toString(16).padStart(6,'0');
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.shadowColor = ctx.fillStyle;
+            ctx.shadowBlur = 10;
+            ctx.fillText(text, 256, 64);
+            const tex = new THREE.CanvasTexture(canvas);
+            const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true }));
+            return sprite;
+        }
+
+        // 1. Game Zone (Arcade Machines)
+        const cabGeo = new THREE.BoxGeometry(4, 8, 4);
+        
+        // 2. Web Zone (Glass Buildings)
+        const buildGeo = new THREE.BoxGeometry(6, 12, 6);
+
+        // 3. Data Zone (Server Racks)
+        const rackGeo = new THREE.BoxGeometry(5, 7, 2);
+
+        PROJECTS.forEach(p => {
+            let mesh, color;
+            if (p.type === 'GAME') {
+                color = ZONES.GAMES.color;
+                mesh = new THREE.Mesh(cabGeo, new THREE.MeshStandardMaterial({ color: 0x222222 }));
+                // Add joystick
+                const joy = new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,1), new THREE.MeshStandardMaterial({color:0xff0000}));
+                joy.position.set(0, 1, 2); joy.rotation.x = 1;
+                mesh.add(joy);
+            } else if (p.type === 'WEB') {
+                color = ZONES.WEB.color;
+                mesh = new THREE.Mesh(buildGeo, new THREE.MeshStandardMaterial({ 
+                    color: 0xeeeeee, transparent: true, opacity: 0.9, roughness: 0.1, metalness: 0.8 
+                }));
+            } else {
+                color = ZONES.DATA.color;
+                mesh = new THREE.Mesh(rackGeo, new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.5 }));
+                // Blinking lights
+                const lights = new THREE.Mesh(new THREE.PlaneGeometry(4, 6), new THREE.MeshBasicMaterial({ color: 0x00ff00 }));
+                lights.position.z = 1.05;
+                mesh.add(lights);
+            }
+
+            mesh.position.set(p.pos.x, mesh.geometry.parameters.height/2, p.pos.z);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            
+            // Glowing Screen/Sign
+            const sign = new THREE.Mesh(new THREE.PlaneGeometry(3, 1), new THREE.MeshBasicMaterial({ color: color }));
+            sign.position.y = mesh.geometry.parameters.height/2 + 2;
+            sign.position.z = 0;
+            // Always face center roughly
+            sign.lookAt(0, sign.position.y, 0);
+            
+            // Text Label
+            const label = createLabel(p.title, color);
+            label.position.set(0, mesh.geometry.parameters.height/2 + 5, 0);
+            label.scale.set(12, 3, 1);
+            
+            mesh.add(label);
+            scene.add(mesh);
+            scene.add(sign);
+
+            interactables.push({ mesh, data: p, radius: 10, color });
+        });
+
+        // --- HUB & SIGNPOSTS ---
+        const centerHub = new THREE.Group();
+        const hubBase = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 1, 32), new THREE.MeshStandardMaterial({ color: 0x333333 }));
+        centerHub.add(hubBase);
+        
+        // Pillar
+        const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 10), new THREE.MeshStandardMaterial({color: 0xffffff}));
+        pillar.position.y = 5;
+        centerHub.add(pillar);
+
+        // Arrows
+        function createArrow(angle, color, text) {
+            const group = new THREE.Group();
+            const arrow = new THREE.Mesh(new THREE.BoxGeometry(4, 1, 0.5), new THREE.MeshBasicMaterial({color: color}));
+            arrow.position.set(2, 0, 0);
+            group.add(arrow);
+            group.rotation.y = angle;
+            group.position.y = 8;
+            return group;
+        }
+        centerHub.add(createArrow(Math.PI, ZONES.GAMES.color, "GAMES")); // North (neg Z)
+        centerHub.add(createArrow(Math.PI/2, ZONES.WEB.color, "WEB")); // West (neg X)
+        centerHub.add(createArrow(-Math.PI/2, ZONES.DATA.color, "DATA")); // East (pos X)
+
+        scene.add(centerHub);
+
+        // --- PLAYER (Cyber Truck) ---
+        const car = new THREE.Group();
+        const bodyGeo = new THREE.BufferGeometry();
+        // Simple low poly cyber truck shape
+        const vertices = new Float32Array([
+            // bottom
+            -1.5,0.5,2,  1.5,0.5,2,  -1.5,0.5,-2,  1.5,0.5,-2,
+            // top
+            -1.2,2,0,  1.2,2,0,  -1.2,1.5,-1.5,  1.2,1.5,-1.5
+        ]);
+        // Note: Building custom geo manually is verbose, using primitives for stability
+        
+        const carBody = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1, 5), new THREE.MeshStandardMaterial({color: 0x333333, roughness: 0.3}));
+        carBody.position.y = 1;
+        carBody.castShadow = true;
+        car.add(carBody);
+
+        const carTop = new THREE.Mesh(new THREE.ConeGeometry(2, 2, 4), new THREE.MeshStandardMaterial({color: 0x111111}));
+        carTop.rotation.y = Math.PI/4;
+        carTop.position.y = 2;
+        car.add(carTop);
+
+        // Neon Strips
+        const strip = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.1, 5.1), new THREE.MeshBasicMaterial({color: 0x00ffcc}));
+        strip.position.y = 1;
+        car.add(strip);
+
+        // Wheels
+        const wGeo = new THREE.CylinderGeometry(0.6, 0.6, 0.5, 16);
+        const wMat = new THREE.MeshStandardMaterial({color:0x000000});
+        [[-1.3, 1.5], [1.3, 1.5], [-1.3, -1.5], [1.3, -1.5]].forEach(pos => {
+            const w = new THREE.Mesh(wGeo, wMat);
+            w.rotation.z = Math.PI/2;
+            w.position.set(pos[0], 0.6, pos[1]);
+            car.add(w);
+        });
+
+        // Lights
+        const hLight = new THREE.SpotLight(0xffffff, 1, 50, 0.5, 0.5);
+        hLight.position.set(0, 2, -1);
+        hLight.target.position.set(0, 0, -20);
+        car.add(hLight);
+        car.add(hLight.target);
+
+        // Engine Particles (Simple mesh trail)
+        const trailGeo = new THREE.PlaneGeometry(0.5, 0.5);
+        const trailMat = new THREE.MeshBasicMaterial({color: 0x00ffcc, transparent: true, opacity: 0.6});
+        const trails = [];
+        for(let i=0; i<10; i++) {
+            const t = new THREE.Mesh(trailGeo, trailMat);
+            t.visible = false;
+            scene.add(t);
+            trails.push({mesh: t, life: 0});
+        }
+
+        scene.add(car);
+
+        // --- PHYSICS & INPUT ---
+        const player = {
+            pos: new THREE.Vector3(0,0,30),
+            vel: new THREE.Vector3(),
+            dir: Math.PI,
+            speed: 0,
+            boost: 0
+        };
+
+        const keys = { w:false, a:false, s:false, d:false, shift:false };
+        
+        window.addEventListener('keydown', e => {
+            const k = e.key.toLowerCase();
+            if(keys.hasOwnProperty(k) || k === 'shift') keys[k] = true;
+            if(e.key.startsWith('Arrow')) {
+                if(e.key==='ArrowUp') keys.w = true;
+                if(e.key==='ArrowDown') keys.s = true;
+                if(e.key==='ArrowLeft') keys.a = true;
+                if(e.key==='ArrowRight') keys.d = true;
+            }
+        });
+        window.addEventListener('keyup', e => {
+            const k = e.key.toLowerCase();
+            if(keys.hasOwnProperty(k) || k === 'shift') keys[k] = false;
+            if(e.key.startsWith('Arrow')) {
+                if(e.key==='ArrowUp') keys.w = false;
+                if(e.key==='ArrowDown') keys.s = false;
+                if(e.key==='ArrowLeft') keys.a = false;
+                if(e.key==='ArrowRight') keys.d = false;
+            }
+        });
+
+        // Mobile Controls
+        const joystick = { x: 0, y: 0, active: false };
+        const joyZone = document.getElementById('joystick-zone');
+        const boostBtn = document.getElementById('boost-btn');
+
+        // Simple virtual joystick logic
+        joyZone.addEventListener('touchstart', e => {
+            joystick.active = true;
+            handleJoy(e.touches[0]);
+        });
+        joyZone.addEventListener('touchmove', e => {
+            if(joystick.active) handleJoy(e.touches[0]);
+        });
+        const endJoy = () => { joystick.active = false; joystick.x=0; joystick.y=0; };
+        joyZone.addEventListener('touchend', endJoy);
+        
+        function handleJoy(touch) {
+            const rect = joyZone.getBoundingClientRect();
+            const cx = rect.left + rect.width/2;
+            const cy = rect.top + rect.height/2;
+            const dx = (touch.clientX - cx) / (rect.width/2);
+            const dy = (touch.clientY - cy) / (rect.height/2);
+            joystick.x = Math.max(-1, Math.min(1, dx));
+            joystick.y = Math.max(-1, Math.min(1, dy));
+        }
+
+        boostBtn.addEventListener('touchstart', () => keys.shift = true);
+        boostBtn.addEventListener('touchend', () => keys.shift = false);
+
+
+        // --- MAIN LOOP ---
+        function update() {
+            // Physics Params
+            const MAX_SPEED = keys.shift ? 1.5 : 0.8;
+            const ACCEL = 0.04;
+            const TURN = 0.06;
+            const FRICTION = 0.95;
+
+            // Input
+            let gas = 0; 
+            let turn = 0;
+
+            if (joystick.active) {
+                gas = -joystick.y;
+                turn = -joystick.x;
+            } else {
+                if (keys.w) gas += 1;
+                if (keys.s) gas -= 1;
+                if (keys.a) turn += 1;
+                if (keys.d) turn -= 1;
+            }
+
+            // Move
+            player.speed += gas * ACCEL;
+            player.speed *= FRICTION;
+            // Limit
+            if(player.speed > MAX_SPEED) player.speed = MAX_SPEED;
+            if(player.speed < -MAX_SPEED/2) player.speed = -MAX_SPEED/2;
+
+            // Turn
+            if(Math.abs(player.speed) > 0.01) {
+                const dirOp = player.speed > 0 ? 1 : -1;
+                player.dir += turn * TURN * dirOp;
+            }
+
+            // Velocity
+            player.vel.x = Math.sin(player.dir) * player.speed;
+            player.vel.z = Math.cos(player.dir) * player.speed;
+
+            player.pos.add(player.vel);
+
+            // Boundaries
+            if(Math.abs(player.pos.x) > 190) player.pos.x = Math.sign(player.pos.x)*190;
+            if(Math.abs(player.pos.z) > 190) player.pos.z = Math.sign(player.pos.z)*190;
+
+            // Update Mesh
+            car.position.copy(player.pos);
+            car.rotation.y = player.dir;
+            
+            // Tilt juice
+            car.rotation.z = -turn * 0.15 * (player.speed);
+            car.rotation.x = -player.speed * 0.15;
+
+            // Camera
+            const camTarget = player.pos.clone().add(new THREE.Vector3(0,0,0));
+            const camOffset = new THREE.Vector3(0, 25, -30);
+            camOffset.applyAxisAngle(new THREE.Vector3(0,1,0), player.dir);
+            const finalPos = player.pos.clone().add(camOffset);
+            
+            camera.position.lerp(finalPos, 0.1);
+            camera.lookAt(camTarget);
+
+            // Interactions
+            checkInteractions();
+
+            // Trail FX
+            if(keys.shift && Math.abs(player.speed) > 1) {
+                const trail = trails.find(t => !t.visible);
+                if(trail) {
+                    trail.mesh.visible = true;
+                    trail.mesh.position.copy(player.pos);
+                    trail.mesh.position.y = 0.5;
+                    trail.mesh.rotation.x = -Math.PI/2;
+                    trail.mesh.rotation.z = player.dir;
+                    trail.life = 1.0;
+                }
+            }
+            trails.forEach(t => {
+                if(t.mesh.visible) {
+                    t.life -= 0.05;
+                    t.mesh.scale.setScalar(t.life);
+                    t.mesh.material.opacity = t.life * 0.6;
+                    if(t.life <= 0) t.mesh.visible = false;
+                }
+            });
+            
+            renderer.render(scene, camera);
+            requestAnimationFrame(update);
+        }
+
+        const modal = document.getElementById('modal');
+        let activeProject = null;
+
+        function checkInteractions() {
+            let nearest = null;
+            let minDist = 100;
+
+            interactables.forEach(item => {
+                const dist = player.pos.distanceTo(item.mesh.position);
+                if (dist < item.radius + 5) {
+                    nearest = item;
+                }
+                
+                // Animation for floating labels
+                const label = item.mesh.children[item.mesh.children.length-1];
+                if(label && label.type === 'Sprite') {
+                    label.position.y = (item.mesh.geometry.parameters.height/2 + 5) + Math.sin(Date.now()*0.003)*0.5;
+                }
+            });
+
+            if (nearest && !activeProject) {
+                showModal(nearest.data, nearest.color);
+                activeProject = nearest.data.title;
+            } else if (!nearest && activeProject) {
+                hideModal();
+                activeProject = null;
+            }
+        }
+
+        function showModal(data, colorHex) {
+            const color = '#' + colorHex.toString(16).padStart(6,'0');
+            document.getElementById('modal-banner').style.backgroundColor = color;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-title').style.color = color;
+            document.getElementById('modal-desc').innerText = data.desc;
+            document.getElementById('modal-link').href = data.link;
+            document.getElementById('modal-link').style.backgroundColor = color;
+            
+            const tags = document.getElementById('modal-tags');
+            tags.innerHTML = '';
+            data.tech.forEach(t => {
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerText = t;
+                tag.style.color = color;
+                tag.style.borderColor = color;
+                tags.appendChild(tag);
+            });
+            
+            modal.classList.add('active');
+        }
+
+        function hideModal() {
+            modal.classList.remove('active');
+        }
+
+        // --- INIT ---
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        document.getElementById('load-bar').style.width = '100%';
+        setTimeout(() => {
+            document.getElementById('loader').style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById('loader').remove();
+                update();
+            }, 500);
+        }, 1000);
+
+    </script>
 </body>
 </html>
