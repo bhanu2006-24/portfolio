@@ -114,12 +114,15 @@ portfolio/
 
 3. Navigate to `http://localhost:8000`
 
-## 📜 License
+## 📜 License & Attribution
 
 This project is open source and available under the [MIT License](LICENSE).
+
+**Original Terminal Portfolio Design:** [Quang Bui](https://github.com/duckyquang) - The terminal-style interface design was inspired by and adapted from Quang Bui's portfolio.
 
 ---
 
 <p align="center">
-  <b>Built with ❤️ by Bhanu Pratap Saini</b>
+  <b>Built with ❤️ by Bhanu Pratap Saini</b><br>
+  <sub>Original design credit: Quang Bui</sub>
 </p>
