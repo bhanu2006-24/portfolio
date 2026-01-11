@@ -3,454 +3,661 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhanu Saini | Portfolio</title>
+    <title>Bhanu Saini | Full-Stack Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#050505',
+                        card: '#0a0a0a',
+                        primary: '#06b6d4', // cyan-500
+                        secondary: '#8b5cf6', // violet-500
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #09090b; /* zinc-950 */
+            background-color: #050505;
             color: white;
+            cursor: none; /* Hiding default cursor for custom one */
         }
         
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
             width: 8px;
+            height: 8px;
+            background-color: #06b6d4;
         }
-        ::-webkit-scrollbar-track {
-            background: #09090b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #3f3f46;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #71717a;
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
 
-        /* Animation Keyframes */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+        /* Utilities */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(1.1); }
+        .text-gradient {
+            background: linear-gradient(to right, #06b6d4, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
+        /* Reveal on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .blob {
-            position: absolute;
-            filter: blur(100px);
-            z-index: 0;
-            animation: pulse-glow 8s infinite;
+        /* Typewriter Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
         }
-
-        /* Utility for selection color */
-        ::selection {
-            background-color: #06b6d4; /* cyan-500 */
-            color: black;
-        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
 <body class="overflow-x-hidden antialiased selection:bg-cyan-500 selection:text-black">
 
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent">
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent border-b border-transparent">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Logo -->
-            <div class="text-2xl font-bold tracking-tighter cursor-pointer group" onclick="scrollToSection('home')">
+            <div class="text-2xl font-display font-bold tracking-tighter cursor-pointer group" onclick="scrollToSection('home')">
                 BS<span class="text-cyan-400">.</span>
-                <div class="h-1 w-0 group-hover:w-full bg-cyan-400 transition-all duration-300"></div>
             </div>
             
-            <!-- Desktop Menu -->
             <div class="hidden md:flex gap-8 text-sm font-medium text-zinc-400">
-                <button onclick="scrollToSection('about')" class="nav-link hover:text-cyan-400 transition-colors uppercase tracking-widest" data-section="about">About</button>
-                <button onclick="scrollToSection('projects')" class="nav-link hover:text-cyan-400 transition-colors uppercase tracking-widest" data-section="projects">Projects</button>
-                <button onclick="scrollToSection('skills')" class="nav-link hover:text-cyan-400 transition-colors uppercase tracking-widest" data-section="skills">Skills</button>
-                <button onclick="scrollToSection('contact')" class="nav-link hover:text-cyan-400 transition-colors uppercase tracking-widest" data-section="contact">Contact</button>
+                <button onclick="scrollToSection('about')" class="hover:text-cyan-400 transition-colors">About</button>
+                <button onclick="scrollToSection('experience')" class="hover:text-cyan-400 transition-colors">Experience</button>
+                <button onclick="scrollToSection('projects')" class="hover:text-cyan-400 transition-colors">Work</button>
+                <button onclick="scrollToSection('contact')" class="hover:text-cyan-400 transition-colors">Contact</button>
             </div>
 
-            <!-- GitHub Link -->
-            <a href="https://github.com/bhanu2006-24" target="_blank" class="p-2 bg-zinc-900 rounded-full hover:bg-zinc-800 border border-zinc-800 transition-all hover:scale-110">
-                <i data-lucide="github" class="w-5 h-5"></i>
-            </a>
+            <div class="flex items-center gap-4">
+                <span class="hidden md:flex items-center gap-2 text-xs font-mono text-green-400 bg-green-400/10 px-3 py-1 rounded-full border border-green-400/20">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    Open to Work
+                </span>
+                <a href="https://github.com/bhanu2006-24" target="_blank" class="p-2 bg-zinc-900 rounded-full hover:bg-zinc-800 border border-zinc-800 transition-all hover:scale-110 group">
+                    <i data-lucide="github" class="w-5 h-5 text-zinc-400 group-hover:text-white"></i>
+                </a>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- Background Blobs -->
-        <div class="blob top-20 left-10 w-72 h-72 bg-purple-600/20 rounded-full"></div>
-        <div class="blob bottom-20 right-10 w-96 h-96 bg-cyan-600/20 rounded-full" style="animation-delay: 1s;"></div>
+        <!-- Background Effects -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
+        </div>
 
-        <div class="max-w-4xl mx-auto px-6 text-center z-10">
-            <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-mono tracking-widest uppercase">
+        <div class="max-w-5xl mx-auto px-6 text-center z-10 relative">
+            <div class="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm text-zinc-400 text-xs font-mono uppercase tracking-wider hover:border-cyan-500/50 transition-colors duration-300">
+                <i data-lucide="code" class="w-3 h-3 text-cyan-400"></i>
                 Vibe Coding Enthusiast
             </div>
             
-            <h1 class="text-6xl md:text-8xl font-black tracking-tight mb-6 leading-tight">
-                I build <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">digital</span><br />
-                experiences.
+            <h1 class="text-6xl md:text-8xl font-display font-bold tracking-tight mb-6 leading-[1.1]">
+                Building digital <br />
+                <span id="typewriter" class="text-gradient typing-cursor"></span>
             </h1>
             
-            <p class="text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                Hi, I'm <span class="text-white font-semibold">Bhanu Saini</span>. A Full-Stack Developer & IIT Madras Student building the future with React, Node.js, and modern vibes.
+            <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                Hi, I'm <span class="text-white font-semibold">Bhanu Saini</span>. A Full-Stack Developer & Data Science student at IIT Madras. I craft high-performance web applications that merge logic with creativity.
             </p>
             
             <div class="flex flex-col md:flex-row items-center justify-center gap-4">
-                <button onclick="scrollToSection('projects')" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-cyan-400 transition-all hover:scale-105 flex items-center gap-2">
-                    <i data-lucide="code-2" class="w-5 h-5"></i> View Work
+                <button onclick="scrollToSection('projects')" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-cyan-500 hover:text-white transition-all hover:scale-105 flex items-center gap-2 group">
+                    View My Work <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                 </button>
-                <a href="mailto:bhanupsaini2024@gmail.com" class="px-8 py-4 bg-zinc-900 border border-zinc-800 text-white font-bold rounded-full hover:bg-zinc-800 transition-all hover:scale-105 flex items-center gap-2">
-                    <i data-lucide="mail" class="w-5 h-5"></i> Contact Me
+                <a href="./Web-Resume.pdf" download class="px-8 py-4 bg-zinc-900 border border-zinc-800 text-white font-bold rounded-full hover:bg-zinc-800 transition-all hover:scale-105 flex items-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i> Download CV
                 </a>
             </div>
-        </div>
 
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-            <i data-lucide="chevron-down" class="w-6 h-6 text-zinc-600"></i>
+            <!-- Stats/Tech Ticker -->
+            <div class="mt-20 pt-10 border-t border-white/5 flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                <i data-lucide="layout-template" class="w-8 h-8 hover:text-[#61DAFB] transition-colors" title="React"></i>
+                <i data-lucide="file-code-2" class="w-8 h-8 hover:text-[#3178C6] transition-colors" title="TypeScript"></i>
+                <i data-lucide="server" class="w-8 h-8 hover:text-[#339933] transition-colors" title="Node.js"></i>
+                <i data-lucide="database" class="w-8 h-8 hover:text-[#336791] transition-colors" title="PostgreSQL"></i>
+                <i data-lucide="wind" class="w-8 h-8 hover:text-[#38B2AC] transition-colors" title="Tailwind"></i>
+                <i data-lucide="cpu" class="w-8 h-8 hover:text-white transition-colors" title="AI/ML"></i>
+            </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 bg-zinc-900/30 border-y border-white/5">
+    <!-- About & Stats Section -->
+    <section id="about" class="py-32 bg-dark">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="relative group">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl opacity-30 blur-xl group-hover:opacity-50 transition-opacity"></div>
-                    <div class="relative bg-zinc-900 border border-zinc-800 p-8 rounded-2xl">
-                        <i data-lucide="terminal" class="w-10 h-10 text-cyan-400 mb-6"></i>
-                        <h3 class="text-2xl font-bold mb-4">About Me</h3>
-                        <p class="text-zinc-400 mb-6 leading-relaxed">
-                            I'm an aspiring Full-Stack Developer currently pursuing a B.Sc. in Data Science at <span class="text-white">IIT Madras</span>. 
-                            My journey started at KV No. 2, Jaipur, and now I'm passionate about "vibe coding" — creating software that feels as good as it looks.
-                        </p>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4 text-sm text-zinc-300">
-                                <div class="w-12 font-mono text-zinc-500">NOW</div>
-                                <div>Learning Next.js & Advanced Backend</div>
-                            </div>
-                            <div class="flex items-center gap-4 text-sm text-zinc-300">
-                                <div class="w-12 font-mono text-zinc-500">2025</div>
-                                <div>B.Sc Data Science @ IIT Madras</div>
-                            </div>
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+                        More than just <br /> <span class="text-zinc-500">writing code.</span>
+                    </h2>
+                    <p class="text-zinc-400 text-lg mb-6 leading-relaxed">
+                        I specialize in building scalable, user-centric applications. Currently pursuing a <span class="text-white">B.Sc. in Data Science at IIT Madras</span>, I blend analytical thinking with creative frontend development.
+                    </p>
+                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">
+                        My philosophy is simple: <span class="text-cyan-400 font-mono">"Vibe Coding"</span>. It means creating software that doesn't just work but feels alive through smooth animations, intuitive UI, and robust architecture.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="p-4 bg-zinc-900/50 border border-zinc-800 rounded-xl">
+                            <h3 class="text-3xl font-bold text-white mb-1">10+</h3>
+                            <p class="text-sm text-zinc-500 uppercase tracking-wider">Projects Completed</p>
+                        </div>
+                        <div class="p-4 bg-zinc-900/50 border border-zinc-800 rounded-xl">
+                            <h3 class="text-3xl font-bold text-white mb-1">3+</h3>
+                            <p class="text-sm text-zinc-500 uppercase tracking-wider">Years Coding</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="space-y-8">
-                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
-                        Bridging the gap between <span class="text-cyan-400">Logic</span> and <span class="text-purple-400">Creativity</span>.
-                    </h2>
-                    <p class="text-zinc-400 text-lg">
-                        I don't just write code; I craft solutions. Whether it's an AI-powered anime explorer or a devotional e-commerce platform, I focus on performance, scalability, and an exceptional user experience.
-                    </p>
-                    
-                    <div class="flex flex-wrap gap-4">
-                        <div class="flex items-center gap-2 px-4 py-2 bg-zinc-800/50 rounded-full border border-zinc-700 text-sm font-medium">
-                            <i data-lucide="code-2" class="w-4 h-4 text-cyan-400"></i> Full Stack
+                <div class="reveal relative">
+                    <!-- Decorative abstract code block -->
+                    <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl opacity-20 blur-xl"></div>
+                    <div class="relative bg-[#0a0a0a] border border-zinc-800 rounded-2xl p-6 font-mono text-sm leading-relaxed text-zinc-300 overflow-hidden shadow-2xl">
+                        <div class="flex gap-2 mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="flex items-center gap-2 px-4 py-2 bg-zinc-800/50 rounded-full border border-zinc-700 text-sm font-medium">
-                            <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i> UI/UX Design
-                        </div>
-                        <div class="flex items-center gap-2 px-4 py-2 bg-zinc-800/50 rounded-full border border-zinc-700 text-sm font-medium">
-                            <i data-lucide="database" class="w-4 h-4 text-green-400"></i> Data Science
-                        </div>
+                        <p><span class="text-purple-400">const</span> <span class="text-yellow-200">developer</span> = {</p>
+                        <p class="pl-4">name: <span class="text-green-400">'Bhanu Saini'</span>,</p>
+                        <p class="pl-4">education: <span class="text-green-400">'IIT Madras'</span>,</p>
+                        <p class="pl-4">skills: [<span class="text-green-400">'React'</span>, <span class="text-green-400">'Node'</span>, <span class="text-green-400">'AI'</span>],</p>
+                        <p class="pl-4">passion: <span class="text-green-400">'Building cool stuff'</span>,</p>
+                        <p class="pl-4">status: <span class="text-cyan-400">true</span> <span class="text-zinc-500">// Ready to hire</span></p>
+                        <p>}</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-24">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4">Technical Arsenal</h2>
-                <p class="text-zinc-400 text-lg">The tools I use to bring ideas to life</p>
-            </div>
+    <!-- Experience Timeline -->
+    <section id="experience" class="py-32 bg-zinc-900/20 border-y border-white/5">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-display font-bold mb-16 text-center reveal">Journey So Far</h2>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Frontend -->
-                <div class="group p-6 bg-zinc-900/50 border border-zinc-800 rounded-2xl hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-3 bg-zinc-800 rounded-lg text-cyan-400 group-hover:text-white group-hover:bg-cyan-500 transition-colors">
-                            <i data-lucide="palette" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="text-xl font-bold">Frontend</h3>
+            <div class="space-y-12 relative before:content-[''] before:absolute before:left-[19px] md:before:left-1/2 before:top-0 before:h-full before:w-[2px] before:bg-zinc-800">
+                
+                <!-- Timeline Item 1 -->
+                <div class="reveal flex flex-col md:flex-row gap-8 items-center md:items-start relative">
+                    <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1">
+                        <h3 class="text-xl font-bold text-white">B.Sc. in Data Science</h3>
+                        <p class="text-cyan-400 font-mono text-sm mb-2">2025 - 2028</p>
+                        <p class="text-zinc-400 text-sm">IIT Madras</p>
+                        <p class="text-zinc-500 text-sm mt-2">Deepening knowledge in algorithms, computational thinking, and full-stack integration.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">React.js</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">Next.js</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">TypeScript</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">TailwindCSS</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">GSAP</span>
+                    <div class="absolute left-[10px] md:left-1/2 -translate-x-1/2 w-5 h-5 bg-cyan-500 rounded-full border-4 border-[#050505] z-10 order-1 md:order-2"></div>
+                    <div class="md:w-1/2 md:pl-12 order-3 md:order-3"></div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="reveal flex flex-col md:flex-row gap-8 items-center md:items-start relative">
+                    <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1"></div>
+                    <div class="absolute left-[10px] md:left-1/2 -translate-x-1/2 w-5 h-5 bg-purple-500 rounded-full border-4 border-[#050505] z-10 order-1 md:order-2"></div>
+                    <div class="md:w-1/2 md:pl-12 order-3 md:order-3">
+                        <h3 class="text-xl font-bold text-white">Full Stack Projects</h3>
+                        <p class="text-purple-400 font-mono text-sm mb-2">2024 - Present</p>
+                        <p class="text-zinc-400 text-sm">Freelance & Open Source</p>
+                        <p class="text-zinc-500 text-sm mt-2">Developed high-impact web apps like AniGlitch and GrooveWave, focusing on user experience and performance.</p>
                     </div>
                 </div>
 
-                <!-- Backend -->
-                <div class="group p-6 bg-zinc-900/50 border border-zinc-800 rounded-2xl hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-3 bg-zinc-800 rounded-lg text-cyan-400 group-hover:text-white group-hover:bg-cyan-500 transition-colors">
-                            <i data-lucide="database" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="text-xl font-bold">Backend</h3>
+                <!-- Timeline Item 3 -->
+                <div class="reveal flex flex-col md:flex-row gap-8 items-center md:items-start relative">
+                    <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1">
+                        <h3 class="text-xl font-bold text-white">High School</h3>
+                        <p class="text-zinc-500 font-mono text-sm mb-2">Graduated</p>
+                        <p class="text-zinc-400 text-sm">Kendriya Vidyalaya No. 2, Jaipur</p>
+                        <p class="text-zinc-500 text-sm mt-2">Strong foundation in STEM academics.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">Node.js</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">Express.js</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">Flask</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">PostgreSQL</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">REST APIs</span>
-                    </div>
+                    <div class="absolute left-[10px] md:left-1/2 -translate-x-1/2 w-5 h-5 bg-zinc-600 rounded-full border-4 border-[#050505] z-10 order-1 md:order-2"></div>
+                    <div class="md:w-1/2 md:pl-12 order-3 md:order-3"></div>
                 </div>
 
-                <!-- Tools -->
-                <div class="group p-6 bg-zinc-900/50 border border-zinc-800 rounded-2xl hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="p-3 bg-zinc-800 rounded-lg text-cyan-400 group-hover:text-white group-hover:bg-cyan-500 transition-colors">
-                            <i data-lucide="cpu" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="text-xl font-bold">Tools</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">Git & GitHub</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">Figma</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">Vercel</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">Cloudflare</span>
-                        <span class="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700/50">VS Code</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-24 bg-zinc-900/30">
+    <section id="projects" class="py-32">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4">Featured Projects</h2>
-                <p class="text-zinc-400 text-lg">A collection of my recent web development work</p>
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-display font-bold mb-4">Selected Works</h2>
+                    <p class="text-zinc-400 text-lg">A showcase of interactive and functional applications.</p>
+                </div>
+                <!-- Filter Tabs -->
+                <div class="flex gap-2 mt-6 md:mt-0 overflow-x-auto pb-2 md:pb-0">
+                    <button onclick="filterProjects('all')" class="filter-btn active px-4 py-2 rounded-full border border-zinc-800 text-sm hover:bg-zinc-800 transition-colors bg-white text-black font-medium" data-filter="all">All</button>
+                    <button onclick="filterProjects('react')" class="filter-btn px-4 py-2 rounded-full border border-zinc-800 text-sm hover:bg-zinc-800 transition-colors text-zinc-400" data-filter="react">React</button>
+                    <button onclick="filterProjects('fullstack')" class="filter-btn px-4 py-2 rounded-full border border-zinc-800 text-sm hover:bg-zinc-800 transition-colors text-zinc-400" data-filter="fullstack">Full Stack</button>
+                    <button onclick="filterProjects('ai')" class="filter-btn px-4 py-2 rounded-full border border-zinc-800 text-sm hover:bg-zinc-800 transition-colors text-zinc-400" data-filter="ai">AI / Data</button>
+                </div>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-                <!-- Projects will be populated by JS for cleanliness, or we can hardcode. Let's hardcode for SEO/No-JS fallback but maintain the structure. -->
-                
                 <!-- Project 1 -->
-                <div class="group relative bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-300 hover:-translate-y-2">
-                    <div class="h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-zinc-800 rounded-xl">
-                                <i data-lucide="zap" class="w-6 h-6"></i>
+                <div class="project-card group reveal" data-category="ai react">
+                    <div class="glass-card rounded-2xl overflow-hidden h-full flex flex-col transition-transform duration-300 hover:-translate-y-2 hover:border-cyan-500/30">
+                        <div class="h-48 bg-zinc-900 relative overflow-hidden group-hover:bg-zinc-800 transition-colors">
+                            <div class="absolute inset-0 flex items-center justify-center text-zinc-700">
+                                <i data-lucide="zap" class="w-12 h-12 group-hover:text-cyan-400 group-hover:scale-110 transition-all duration-300"></i>
                             </div>
-                            <a href="https://aniglitch.pages.dev" target="_blank" class="text-zinc-500 hover:text-white transition-colors">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
+                            <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono border border-white/10">AI Powered</div>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">AniGlitch</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6 h-20">Anime explorer with cyberpunk design and AI-powered search capabilities.</p>
-                        <div class="flex flex-wrap gap-2 mt-auto">
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">React</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">TypeScript</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">AI</span>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">AniGlitch</h3>
+                            <p class="text-zinc-400 text-sm mb-4 line-clamp-2">Anime explorer featuring a cyberpunk design and AI-driven search recommendations.</p>
+                            <div class="flex gap-2 mb-6 flex-wrap">
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">React</span>
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">TypeScript</span>
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">AI API</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center">
+                                <a href="https://aniglitch.pages.dev" target="_blank" class="text-sm font-medium flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                                    Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="group relative bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-300 hover:-translate-y-2">
-                    <div class="h-2 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-zinc-800 rounded-xl">
-                                <i data-lucide="terminal" class="w-6 h-6"></i>
+                <div class="project-card group reveal" data-category="ai fullstack">
+                    <div class="glass-card rounded-2xl overflow-hidden h-full flex flex-col transition-transform duration-300 hover:-translate-y-2 hover:border-purple-500/30">
+                        <div class="h-48 bg-zinc-900 relative overflow-hidden group-hover:bg-zinc-800 transition-colors">
+                            <div class="absolute inset-0 flex items-center justify-center text-zinc-700">
+                                <i data-lucide="terminal" class="w-12 h-12 group-hover:text-purple-400 group-hover:scale-110 transition-all duration-300"></i>
                             </div>
-                            <a href="https://oppe-practice.pages.dev" target="_blank" class="text-zinc-500 hover:text-white transition-colors">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
+                            <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono border border-white/10">EdTech</div>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">OPPE Practice</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6 h-20">Coding practice platform for IIT Madras with in-browser Python execution via Pyodide.</p>
-                        <div class="flex flex-wrap gap-2 mt-auto">
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">React</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">Pyodide</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">Python</span>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2 group-hover:text-purple-400 transition-colors">OPPE Platform</h3>
+                            <p class="text-zinc-400 text-sm mb-4 line-clamp-2">Coding platform for IIT Madras students with in-browser Python execution (Pyodide).</p>
+                            <div class="flex gap-2 mb-6 flex-wrap">
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">Pyodide</span>
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">React</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center">
+                                <a href="https://oppe-practice.pages.dev" target="_blank" class="text-sm font-medium flex items-center gap-2 hover:text-purple-400 transition-colors">
+                                    Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 3 -->
-                <div class="group relative bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-300 hover:-translate-y-2">
-                    <div class="h-2 bg-gradient-to-r from-green-400 to-emerald-600"></div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-zinc-800 rounded-xl">
-                                <i data-lucide="sparkles" class="w-6 h-6"></i>
+                <div class="project-card group reveal" data-category="react fullstack">
+                    <div class="glass-card rounded-2xl overflow-hidden h-full flex flex-col transition-transform duration-300 hover:-translate-y-2 hover:border-green-500/30">
+                        <div class="h-48 bg-zinc-900 relative overflow-hidden group-hover:bg-zinc-800 transition-colors">
+                            <div class="absolute inset-0 flex items-center justify-center text-zinc-700">
+                                <i data-lucide="music" class="w-12 h-12 group-hover:text-green-400 group-hover:scale-110 transition-all duration-300"></i>
                             </div>
-                            <a href="https://groovewave.pages.dev" target="_blank" class="text-zinc-500 hover:text-white transition-colors">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
+                            <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono border border-white/10">SaaS</div>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">GrooveWave</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6 h-20">Next-gen music streaming platform with intelligent discovery and premium UI.</p>
-                        <div class="flex flex-wrap gap-2 mt-auto">
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">React</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">TypeScript</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">SaaS</span>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2 group-hover:text-green-400 transition-colors">GrooveWave</h3>
+                            <p class="text-zinc-400 text-sm mb-4 line-clamp-2">Next-gen music streaming platform with intelligent discovery algorithms and premium UI.</p>
+                            <div class="flex gap-2 mb-6 flex-wrap">
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">TypeScript</span>
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">Tailwind</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center">
+                                <a href="https://groovewave.pages.dev" target="_blank" class="text-sm font-medium flex items-center gap-2 hover:text-green-400 transition-colors">
+                                    Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 4 -->
-                <div class="group relative bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-300 hover:-translate-y-2">
-                    <div class="h-2 bg-gradient-to-r from-orange-400 to-amber-600"></div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-zinc-800 rounded-xl">
-                                <i data-lucide="globe" class="w-6 h-6"></i>
+                <div class="project-card group reveal" data-category="react fullstack">
+                    <div class="glass-card rounded-2xl overflow-hidden h-full flex flex-col transition-transform duration-300 hover:-translate-y-2 hover:border-orange-500/30">
+                        <div class="h-48 bg-zinc-900 relative overflow-hidden group-hover:bg-zinc-800 transition-colors">
+                            <div class="absolute inset-0 flex items-center justify-center text-zinc-700">
+                                <i data-lucide="shopping-bag" class="w-12 h-12 group-hover:text-orange-400 group-hover:scale-110 transition-all duration-300"></i>
                             </div>
-                            <a href="https://deepenyourfaith.in" target="_blank" class="text-zinc-500 hover:text-white transition-colors">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
+                            <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono border border-white/10">E-Commerce</div>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Deepen Your Faith</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6 h-20">Devotional e-commerce store with product catalog and spiritual UI.</p>
-                        <div class="flex flex-wrap gap-2 mt-auto">
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">React</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">Vite</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">E-commerce</span>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2 group-hover:text-orange-400 transition-colors">Deepen Your Faith</h3>
+                            <p class="text-zinc-400 text-sm mb-4 line-clamp-2">Devotional e-commerce store with comprehensive product catalog and Cloudflare integration.</p>
+                            <div class="flex gap-2 mb-6 flex-wrap">
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">Vite</span>
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">Cloudflare</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center">
+                                <a href="https://deepenyourfaith.in" target="_blank" class="text-sm font-medium flex items-center gap-2 hover:text-orange-400 transition-colors">
+                                    Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 5 -->
-                <div class="group relative bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-300 hover:-translate-y-2">
-                    <div class="h-2 bg-gradient-to-r from-indigo-500 to-blue-600"></div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-zinc-800 rounded-xl">
-                                <i data-lucide="briefcase" class="w-6 h-6"></i>
+                <div class="project-card group reveal" data-category="react">
+                    <div class="glass-card rounded-2xl overflow-hidden h-full flex flex-col transition-transform duration-300 hover:-translate-y-2 hover:border-indigo-500/30">
+                        <div class="h-48 bg-zinc-900 relative overflow-hidden group-hover:bg-zinc-800 transition-colors">
+                            <div class="absolute inset-0 flex items-center justify-center text-zinc-700">
+                                <i data-lucide="briefcase" class="w-12 h-12 group-hover:text-indigo-400 group-hover:scale-110 transition-all duration-300"></i>
                             </div>
-                            <a href="https://remotenexus.pages.dev" target="_blank" class="text-zinc-500 hover:text-white transition-colors">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Remote Nexus</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6 h-20">Job portal connecting professionals to premium remote work opportunities.</p>
-                        <div class="flex flex-wrap gap-2 mt-auto">
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">React</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">Vite</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">TS</span>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">Remote Nexus</h3>
+                            <p class="text-zinc-400 text-sm mb-4 line-clamp-2">Job portal connecting professionals to premium remote work opportunities.</p>
+                            <div class="flex gap-2 mb-6 flex-wrap">
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">React</span>
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">Vite</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center">
+                                <a href="https://remotenexus.pages.dev" target="_blank" class="text-sm font-medium flex items-center gap-2 hover:text-indigo-400 transition-colors">
+                                    Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 6 -->
-                <div class="group relative bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-300 hover:-translate-y-2">
-                    <div class="h-2 bg-gradient-to-r from-yellow-400 to-orange-500"></div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-zinc-800 rounded-xl">
-                                <i data-lucide="book" class="w-6 h-6"></i>
+                <div class="project-card group reveal" data-category="react">
+                    <div class="glass-card rounded-2xl overflow-hidden h-full flex flex-col transition-transform duration-300 hover:-translate-y-2 hover:border-yellow-500/30">
+                        <div class="h-48 bg-zinc-900 relative overflow-hidden group-hover:bg-zinc-800 transition-colors">
+                            <div class="absolute inset-0 flex items-center justify-center text-zinc-700">
+                                <i data-lucide="book-open" class="w-12 h-12 group-hover:text-yellow-400 group-hover:scale-110 transition-all duration-300"></i>
                             </div>
-                            <a href="https://krishna-books.pages.dev" target="_blank" class="text-zinc-500 hover:text-white transition-colors">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Krishna Books</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-6 h-20">Web app to discover, read, and share Krishna-related spiritual books.</p>
-                        <div class="flex flex-wrap gap-2 mt-auto">
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">React</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">TS</span>
-                            <span class="text-xs font-mono px-2 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">Tailwind</span>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2 group-hover:text-yellow-400 transition-colors">Krishna Books</h3>
+                            <p class="text-zinc-400 text-sm mb-4 line-clamp-2">Interactive library web app to discover and read spiritual literature.</p>
+                            <div class="flex gap-2 mb-6 flex-wrap">
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">React</span>
+                                <span class="px-2 py-1 bg-zinc-900 rounded text-xs text-zinc-400 border border-zinc-800">Tailwind</span>
+                            </div>
+                            <div class="mt-auto flex justify-between items-center">
+                                <a href="https://krishna-books.pages.dev" target="_blank" class="text-sm font-medium flex items-center gap-2 hover:text-yellow-400 transition-colors">
+                                    Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center mt-12">
-                <a href="https://github.com/bhanu2006-24" target="_blank" class="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors border-b border-transparent hover:border-white pb-1">
-                    View more on GitHub <i data-lucide="external-link" class="w-4 h-4"></i>
+            <div class="text-center mt-12 reveal">
+                <a href="https://github.com/bhanu2006-24" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600 transition-all">
+                    <i data-lucide="github" class="w-4 h-4"></i> View More on GitHub
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 relative overflow-hidden">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-        
-        <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
-            <h2 class="text-5xl font-bold mb-8">Let's create something <br/><span class="text-cyan-400">amazing</span> together.</h2>
-            <p class="text-xl text-zinc-400 mb-10">
-                I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-            </p>
-            
-            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-                <a href="mailto:bhanupsaini2024@gmail.com" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-cyan-400 transition-all hover:scale-105 flex items-center gap-2">
-                    <i data-lucide="mail" class="w-5 h-5"></i> Say Hello
-                </a>
-                <a href="https://linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="px-8 py-4 bg-zinc-900 border border-zinc-800 text-white font-bold rounded-full hover:bg-zinc-800 transition-all hover:scale-105 flex items-center gap-2">
-                    <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn
-                </a>
+    <section id="contact" class="py-32 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            <div class="glass-card rounded-3xl p-8 md:p-12 border border-zinc-800/50">
+                <div class="text-center mb-10">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">Let's Work Together</h2>
+                    <p class="text-zinc-400">Have a project in mind or want to hire me? Send me a message.</p>
+                </div>
+                
+                <form id="contactForm" class="space-y-6 max-w-xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-zinc-400">Name</label>
+                            <input type="text" required class="w-full bg-black/50 border border-zinc-800 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-500 transition-colors text-white" placeholder="John Doe">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-zinc-400">Email</label>
+                            <input type="email" required class="w-full bg-black/50 border border-zinc-800 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-500 transition-colors text-white" placeholder="john@example.com">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-zinc-400">Message</label>
+                        <textarea required rows="4" class="w-full bg-black/50 border border-zinc-800 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-500 transition-colors text-white" placeholder="Tell me about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg font-bold hover:opacity-90 transition-opacity flex justify-center items-center gap-2">
+                        <span>Send Message</span> <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                </form>
+
+                <div class="mt-12 pt-8 border-t border-zinc-800 flex justify-center gap-8">
+                    <a href="mailto:bhanupsaini2024@gmail.com" class="text-zinc-400 hover:text-white transition-colors flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4"></i> bhanupsaini2024@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="text-zinc-400 hover:text-white transition-colors flex items-center gap-2">
+                        <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-white/5 text-center text-zinc-500 text-sm">
-        <p>&copy; 2025 Bhanu Saini. All rights reserved.</p>
-        <p class="mt-2">Built with <span class="text-red-500">♥</span> and modern web tech.</p>
+    <footer class="py-8 text-center text-zinc-600 text-sm border-t border-white/5 bg-black">
+        <p>&copy; <span id="year"></span> Bhanu Saini. All rights reserved.</p>
     </footer>
+
+    <!-- Toast Notification (Hidden by default) -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-green-500 text-black px-6 py-3 rounded-lg font-bold transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <i data-lucide="check-circle" class="w-5 h-5"></i> Message Sent Successfully!
+    </div>
 
     <!-- JavaScript -->
     <script>
         // Initialize Icons
         lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Scroll Logic
-        const navbar = document.getElementById('navbar');
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
+        // Typewriter Effect
+        const words = ["experiences.", "solutions.", "innovations.", "vibes."];
+        let i = 0;
+        let timer;
 
-        function handleScroll() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-zinc-950/80', 'backdrop-blur-md', 'border-b', 'border-zinc-800');
-                navbar.classList.remove('bg-transparent');
-            } else {
-                navbar.classList.remove('bg-zinc-950/80', 'backdrop-blur-md', 'border-b', 'border-zinc-800');
-                navbar.classList.add('bg-transparent');
+        function typeWriter() {
+            const heading = document.getElementById("typewriter");
+            const word = words[i];
+            let j = 0;
+            let isDeleting = false;
+
+            function loop() {
+                heading.innerHTML = word.substring(0, j);
+                
+                if (!isDeleting && j < word.length) {
+                    j++;
+                    timer = setTimeout(loop, 100);
+                } else if (isDeleting && j > 0) {
+                    j--;
+                    timer = setTimeout(loop, 50);
+                } else {
+                    isDeleting = !isDeleting;
+                    if (!isDeleting) {
+                        i = (i + 1) % words.length;
+                        setTimeout(typeWriter, 500); // Wait before typing new word
+                        return;
+                    }
+                    timer = setTimeout(loop, 1500); // Wait before deleting
+                }
             }
+            loop();
+        }
+        typeWriter();
 
-            // Active section highlighting
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 300) {
-                    current = section.getAttribute('id');
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Add delay to outline for smooth effect
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Interactive Elements Hover Effect for Cursor
+        document.querySelectorAll('a, button, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(6, 182, 212, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // Scroll Reveal
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+            
+            // Navbar glass effect
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-black/80', 'backdrop-blur-md', 'border-b', 'border-zinc-800');
+                navbar.classList.remove('bg-transparent', 'border-transparent');
+            } else {
+                navbar.classList.remove('bg-black/80', 'backdrop-blur-md', 'border-b', 'border-zinc-800');
+                navbar.classList.add('bg-transparent', 'border-transparent');
+            }
+        }
+        reveal(); // Trigger once on load
+
+        // Project Filter
+        function filterProjects(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.project-card');
+
+            // Update buttons
+            buttons.forEach(btn => {
+                if(btn.getAttribute('data-filter') === category) {
+                    btn.classList.add('active', 'bg-white', 'text-black', 'font-medium');
+                    btn.classList.remove('text-zinc-400');
+                } else {
+                    btn.classList.remove('active', 'bg-white', 'text-black', 'font-medium');
+                    btn.classList.add('text-zinc-400');
                 }
             });
 
-            navLinks.forEach(link => {
-                link.classList.remove('text-cyan-400');
-                if (link.getAttribute('data-section') === current) {
-                    link.classList.add('text-cyan-400');
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category.includes(category)) {
+                    card.style.display = 'block';
+                    setTimeout(() => card.classList.add('active'), 100);
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('active');
                 }
             });
         }
 
-        window.addEventListener('scroll', handleScroll);
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            // Loading state
+            btn.innerHTML = '<i data-lucide="loader" class="animate-spin w-4 h-4"></i> Sending...';
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                // Success
+                btn.innerHTML = originalText;
+                this.reset();
+                
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-24', 'opacity-0');
+                
+                setTimeout(() => {
+                    toast.classList.add('translate-y-24', 'opacity-0');
+                }, 3000);
+            }, 1500);
+        });
 
-        // Smooth Scroll Function
+        // Smooth Scroll
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) {
