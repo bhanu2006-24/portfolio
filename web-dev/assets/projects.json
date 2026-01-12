@@ -1,0 +1,146 @@
+[
+  {
+    "name": "AniGlitch",
+    "description": "Anime discovery engine using AI for personalized recommendations and cyberpunk aesthetics.",
+    "techStack": ["React", "TypeScript", "AI API"],
+    "liveDemo": "https://aniglitch.pages.dev",
+    "github": "https://github.com/bhanu2006-24",
+    "category": "ai"
+  },
+  {
+    "name": "OPPE Platform",
+    "description": "Browser-based Python coding environment for IIT Madras students using WebAssembly (Pyodide).",
+    "techStack": ["Pyodide", "WASM", "React"],
+    "liveDemo": "https://oppe-practice.pages.dev",
+    "github": "https://github.com/bhanu2006-24",
+    "category": "saas"
+  },
+  {
+    "name": "GrooveWave",
+    "description": "Next-gen music streaming platform featuring intelligent song discovery and premium responsive UI.",
+    "techStack": ["TypeScript", "Tailwind"],
+    "liveDemo": "https://groovewave.pages.dev",
+    "github": "https://github.com/bhanu2006-24",
+    "category": "saas"
+  },
+  {
+    "name": "Deepen Your Faith",
+    "description": "Full-featured devotional e-commerce store with product catalog, cart logic, and Cloudflare integration.",
+    "techStack": ["Vite", "Cloudflare"],
+    "liveDemo": "https://deepenyourfaith.in",
+    "github": "https://github.com/bhanu2006-24",
+    "category": "commerce"
+  },
+  {
+    "name": "Remote Nexus",
+    "description": "Job portal connecting professionals to premium remote work opportunities with advanced filtering.",
+    "techStack": ["React", "Vite"],
+    "liveDemo": "https://remotenexus.pages.dev",
+    "github": "https://github.com/bhanu2006-24",
+    "category": "saas"
+  },
+  {
+    "name": "Atmosphere AI",
+    "description": "Advanced weather analytics dashboard with real-time global maps and AI insights.",
+    "techStack": ["React", "TypeScript"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/atmosphere-ai",
+    "category": "ai"
+  },
+  {
+    "name": "NovaNews",
+    "description": "Premium news intelligence platform with smart categorization and glassmorphism UI.",
+    "techStack": ["React 19", "Vite"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/novanews",
+    "category": "saas"
+  },
+  {
+    "name": "Crypto Pulse",
+    "description": "Professional cryptocurrency analytics dashboard tracking top 50 coins and market trends.",
+    "techStack": ["JavaScript", "CoinGecko API"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/crypto-pulse",
+    "category": "ai"
+  },
+  {
+    "name": "Krishna Books",
+    "description": "Interactive library application to discover, read, and share spiritual literature.",
+    "techStack": ["React", "Tailwind"],
+    "liveDemo": "https://krishna-books.pages.dev",
+    "github": "https://github.com/bhanu2006-24",
+    "category": "saas"
+  },
+  {
+    "name": "Bhanu Creative",
+    "description": "Immersive digital experience portfolio where design meets code, featuring high-end animations.",
+    "techStack": ["GSAP", "WebGL"],
+    "liveDemo": "https://bhanu-creative.pages.dev/",
+    "github": "",
+    "category": "creative"
+  },
+  {
+    "name": "MacOS Portfolio",
+    "description": "Interactive MacOS Sequoia clone with functional dock, menu bar, and apps.",
+    "techStack": ["React", "TypeScript"],
+    "liveDemo": "https://bhanu2006-24.github.io/bhanu-os-portfolio/",
+    "github": "https://github.com/bhanu2006-24/bhanu-os-portfolio",
+    "category": "creative"
+  },
+  {
+    "name": "Krishna Templates",
+    "description": "A massive collection of 20+ responsive business websites for Academy, Ecommerce, Real Estate, and more.",
+    "techStack": ["HTML/CSS", "Responsive"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/web_sample",
+    "category": "creative"
+  },
+  {
+    "name": "Find My IP",
+    "description": "Privacy-focused IP intelligence dashboard providing geolocation and network insights.",
+    "techStack": ["API", "Dashboard"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/find-my-ip",
+    "category": "tools"
+  },
+  {
+    "name": "GSoC Planner",
+    "description": "Toolkit to discover organizations, compare stats, and predict GSoC acceptance.",
+    "techStack": ["Analytics", "PWA"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/GSOC-planner",
+    "category": "tools"
+  },
+  {
+    "name": "GSAP Cocktails",
+    "description": "Modern recipe landing page featuring advanced, fluid GSAP animations.",
+    "techStack": ["GSAP", "React"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/gsap-cocktails",
+    "category": "creative"
+  },
+  {
+    "name": "MacBook Clone",
+    "description": "Immersive Apple MacBook Pro landing page clone with 3D models and scroll animations.",
+    "techStack": ["Three.js", "GSAP"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/Macbook_Landing",
+    "category": "creative"
+  },
+  {
+    "name": "LinkLift",
+    "description": "Premium URL shortener service built with Python and Streamlit.",
+    "techStack": ["Python", "Streamlit"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/url-shortner",
+    "category": "tools"
+  },
+  {
+    "name": "Neon Maze",
+    "description": "First-person 3D maze escape game with immersive neon aesthetics.",
+    "techStack": ["WebGL", "GameDev"],
+    "liveDemo": "",
+    "github": "https://github.com/bhanu2006-24/neon-maze",
+    "category": "creative"
+  }
+]
