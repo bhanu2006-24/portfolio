@@ -646,26 +646,35 @@
         });
 
         // 7. 3D Tilt Effect
-        const cards = document.querySelectorAll('.tilt-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        function initTilt() {
+            const cards = document.querySelectorAll('.tilt-card');
+            cards.forEach(card => {
+                card.removeEventListener('mousemove', handleTiltMove);
+                card.removeEventListener('mouseleave', handleTiltLeave);
+                card.addEventListener('mousemove', handleTiltMove);
+                card.addEventListener('mouseleave', handleTiltLeave);
             });
+        }
+
+        function handleTiltMove(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
             
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-            });
-        });
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
+            const rotateY = ((x - centerX) / centerX) * 10;
+            
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        function handleTiltLeave() {
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        }
+
+        initTilt();
 
         // 8. Filtering & Scroll Reveal
         window.addEventListener('scroll', () => {
@@ -709,6 +718,84 @@
             const el = document.getElementById(id);
             if(el) el.scrollIntoView({ behavior: 'smooth' });
         }
+
+        // 9. Load Projects
+        async function loadProjects() {
+            try {
+                const response = await fetch('assets/projects.json');
+                const projects = await response.json();
+                const grid = document.getElementById('projects-grid');
+                
+                grid.innerHTML = projects.map(p => `
+                    <div class="tilt-card spotlight-card group h-full reveal" data-category="${p.category}">
+                        <div class="glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:border-${p.color}-500/50 hover:shadow-[0_0_30px_rgba(${getColorRgba(p.color)})]">
+                            <div class="h-56 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-4 bg-zinc-900 rounded-xl border border-white/5 shadow-2xl overflow-hidden flex items-center justify-center">
+                                    <i data-lucide="${p.icon}" class="w-16 h-16 text-${p.color}-500 group-hover:scale-125 transition-transform duration-500"></i>
+                                    <div class="absolute inset-0 bg-${p.color}-500/10 mix-blend-overlay"></div>
+                                </div>
+                                <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono border border-${p.color}-500/30 text-${p.color}-400">${p.badge || 'Project'}</div>
+                            </div>
+                            <div class="p-8 flex-1 flex flex-col tilt-content">
+                                <h3 class="text-2xl font-bold mb-2 group-hover:text-${p.color}-400 transition-colors">${p.name}</h3>
+                                <p class="text-zinc-400 text-sm mb-6 line-clamp-2">${p.description}</p>
+                                
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    ${p.techStack.map(t => `<span class="px-3 py-1 bg-white/5 rounded-md text-xs text-zinc-300 border border-white/5">${t}</span>`).join('')}
+                                </div>
+                                
+                                <div class="mt-auto flex justify-between items-center pt-6 border-t border-white/5">
+                                    ${p.liveDemo ? `
+                                    <a href="${p.liveDemo}" target="_blank" class="flex items-center gap-2 text-sm font-bold text-white hover:text-${p.color}-400 transition-colors">
+                                        Live Demo <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>` : ''}
+                                    ${p.github ? `
+                                    <a href="${p.github}" target="_blank" class="text-zinc-500 hover:text-white transition-colors">
+                                        <i data-lucide="github" class="w-5 h-5"></i>
+                                    </a>` : ''}
+                                    ${!p.liveDemo && !p.github ? `<span class="text-zinc-600 text-xs italic">Coming Soon</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                lucide.createIcons();
+                initTilt();
+                
+                // Re-trigger scroll reveal if needed
+                const reveals = document.querySelectorAll('.reveal');
+                reveals.forEach(reveal => {
+                    reveal.classList.add('active'); // Force show initially or let scroll handler handle it
+                });
+
+            } catch (error) {
+                console.error('Failed to load projects:', error);
+                document.getElementById('projects-grid').innerHTML = '<p class="text-red-500">Failed to load projects.</p>';
+            }
+        }
+
+        function getColorRgba(color) {
+            const colors = {
+                'purple': '147,51,234,0.2',
+                'blue': '59,130,246,0.2',
+                'green': '34,197,94,0.2',
+                'orange': '249,115,22,0.2',
+                'cyan': '6,182,212,0.2',
+                'sky': '14,165,233,0.2',
+                'yellow': '250,204,21,0.2',
+                'teal': '45,212,191,0.2',
+                'pink': '236,72,153,0.2',
+                'red': '239,68,68,0.2',
+                'rose': '244,63,94,0.2',
+                'gray': '107,114,128,0.2',
+                'indigo': '99,102,241,0.2',
+                'lime': '132,204,22,0.2'
+            };
+            return colors[color] || '255,255,255,0.2';
+        }
+
+        loadProjects();
     </script>
 </body>
 </html>

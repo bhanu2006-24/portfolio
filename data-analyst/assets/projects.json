@@ -4,27 +4,43 @@
     "description": "A dynamic Streamlit dashboard that fetches live cryptocurrency data from the CoinGecko API, cleans it, and visualizes key metrics. Features include automated data cleaning, KPI cards, sidebar filters, and responsive design for mobile.",
     "techStack": ["Streamlit", "Python", "CoinGecko API"],
     "liveDemo": "https://bs-crypto-analysis.streamlit.app",
-    "github": "https://github.com/bhanu2006-24/crypto-analysis"
+    "github": "https://github.com/bhanu2006-24/crypto-analysis",
+    "gradient_from": "blue-500",
+    "gradient_to": "cyan-500",
+    "icon": "fas fa-coins",
+    "link_color": "cyan-400"
   },
   {
     "name": "IMDb Analytics Dashboard",
     "description": "An interactive dashboard analyzing IMDb movie data across multiple datasets (movies, cast, genres). Provides KPIs, genre frequency, cast analysis, yearly trends, scatter plots, and correlation heatmaps. Designed for clarity and storytelling with Plotly charts.",
     "techStack": ["Plotly", "Python", "Dash"],
     "liveDemo": "",
-    "github": "https://github.com/bhanu2006-24/imdb-analysis"
+    "github": "https://github.com/bhanu2006-24/imdb-analysis",
+    "gradient_from": "purple-500",
+    "gradient_to": "pink-500",
+    "icon": "fas fa-film",
+    "link_color": "purple-400"
   },
   {
     "name": "Steam Games Analytics Dashboard",
     "description": "End-to-end pipeline that scrapes Steam store data, cleans it, and explores trends in genres, pricing, reviews, and release years. Includes robust scraping workflow, EDA notebooks, and a Streamlit dashboard with KPIs, genre analysis, yearly trends, and export options.",
     "techStack": ["Streamlit", "Python", "Scraping"],
     "liveDemo": "",
-    "github": "https://github.com/bhanu2006-24/steam-analysis"
+    "github": "https://github.com/bhanu2006-24/steam-analysis",
+    "gradient_from": "green-500",
+    "gradient_to": "emerald-500",
+    "icon": "fab fa-steam",
+    "link_color": "green-400"
   },
   {
     "name": "Tableau Public Visualizations",
     "description": "Interactive Tableau dashboards showcasing advanced visualization skills. Projects include trend analysis, KPI tracking, and storytelling with data. These vizzes highlight the ability to communicate insights visually and complement Python/Streamlit dashboards with enterprise-grade BI tools.",
     "techStack": ["Tableau"],
     "liveDemo": "https://public.tableau.com/app/profile/bhanu.saini6988/vizzes",
-    "github": ""
+    "github": "",
+    "gradient_from": "orange-500",
+    "gradient_to": "red-500",
+    "icon": "fas fa-chart-bar",
+    "link_color": "orange-400"
   }
 ]

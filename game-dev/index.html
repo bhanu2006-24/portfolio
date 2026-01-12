@@ -244,31 +244,17 @@
             HQ: { color: 0x1e293b, name: "HEADQUARTERS", hex: "#1e293b" }
         };
 
-        const PROJECTS = [
-            // --- HQ ---
-            { title: "Bhanu's HQ", desc: "Welcome to my central command. Connect with me or view my resume.", tech: ["Resume", "Contact", "About"], link: "#", type: "HQ", pos: {x: 0, z: 0}, isContact: true },
-            
-            // --- GAMES (North, -Z) ---
-            { title: "Echo Shooter", desc: "Neon arena shooter. Survive waves, use overdrive abilities, and score combos.", tech: ["JS", "Canvas", "Action"], link: "https://echo-shooter.pages.dev", type: "GAMES", pos: {x: 45, z: -50} },
-            { title: "Portal Nexus", desc: "Survival RPG in a 100-room labyrinth with shifting portals and secrets.", tech: ["React", "TypeScript", "RPG"], link: "https://portal-nexus.pages.dev", type: "GAMES", pos: {x: -45, z: -70} },
-            { title: "Neon Maze", desc: "3D Procedural maze escape with time limits and laser traps.", tech: ["Three.js", "WebGL"], link: "https://bhanu2006-24.github.io/neon-maze", type: "GAMES", pos: {x: 45, z: -90} },
-            { title: "Antigravity", desc: "Top-down shooter experimenting with gravity mechanics and boss AI.", tech: ["Physics", "Canvas"], link: "https://antigravity-game.pages.dev", type: "GAMES", pos: {x: -35, z: -110} },
-            { title: "Bomber Legends", desc: "Classic arcade bomber remake with destructible grid environments.", tech: ["React", "Grid Logic"], link: "https://bomber-legends.pages.dev", type: "GAMES", pos: {x: 35, z: -130} },
+        let PROJECTS = [];
 
-            // --- WEB (West, -X) ---
-            { title: "NovaNews", desc: "Modern news aggregator with clean UI and smart categorization.", tech: ["React 19", "Vite", "API"], link: "https://github.com/bhanu2006-24/novanews", type: "WEB", pos: {x: -70, z: 30} },
-            { title: "GrooveWave", desc: "Music analytics SaaS dashboard with real-time visualization.", tech: ["SaaS", "Data Viz"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -100, z: -30} },
-            { title: "Atmosphere AI", desc: "Environmental monitoring dashboard powered by AI predictions.", tech: ["AI", "Analytics"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -130, z: 30} },
-            { title: "RemoteNexus", desc: "Job portal connecting professionals with premium remote work.", tech: ["React", "Node.js"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -160, z: -30} },
-            { title: "Krishna Books", desc: "Online bookstore and library management system.", tech: ["E-commerce", "Web"], link: "https://github.com/bhanu2006-24", type: "WEB", pos: {x: -100, z: 65} },
-
-            // --- DATA (East, +X) ---
-            { title: "Crypto Pulse", desc: "Live cryptocurrency market tracker with portfolio management.", tech: ["React", "Finance API"], link: "https://github.com/bhanu2006-24/crypto-pulse", type: "DATA", pos: {x: 70, z: -30} },
-            { title: "IMDb Analytics", desc: "Data dashboard analyzing movie trends and correlations.", tech: ["Python", "Plotly"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 100, z: 30} },
-            { title: "Img Toolkit", desc: "Browser-based image processing tools (remove bg, filters).", tech: ["Streamlit", "CV"], link: "https://github.com/bhanu2006-24/img-toolkit", type: "DATA", pos: {x: 130, z: -30} },
-            { title: "T-Shirt Gen", desc: "Procedural design generator for apparel using computer vision.", tech: ["Python", "OpenCV"], link: "https://github.com/bhanu2006-24/tshirtgen", type: "DATA", pos: {x: 160, z: 30} },
-            { title: "Steam Analytics", desc: "End-to-end pipeline scraping Steam data for market trends.", tech: ["Scraping", "Pandas"], link: "https://github.com/bhanu2006-24", type: "DATA", pos: {x: 100, z: 65} }
-        ];
+        async function loadProjects() {
+            try {
+                const response = await fetch('assets/projects.json');
+                PROJECTS = await response.json();
+                renderProjectBuildings();
+            } catch (error) {
+                console.error("Failed to load projects:", error);
+            }
+        }
 
         // --- THREE.JS SETUP ---
         const scene = new THREE.Scene();
@@ -531,94 +517,99 @@
             return sprite;
         }
 
-        PROJECTS.forEach(p => {
-            const config = ZONES[p.type];
-            const group = new THREE.Group();
-            group.position.set(p.pos.x, 0, p.pos.z);
-
-            let mesh;
-            let collisionRadius = 5; 
-            
-            if (p.type === 'HQ') {
-                collisionRadius = 15;
-                // --- HQ REDESIGN ---
+        function renderProjectBuildings() {
+            PROJECTS.forEach(p => {
+                const config = ZONES[p.type];
+                const group = new THREE.Group();
+                group.position.set(p.pos.x, 0, p.pos.z);
+    
+                let mesh;
+                let collisionRadius = 5; 
                 
-                // 1. Central Spire
-                const spireGeo = new THREE.CylinderGeometry(6, 9, 30, 8);
-                const spireMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2, metalness: 0.5 });
-                const spire = new THREE.Mesh(spireGeo, spireMat);
-                spire.position.y = 15;
-                group.add(spire);
-
-                // 2. Floating Rings
-                const r1 = new THREE.Mesh(new THREE.TorusGeometry(12, 0.5, 16, 64), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
-                r1.rotation.x = Math.PI/2; r1.position.y = 10;
-                group.add(r1);
-
-                const r2 = new THREE.Mesh(new THREE.TorusGeometry(15, 0.5, 16, 64), new THREE.MeshBasicMaterial({ color: 0x2563eb }));
-                r2.rotation.x = Math.PI/2.2; r2.position.y = 20;
-                group.add(r2);
-
-                // 3. Floating Satellites
-                for(let k=0; k<4; k++) {
-                    const sat = new THREE.Mesh(new THREE.BoxGeometry(2,2,2), new THREE.MeshStandardMaterial({color: 0xffffff}));
-                    sat.position.set(Math.cos(k*Math.PI/2)*18, 25, Math.sin(k*Math.PI/2)*18);
-                    group.add(sat);
+                if (p.type === 'HQ') {
+                    collisionRadius = 15;
+                    // --- HQ REDESIGN ---
+                    
+                    // 1. Central Spire
+                    const spireGeo = new THREE.CylinderGeometry(6, 9, 30, 8);
+                    const spireMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2, metalness: 0.5 });
+                    const spire = new THREE.Mesh(spireGeo, spireMat);
+                    spire.position.y = 15;
+                    group.add(spire);
+    
+                    // 2. Floating Rings
+                    const r1 = new THREE.Mesh(new THREE.TorusGeometry(12, 0.5, 16, 64), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
+                    r1.rotation.x = Math.PI/2; r1.position.y = 10;
+                    group.add(r1);
+    
+                    const r2 = new THREE.Mesh(new THREE.TorusGeometry(15, 0.5, 16, 64), new THREE.MeshBasicMaterial({ color: 0x2563eb }));
+                    r2.rotation.x = Math.PI/2.2; r2.position.y = 20;
+                    group.add(r2);
+    
+                    // 3. Floating Satellites
+                    for(let k=0; k<4; k++) {
+                        const sat = new THREE.Mesh(new THREE.BoxGeometry(2,2,2), new THREE.MeshStandardMaterial({color: 0xffffff}));
+                        sat.position.set(Math.cos(k*Math.PI/2)*18, 25, Math.sin(k*Math.PI/2)*18);
+                        group.add(sat);
+                    }
+    
+                    // 4. Top Beacon
+                    const beacon = new THREE.Mesh(new THREE.OctahedronGeometry(3), new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true }));
+                    beacon.position.y = 35;
+                    group.add(beacon);
+    
+                    group.userData = { isHQ: true, r1: r1, r2: r2, beacon: beacon };
                 }
-
-                // 4. Top Beacon
-                const beacon = new THREE.Mesh(new THREE.OctahedronGeometry(3), new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true }));
-                beacon.position.y = 35;
-                group.add(beacon);
-
-                group.userData = { isHQ: true, r1: r1, r2: r2, beacon: beacon };
-            }
-            else if(p.type === 'GAMES') {
-                const geo = new THREE.BoxGeometry(4, 6, 4);
-                const mat = new THREE.MeshStandardMaterial({ color: 0xfce7f3 });
-                mesh = new THREE.Mesh(geo, mat);
-                mesh.position.y = 3;
-                const screen = new THREE.Mesh(new THREE.PlaneGeometry(3, 2), new THREE.MeshBasicMaterial({ color: config.color }));
-                screen.position.set(0, 4.5, 2.05);
-                group.add(screen);
-                mesh.castShadow = true;
-                group.add(mesh);
-            } 
-            else if(p.type === 'WEB') {
-                const geo = new THREE.BoxGeometry(6, 10, 6);
-                const mat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transmission: 0.2, opacity: 0.9, transparent: true });
-                mesh = new THREE.Mesh(geo, mat);
-                mesh.position.y = 5;
-                const core = new THREE.Mesh(new THREE.BoxGeometry(3, 8, 3), new THREE.MeshLambertMaterial({ color: config.color }));
-                core.position.y = 5;
-                group.add(core);
-                mesh.castShadow = true;
-                group.add(mesh);
-            } 
-            else { // DATA
-                const geo = new THREE.CylinderGeometry(4, 4, 7, 6);
-                const mat = new THREE.MeshStandardMaterial({ color: 0xfffbeb });
-                mesh = new THREE.Mesh(geo, mat);
-                mesh.position.y = 3.5;
-                mesh.castShadow = true;
-                group.add(mesh);
-            }
-
-            const label = createTextSprite(p.title, config.hex);
-            label.position.set(0, p.type==='HQ' ? 40 : 12, 0);
-            group.add(label);
-
-            scene.add(group);
-            
-            interactables.push({ 
-                pos: p.pos, 
-                radius: p.type==='HQ'? 22 : 9, 
-                collisionRad: collisionRadius, 
-                data: p, 
-                config: config, 
-                mesh: group 
+                else if(p.type === 'GAMES') {
+                    const geo = new THREE.BoxGeometry(4, 6, 4);
+                    const mat = new THREE.MeshStandardMaterial({ color: 0xfce7f3 });
+                    mesh = new THREE.Mesh(geo, mat);
+                    mesh.position.y = 3;
+                    const screen = new THREE.Mesh(new THREE.PlaneGeometry(3, 2), new THREE.MeshBasicMaterial({ color: config.color }));
+                    screen.position.set(0, 4.5, 2.05);
+                    group.add(screen);
+                    mesh.castShadow = true;
+                    group.add(mesh);
+                } 
+                else if(p.type === 'WEB') {
+                    const geo = new THREE.BoxGeometry(6, 10, 6);
+                    const mat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transmission: 0.2, opacity: 0.9, transparent: true });
+                    mesh = new THREE.Mesh(geo, mat);
+                    mesh.position.y = 5;
+                    const core = new THREE.Mesh(new THREE.BoxGeometry(3, 8, 3), new THREE.MeshLambertMaterial({ color: config.color }));
+                    core.position.y = 5;
+                    group.add(core);
+                    mesh.castShadow = true;
+                    group.add(mesh);
+                } 
+                else { // DATA
+                    const geo = new THREE.CylinderGeometry(4, 4, 7, 6);
+                    const mat = new THREE.MeshStandardMaterial({ color: 0xfffbeb });
+                    mesh = new THREE.Mesh(geo, mat);
+                    mesh.position.y = 3.5;
+                    mesh.castShadow = true;
+                    mesh.rotation.y = Math.PI/6; // Rotate hex
+                    group.add(mesh);
+                }
+    
+                const label = createTextSprite(p.title, config.hex);
+                label.position.set(0, p.type==='HQ' ? 40 : 12, 0);
+                group.add(label);
+    
+                scene.add(group);
+                
+                interactables.push({ 
+                    pos: p.pos, 
+                    radius: p.type==='HQ'? 22 : 9, 
+                    collisionRad: collisionRadius, 
+                    data: p, 
+                    config: config, 
+                    mesh: group 
+                });
             });
-        });
+        }
+        
+        loadProjects();
 
         // --- PLAYER CAR ---
         const car = new THREE.Group();

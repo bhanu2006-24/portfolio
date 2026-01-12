@@ -4,27 +4,43 @@
     "description": "Distinguished between real and fake news with high precision. Implemented TF-IDF vectorization and Text Classification algorithms.",
     "techStack": ["NLP", "Python"],
     "accuracy": "97.9% Accuracy",
-    "github": "https://github.com/bhanu2006-24/ML-projects"
+    "github": "https://github.com/bhanu2006-24/ML-projects",
+    "metric_icon": "file-check",
+    "gradient_from": "emerald-500",
+    "gradient_to": "blue-500",
+    "color_theme": "emerald"
   },
   {
     "name": "House Price Prediction",
     "description": "Engineered an advanced regression model for California housing. Leveraged XGBoost to handle complex non-linear relationships.",
     "techStack": ["XGBoost", "Regression"],
     "accuracy": "82.87% R² Score",
-    "github": "https://github.com/bhanu2006-24/ML-projects"
+    "github": "https://github.com/bhanu2006-24/ML-projects",
+    "metric_icon": "trending-up",
+    "gradient_from": "blue-500",
+    "gradient_to": "indigo-500",
+    "color_theme": "blue"
   },
   {
     "name": "Trader Sentiment",
     "description": "A specialized research project analyzing the 'Fear & Greed Index' against Bitcoin trader performance using Time Series data.",
     "techStack": ["Time Series", "Finance"],
     "accuracy": "Crypto Research",
-    "github": "https://github.com/bhanu2006-24/trader-sentiment-analysis"
+    "github": "https://github.com/bhanu2006-24/trader-sentiment-analysis",
+    "metric_icon": "bitcoin",
+    "gradient_from": "purple-500",
+    "gradient_to": "pink-500",
+    "color_theme": "purple"
   },
   {
     "name": "Rock vs Mine",
     "description": "Binary classifier trained on SONAR signals to detect underwater mines. Used Logistic Regression for efficient boundary detection.",
     "techStack": ["Logistic Reg", "SONAR"],
     "accuracy": "76% Accuracy",
-    "github": "https://github.com/bhanu2006-24/ML-projects"
+    "github": "https://github.com/bhanu2006-24/ML-projects",
+    "metric_icon": "radar",
+    "gradient_from": "orange-500",
+    "gradient_to": "red-500",
+    "color_theme": "orange"
   }
 ]
