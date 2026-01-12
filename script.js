@@ -245,6 +245,38 @@
               '<a href="https://github.com/bhanu2006-24/Macbook_Landing" target="_blank" class="accent">View on GitHub →</a>',
             ],
           },
+          {
+            name: "Krishna Templates",
+            descriptions: [
+              "Collection of 20+ responsive business website templates",
+              'Tech: <span class="yellow">HTML, CSS, Responsive Design</span>',
+              '<a href="https://github.com/bhanu2006-24/web_sample" target="_blank" class="accent">View Collection →</a>',
+            ],
+          },
+          {
+            name: "Atmosphere AI",
+            descriptions: [
+              "AI-powered weather analytics platform",
+              'Tech: <span class="yellow">React, TypeScript, AI API</span>',
+              '<a href="https://github.com/bhanu2006-24/atmosphere-ai" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "NovaNews",
+            descriptions: [
+              "Premium news intelligence platform",
+              'Tech: <span class="yellow">React 19, Vite, News API</span>',
+              '<a href="https://github.com/bhanu2006-24/novanews" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
+          {
+            name: "Crypto Pulse",
+            descriptions: [
+              "Professional cryptocurrency analytics dashboard",
+              'Tech: <span class="yellow">JavaScript, CoinGecko API</span>',
+              '<a href="https://github.com/bhanu2006-24/crypto-pulse" target="_blank" class="accent">View on GitHub →</a>',
+            ],
+          },
         ]);
         break;
       case "data":
@@ -363,7 +395,10 @@
         ]);
         break;
       case "portfolio":
-        print('<span class="yellow">━━━━━━━━━━━━━━━━ LIVE PORTFOLIOS ━━━━━━━━━━━━━━━━</span>', "");
+        print(
+          '<span class="yellow">━━━━━━━━━━━━━━━━ LIVE PORTFOLIOS ━━━━━━━━━━━━━━━━</span>',
+          ""
+        );
         print("", "");
         print(
           '  📊 <a href="https://bhanu-thedataanalyst.pages.dev/" target="_blank" class="accent">Data Analyst Portfolio</a> <span class="muted">→ bhanu-thedataanalyst.pages.dev</span>',
@@ -381,8 +416,15 @@
           '  🎮 <a href="https://bhanu-thegamedev.pages.dev/" target="_blank" class="accent">Game Developer Portfolio</a> <span class="muted">→ bhanu-thegamedev.pages.dev</span>',
           ""
         );
+        print(
+          '  🎨 <a href="https://bhanu-creative.pages.dev/" target="_blank" class="accent">Creative Developer Portfolio</a> <span class="muted">→ bhanu-creative.pages.dev</span>',
+          ""
+        );
         print("", "");
-        print('<span class="yellow">━━━━━━━━━━━━━━━━ OTHER PORTFOLIOS ━━━━━━━━━━━━━━━━</span>', "");
+        print(
+          '<span class="yellow">━━━━━━━━━━━━━━━━ OTHER PORTFOLIOS ━━━━━━━━━━━━━━━━</span>',
+          ""
+        );
         print("", "");
         print(
           '  🖥️ <a href="https://bhanu2006-24.github.io/bhanu2006-24/" target="_blank" class="accent">Interactive OS Portfolio</a> <span class="muted">→ MacOS-style desktop UI</span>',
@@ -394,7 +436,10 @@
         );
         break;
       case "resume":
-        print('<span class="yellow">━━━━━━━━━━━━━ DOWNLOAD RESUMES ━━━━━━━━━━━━━</span>', "");
+        print(
+          '<span class="yellow">━━━━━━━━━━━━━ DOWNLOAD RESUMES ━━━━━━━━━━━━━</span>',
+          ""
+        );
         print("", "");
         print(
           '  📊 <a href="https://bhanu2006-24.github.io/Resume/analyst-resume.html" target="_blank" class="accent">Data Analyst Resume</a>',
