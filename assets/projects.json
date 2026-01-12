@@ -1,0 +1,263 @@
+{
+  "webdev": [
+    {
+      "name": "GSOC Planner",
+      "descriptions": [
+        "Frontend-first GSoC toolkit for discovering orgs and drafting proposals",
+        "Tech: React, GitHub API, AI Assistant",
+        "https://github.com/bhanu2006-24/GSOC-planner"
+      ]
+    },
+    {
+      "name": "GrooveWave",
+      "descriptions": [
+        "SaaS music platform with React and data visualization",
+        "Tech: React, SaaS, Data Viz",
+        "https://github.com/bhanu2006-24/groovewave"
+      ]
+    },
+    {
+      "name": "Bhanu OS Portfolio",
+      "descriptions": [
+        "MacOS Sequoia-inspired interactive portfolio with desktop-style UI",
+        "Tech: React, TypeScript, macOS UI",
+        "https://bhanu2006-24.github.io/bhanu2006-24/"
+      ]
+    },
+    {
+      "name": "Krishna Books",
+      "descriptions": [
+        "E-commerce bookstore website",
+        "Tech: Web, E-commerce",
+        "https://github.com/bhanu2006-24/krishna-books"
+      ]
+    },
+    {
+      "name": "RemoteNexus",
+      "descriptions": [
+        "Remote work collaboration platform",
+        "Tech: React, Node.js",
+        "https://github.com/bhanu2006-24/remotenexus"
+      ]
+    },
+    {
+      "name": "MacBook Landing",
+      "descriptions": [
+        "Apple MacBook Pro landing page clone with 3D laptop and GSAP animations",
+        "Tech: React, Three.js, GSAP, TailwindCSS",
+        "https://github.com/bhanu2006-24/Macbook_Landing"
+      ]
+    },
+    {
+      "name": "Krishna Templates",
+      "descriptions": [
+        "Collection of 20+ responsive business website templates",
+        "Tech: HTML, CSS, Responsive Design",
+        "https://github.com/bhanu2006-24/web_sample"
+      ]
+    },
+    {
+      "name": "Atmosphere AI",
+      "descriptions": [
+        "AI-powered weather analytics platform",
+        "Tech: React, TypeScript, AI API",
+        "https://github.com/bhanu2006-24/atmosphere-ai"
+      ]
+    },
+    {
+      "name": "NovaNews",
+      "descriptions": [
+        "Premium news intelligence platform",
+        "Tech: React 19, Vite, News API",
+        "https://github.com/bhanu2006-24/novanews"
+      ]
+    },
+    {
+      "name": "Crypto Pulse",
+      "descriptions": [
+        "Professional cryptocurrency analytics dashboard",
+        "Tech: JavaScript, CoinGecko API",
+        "https://github.com/bhanu2006-24/crypto-pulse"
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "Crypto Analysis Suite",
+      "descriptions": [
+        "Live cryptocurrency dashboard with CoinGecko API integration",
+        "Tech: Python, Streamlit, Plotly",
+        "https://bs-crypto-analysis.streamlit.app"
+      ]
+    },
+    {
+      "name": "IMDb Analytics Dashboard",
+      "descriptions": [
+        "Interactive dashboard analyzing movies, cast, and genres",
+        "Tech: Python, Plotly, Data Analysis",
+        "https://github.com/bhanu2006-24/imdb-analysis"
+      ]
+    },
+    {
+      "name": "Steam Games Analytics",
+      "descriptions": [
+        "End-to-end pipeline scraping Steam data with trend analysis",
+        "Tech: Python, Scraping, Streamlit",
+        "https://github.com/bhanu2006-24/steam-analysis"
+      ]
+    },
+    {
+      "name": "Trader Sentiment Analysis",
+      "descriptions": [
+        "Bitcoin sentiment analysis correlating Fear & Greed Index with trader performance",
+        "Tech: Python, Jupyter, Streamlit",
+        "https://github.com/bhanu2006-24/trader-sentiment-analysis"
+      ]
+    },
+    {
+      "name": "Atmosphere AI",
+      "descriptions": [
+        "AI-powered weather analytics platform",
+        "Tech: AI, Web, Analytics",
+        "https://github.com/bhanu2006-24/atmosphere-ai"
+      ]
+    }
+  ],
+  "games": [
+    {
+      "name": "Antigravity Game",
+      "descriptions": [
+        "Fast-paced top-down shooter with dash, dodge, and boss battles",
+        "Tech: JavaScript, HTML5 Canvas, Arcade",
+        "https://github.com/bhanu2006-24/antigravity-game"
+      ]
+    },
+    {
+      "name": "Neon Maze",
+      "descriptions": [
+        "First-person 3D maze escape with cyberpunk neon visuals",
+        "Tech: JavaScript, Three.js, Procedural Gen",
+        "https://github.com/bhanu2006-24/neon-maze"
+      ]
+    },
+    {
+      "name": "Bomber Legends",
+      "descriptions": [
+        "Classic arcade-style bomber game with power-ups",
+        "Tech: React, TypeScript, Grid-based",
+        "https://github.com/bhanu2006-24/bomber-legends"
+      ]
+    },
+    {
+      "name": "Echo Shooter",
+      "descriptions": [
+        "Browser-based shooting game with canvas graphics",
+        "Tech: JavaScript, Canvas",
+        "https://github.com/bhanu2006-24/Echo-shooter"
+      ]
+    },
+    {
+      "name": "Portal Nexus",
+      "descriptions": [
+        "RPG with procedural generation",
+        "Tech: RPG, Procedural Gen",
+        "https://github.com/bhanu2006-24/portal-nexus"
+      ]
+    },
+    {
+      "name": "Neon City: Undead Rising",
+      "descriptions": [
+        "Cyberpunk RPG adventure game",
+        "Tech: RPG, Cyberpunk",
+        "https://github.com/bhanu2006-24/neon-city"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Web Development",
+      "items": [
+        "Frontend: HTML5, CSS3, JavaScript, TypeScript, React, Next.js",
+        "Styling: TailwindCSS, GSAP Animations, Three.js",
+        "Backend: Node.js, Flask, Python"
+      ]
+    },
+    {
+      "name": "Data Analysis & Science",
+      "items": [
+        "Languages: Python, SQL, PostgreSQL",
+        "Libraries: pandas, numpy, BeautifulSoup, Requests",
+        "Visualization: Streamlit, Plotly, Tableau, Matplotlib"
+      ]
+    },
+    {
+      "name": "Game Development",
+      "items": [
+        "Technologies: HTML5 Canvas, JavaScript, Three.js",
+        "Genres: RPG, Arcade, Top-down shooters, Maze games"
+      ]
+    },
+    {
+      "name": "Tools & Platforms",
+      "items": [
+        "Version Control: Git, GitHub",
+        "Design: Figma, Canva",
+        "Deployment: GitHub Pages, Vercel, Streamlit Cloud"
+      ]
+    }
+  ],
+  "edu": [
+    {
+      "name": "Indian Institute of Technology, Madras",
+      "details": [
+        "B.Sc. in Data Science (2025-2028)",
+        "One of India's premier institutions for engineering and data science",
+        "Rigorous training in statistics, machine learning, and analytics"
+      ]
+    },
+    {
+      "name": "Kendriya Vidyalaya No. 2, Jaipur",
+      "details": [
+        "Secondary Education",
+        "Central government school with strong STEM preparation"
+      ]
+    }
+  ],
+  "portfolios": [
+    {
+      "name": "Data Analyst Portfolio",
+      "url": "https://bhanu-thedataanalyst.pages.dev/",
+      "id": "bhanu-thedataanalyst.pages.dev"
+    },
+    {
+      "name": "Data Scientist Portfolio",
+      "url": "https://bhanu-thedatascientist.pages.dev/",
+      "id": "bhanu-thedatascientist.pages.dev"
+    },
+    {
+      "name": "Web Developer Portfolio",
+      "url": "https://bhanu-thewebdev.pages.dev/",
+      "id": "bhanu-thewebdev.pages.dev"
+    },
+    {
+      "name": "Game Developer Portfolio",
+      "url": "https://bhanu-thegamedev.pages.dev/",
+      "id": "bhanu-thegamedev.pages.dev"
+    },
+    {
+      "name": "Creative Developer Portfolio",
+      "url": "https://bhanu-creative.pages.dev/",
+      "id": "bhanu-creative.pages.dev"
+    },
+    {
+      "name": "Interactive OS Portfolio",
+      "url": "https://bhanu2006-24.github.io/bhanu2006-24/",
+      "id": "MacOS-style desktop UI"
+    },
+    {
+      "name": "Resume Hub",
+      "url": "https://bhanu2006-24.github.io/Resume/",
+      "id": "Edit & download resumes"
+    }
+  ]
+}
