@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Fake News Detection",
+    "description": "Distinguished between real and fake news with high precision. Implemented TF-IDF vectorization and Text Classification algorithms.",
+    "techStack": ["NLP", "Python"],
+    "accuracy": "97.9% Accuracy",
+    "github": "https://github.com/bhanu2006-24/ML-projects"
+  },
+  {
+    "name": "House Price Prediction",
+    "description": "Engineered an advanced regression model for California housing. Leveraged XGBoost to handle complex non-linear relationships.",
+    "techStack": ["XGBoost", "Regression"],
+    "accuracy": "82.87% R² Score",
+    "github": "https://github.com/bhanu2006-24/ML-projects"
+  },
+  {
+    "name": "Trader Sentiment",
+    "description": "A specialized research project analyzing the 'Fear & Greed Index' against Bitcoin trader performance using Time Series data.",
+    "techStack": ["Time Series", "Finance"],
+    "accuracy": "Crypto Research",
+    "github": "https://github.com/bhanu2006-24/trader-sentiment-analysis"
+  },
+  {
+    "name": "Rock vs Mine",
+    "description": "Binary classifier trained on SONAR signals to detect underwater mines. Used Logistic Regression for efficient boundary detection.",
+    "techStack": ["Logistic Reg", "SONAR"],
+    "accuracy": "76% Accuracy",
+    "github": "https://github.com/bhanu2006-24/ML-projects"
+  }
+]

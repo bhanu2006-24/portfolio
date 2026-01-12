@@ -1,0 +1,131 @@
+[
+  {
+    "title": "Bhanu's HQ",
+    "desc": "Welcome to my central command. Connect with me or view my resume.",
+    "tech": ["Resume", "Contact", "About"],
+    "link": "#",
+    "type": "HQ",
+    "pos": { "x": 0, "z": 0 },
+    "isContact": true
+  },
+  {
+    "title": "Echo Shooter",
+    "desc": "Neon arena shooter. Survive waves, use overdrive abilities, and score combos.",
+    "tech": ["JS", "Canvas", "Action"],
+    "link": "https://echo-shooter.pages.dev",
+    "type": "GAMES",
+    "pos": { "x": 45, "z": -50 }
+  },
+  {
+    "title": "Portal Nexus",
+    "desc": "Survival RPG in a 100-room labyrinth with shifting portals and secrets.",
+    "tech": ["React", "TypeScript", "RPG"],
+    "link": "https://portal-nexus.pages.dev",
+    "type": "GAMES",
+    "pos": { "x": -45, "z": -70 }
+  },
+  {
+    "title": "Neon Maze",
+    "desc": "3D Procedural maze escape with time limits and laser traps.",
+    "tech": ["Three.js", "WebGL"],
+    "link": "https://bhanu2006-24.github.io/neon-maze",
+    "type": "GAMES",
+    "pos": { "x": 45, "z": -90 }
+  },
+  {
+    "title": "Antigravity",
+    "desc": "Top-down shooter experimenting with gravity mechanics and boss AI.",
+    "tech": ["Physics", "Canvas"],
+    "link": "https://antigravity-game.pages.dev",
+    "type": "GAMES",
+    "pos": { "x": -35, "z": -110 }
+  },
+  {
+    "title": "Bomber Legends",
+    "desc": "Classic arcade bomber remake with destructible grid environments.",
+    "tech": ["React", "Grid Logic"],
+    "link": "https://bomber-legends.pages.dev",
+    "type": "GAMES",
+    "pos": { "x": 35, "z": -130 }
+  },
+  {
+    "title": "NovaNews",
+    "desc": "Modern news aggregator with clean UI and smart categorization.",
+    "tech": ["React 19", "Vite", "API"],
+    "link": "https://github.com/bhanu2006-24/novanews",
+    "type": "WEB",
+    "pos": { "x": -70, "z": 30 }
+  },
+  {
+    "title": "GrooveWave",
+    "desc": "Music analytics SaaS dashboard with real-time visualization.",
+    "tech": ["SaaS", "Data Viz"],
+    "link": "https://github.com/bhanu2006-24",
+    "type": "WEB",
+    "pos": { "x": -100, "z": -30 }
+  },
+  {
+    "title": "Atmosphere AI",
+    "desc": "Environmental monitoring dashboard powered by AI predictions.",
+    "tech": ["AI", "Analytics"],
+    "link": "https://github.com/bhanu2006-24",
+    "type": "WEB",
+    "pos": { "x": -130, "z": 30 }
+  },
+  {
+    "title": "RemoteNexus",
+    "desc": "Job portal connecting professionals with premium remote work.",
+    "tech": ["React", "Node.js"],
+    "link": "https://github.com/bhanu2006-24",
+    "type": "WEB",
+    "pos": { "x": -160, "z": -30 }
+  },
+  {
+    "title": "Krishna Books",
+    "desc": "Online bookstore and library management system.",
+    "tech": ["E-commerce", "Web"],
+    "link": "https://github.com/bhanu2006-24",
+    "type": "WEB",
+    "pos": { "x": -100, "z": 65 }
+  },
+  {
+    "title": "Crypto Pulse",
+    "desc": "Live cryptocurrency market tracker with portfolio management.",
+    "tech": ["React", "Finance API"],
+    "link": "https://github.com/bhanu2006-24/crypto-pulse",
+    "type": "DATA",
+    "pos": { "x": 70, "z": -30 }
+  },
+  {
+    "title": "IMDb Analytics",
+    "desc": "Data dashboard analyzing movie trends and correlations.",
+    "tech": ["Python", "Plotly"],
+    "link": "https://github.com/bhanu2006-24",
+    "type": "DATA",
+    "pos": { "x": 100, "z": 30 }
+  },
+  {
+    "title": "Img Toolkit",
+    "desc": "Browser-based image processing tools (remove bg, filters).",
+    "tech": ["Streamlit", "CV"],
+    "link": "https://github.com/bhanu2006-24/img-toolkit",
+    "type": "DATA",
+    "pos": { "x": 130, "z": -30 }
+  },
+  {
+    "title": "T-Shirt Gen",
+    "desc": "Procedural design generator for apparel using computer vision.",
+    "tech": ["Python", "OpenCV"],
+    "link": "https://github.com/bhanu2006-24/tshirtgen",
+    "type": "DATA",
+    "pos": { "x": 160, "z": 30 }
+  },
+  {
+    "title": "Steam Analytics",
+    "desc": "End-to-end pipeline scraping Steam data for market trends.",
+    "tech": ["Scraping", "Pandas"],
+    "link": "https://github.com/bhanu2006-24",
+    "type": "DATA",
+    "pos": { "x": 100, "z": 65 }
+  }
+]
