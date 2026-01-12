@@ -6,7 +6,393 @@
     path: "~",
     history: [],
     historyIndex: -1,
+    data: null, // To store fetched JSON data
   };
+
+  // Fetch data on init
+  fetch("./assets/projects.json")
+    .then((res) => res.json())
+    .then((data) => {
+      state.data = data;
+    })
+    .catch((err) => {
+      console.error("Failed to load project data:", err);
+      print("Error loading data. Some commands may not work.", "red");
+    });
+
+  function renderAboutMe() {
+    print(
+      "┌─────────────────────────── ABOUT ───────────────────────────┐",
+      ""
+    );
+    print(
+      '│ Name: <span class="accent">Bhanu Pratap Saini</span>                                    │',
+      ""
+    );
+    print(
+      '│ Role: <span class="accent">Web Developer | Data Analyst | Game Dev</span>              │',
+      ""
+    );
+    print(
+      '│ Location: <span class="accent">India (IIT Madras)</span>                              │',
+      ""
+    );
+    print(
+      "└─────────────────────────────────────────────────────────────┘",
+      ""
+    );
+
+    printBranch("Information", [
+      {
+        name: "About",
+        descriptions: [
+          'Passionate <span class="yellow">Web Developer</span> and Aspiring <span class="yellow">Gen AI Engineer</span>',
+          'Currently pursuing <span class="yellow">Data Science at IIT Madras</span>',
+          "Building modern, interactive web apps and exploring AI frontiers",
+        ],
+      },
+      {
+        name: "Tech Stack",
+        descriptions: [
+          'Web: <span class="yellow">HTML, CSS, JavaScript, TypeScript, React, Next.js, TailwindCSS</span>',
+          'Backend: <span class="yellow">Node.js, Flask, Python, PostgreSQL</span>',
+          'Data: <span class="yellow">pandas, numpy, Streamlit, Plotly, Tableau</span>',
+          'Game Dev: <span class="yellow">HTML5 Canvas, Three.js, JavaScript</span>',
+          'Tools: <span class="yellow">Git, GSAP, Figma, VS Code</span>',
+        ],
+      },
+      {
+        name: "Interests",
+        descriptions: [
+          'Creating the <span class="yellow">best possible UI/UX</span> even for technical products',
+          'Building <span class="yellow">AI-powered applications</span> and data dashboards',
+          'Crafting <span class="yellow">immersive browser games</span>',
+        ],
+      },
+      {
+        name: "Working Principles",
+        descriptions: [
+          'User-first - build features that <span class="yellow">benefit users, not just developers</span>',
+          'Clean code - write <span class="yellow">maintainable and readable code</span>',
+          'Continuous learning - always <span class="yellow">exploring new technologies</span>',
+        ],
+      },
+      {
+        name: "Contact",
+        descriptions: [
+          'Email: <span class="accent">bhanupsaini2024@gmail.com</span>',
+          'LinkedIn: <a href="https://www.linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="accent">Bhanu Saini</a>',
+          'GitHub: <a href="https://github.com/bhanu2006-24" target="_blank" class="accent">bhanu2006-24</a>',
+        ],
+      },
+    ]);
+  }
+
+  function promptText() {
+    return `<span class="prompt glow">${state.user}@${state.host}</span>:<span class="accent">${state.path}</span>$`;
+  }
+
+  function focusCmd() {
+    const cmd = document.getElementById("cmd");
+    if (cmd) {
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(cmd);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      cmd.focus();
+    }
+  }
+
+  function appendPrompt() {
+    const wrap = document.createElement("div");
+    wrap.className = "line prompt-line";
+    wrap.innerHTML = `
+      <div>${promptText()}</div>
+      <div id="cmd" contenteditable="true" spellcheck="false"></div>
+    `;
+    screen.appendChild(wrap);
+    screen.scrollTop = screen.scrollHeight;
+    focusCmd();
+  }
+
+  function print(text, cls) {
+    const div = document.createElement("div");
+    div.className = "line" + (cls ? " " + cls : "");
+    div.innerHTML = text;
+    screen.appendChild(div);
+    screen.scrollTop = screen.scrollHeight;
+  }
+
+  function printBranch(title, items) {
+    print(title + ":", "yellow");
+    print("", "");
+    items.forEach((obj) => {
+      print(obj.name, "tree-branch");
+      if (obj.descriptions) {
+        obj.descriptions.forEach((d) => {
+          print("- " + d, "tree-sub");
+        });
+      }
+      else if (obj.items) {
+          obj.items.forEach((d) => {
+            const parts = d.split(':');
+            if(parts.length > 1) {
+                print(`- <span class="yellow">${parts[0]}:</span>${parts.slice(1).join(':')}`, "tree-sub");
+            } else {
+                print("- " + d, "tree-sub");
+            }
+          });
+      }
+      print("", "");
+    });
+  }
+
+  function handleCommand(input) {
+    const cmd = input.trim().toLowerCase();
+    
+    // Commands that don't depend on data
+    if (cmd === "help") {
+      print(
+        [
+          '<span class="yellow">━━━━━━━━━━━━━━━━ AVAILABLE COMMANDS ━━━━━━━━━━━━━━━━</span>',
+          "",
+          '<span class="accent">Navigation</span>',
+          "  help             Show all commands",
+          "  about            Info about Bhanu Pratap Saini",
+          "  portfolio        Open specialized portfolios (LIVE)",
+          "",
+          '<span class="accent">Skills & Projects</span>',
+          "  skills           List of technical skills",
+          "  webdev           Web Development projects",
+          "  data             Data Analysis & Science projects",
+          "  games            Game Development projects",
+          "",
+          '<span class="accent">Info & Downloads</span>',
+          "  edu              Show education info",
+          "  resume           Download resumes (by domain)",
+          "  links            Important links & socials",
+          "",
+          '<span class="accent">Utilities</span>',
+          "  quote            Print a motivational quote",
+          "  clear            Clear the screen",
+          "",
+          '<span class="yellow">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>',
+        ].join("\n")
+      );
+      return;
+    }
+    
+    if (cmd === "about") {
+      renderAboutMe();
+      return;
+    }
+
+    if (cmd === "links") {
+        print('<span class="yellow">Important Links:</span>', "");
+        print("", "");
+        print(
+          '  📧 Email: <a href="mailto:bhanupsaini2024@gmail.com" class="accent">bhanupsaini2024@gmail.com</a>',
+          ""
+        );
+        print(
+          '  💼 LinkedIn: <a href="https://www.linkedin.com/in/bhanu-saini-3bb251391" target="_blank" class="accent">Bhanu Saini</a>',
+          ""
+        );
+        print(
+          '  🐙 GitHub: <a href="https://github.com/bhanu2006-24" target="_blank" class="accent">bhanu2006-24</a>',
+          ""
+        );
+        print(
+          '  📊 Tableau: <a href="https://public.tableau.com/app/profile/bhanu.saini6988/vizzes" target="_blank" class="accent">Tableau Public</a>',
+          ""
+        );
+        print(
+          '  🖥️ OS Portfolio: <a href="https://bhanu2006-24.github.io/bhanu2006-24/" target="_blank" class="accent">Interactive Portfolio</a>',
+          ""
+        );
+        return;
+    }
+
+    if (cmd === "quote") {
+        const quotes = [
+          '"The only way to do great work is to love what you do." – Steve Jobs',
+          '"Code is like humor. When you have to explain it, it\'s bad." – Cory House',
+          '"First, solve the problem. Then, write the code." – John Johnson',
+          '"Building intelligent systems with data, code, and curiosity." – Bhanu Saini',
+          '"The best way to predict the future is to create it." – Peter Drucker',
+        ];
+        print(quotes[Math.floor(Math.random() * quotes.length)], "muted");
+        return;
+    }
+
+    if (cmd === "clear") {
+        while (screen.firstChild) {
+          screen.removeChild(screen.firstChild);
+        }
+        return;
+    }
+
+    if (cmd === "") return;
+
+    // Check if data is loaded for other commands
+    if (!state.data) {
+        print("Data is still loading... please try again in a moment.", "red");
+        return;
+    }
+
+    switch (cmd) {
+      case "skills":
+        printBranch("Technical Skills", state.data.skills);
+        break;
+      case "webdev":
+        printBranch("Web Development Projects", state.data.webdev);
+        break;
+      case "data":
+        printBranch("Data Analysis & Science Projects", state.data.data);
+        break;
+      case "games":
+        printBranch("Game Development Projects", state.data.games);
+        break;
+      case "edu":
+             print("Education:", "yellow");
+             print("", "");
+             state.data.edu.forEach((obj) => {
+               print(obj.name, "tree-branch");
+               obj.details.forEach((d) => {
+                 print("- " + d, "tree-sub");
+               });
+               print("", "");
+             });
+        break;
+      case "portfolio":
+        print(
+          '<span class="yellow">━━━━━━━━━━━━━━━━ LIVE PORTFOLIOS ━━━━━━━━━━━━━━━━</span>',
+          ""
+        );
+        print("", "");
+        state.data.portfolios.forEach(p => {
+             // Basic emoji mapping
+             let icon = "🔗";
+             if(p.name.includes("Game")) icon = "🎮";
+             else if(p.name.includes("Web")) icon = "🌐";
+             else if(p.name.includes("Data")) icon = "📊";
+             else if(p.name.includes("Scientist")) icon = "🔬";
+             else if(p.name.includes("Creative")) icon = "🎨";
+             else if(p.name.includes("OS")) icon = "🖥️";
+             else if(p.name.includes("Resume")) icon = "📄";
+
+            print(
+                `  ${icon} <a href="${p.url}" target="_blank" class="accent">${p.name}</a> <span class="muted">→ ${p.id}</span>`,
+                ""
+            );
+        })
+        break;
+      case "resume":
+        print(
+          '<span class="yellow">━━━━━━━━━━━━━ DOWNLOAD RESUMES ━━━━━━━━━━━━━</span>',
+          ""
+        );
+        print("", "");
+        // We can reuse the portfolio links or hardcode the specific resume links since they are files
+        // But let's check if we have them in the JSON? We put them in "portfolios" with ID "Resume Hub"
+        // Let's print the specific ones we know exist, or maybe I should have added them to JSON.
+        // For now, I'll keep the direct links but they could be in JSON too.
+        // Actually, let's just stick to the specific resume links as they are distinct files.
+         print(
+          '  📊 <a href="https://bhanu2006-24.github.io/Resume/analyst-resume.html" target="_blank" class="accent">Data Analyst Resume</a>',
+          ""
+        );
+        print(
+          '  🔬 <a href="https://bhanu2006-24.github.io/Resume/datascience-resume.html" target="_blank" class="accent">Data Scientist Resume</a>',
+          ""
+        );
+        print(
+          '  🌐 <a href="https://bhanu2006-24.github.io/Resume/webdev-resume.html" target="_blank" class="accent">Web Developer Resume</a>',
+          ""
+        );
+        print(
+          '  🎮 <a href="https://bhanu2006-24.github.io/Resume/game-resume.html" target="_blank" class="accent">Game Developer Resume</a>',
+          ""
+        );
+        print("", "");
+        print(
+          '<span class="muted">Tip: Each resume can be edited and downloaded as PDF!</span>',
+          ""
+        );
+        break;
+      default:
+        print(
+          `command not found: <span class="red">${cmd}</span>. Type <span class="yellow">help</span> for available commands.`
+        );
+    }
+  }
+
+  function lockLine(lineEl) {
+    const input = lineEl.querySelector("#cmd");
+    if (!input) return;
+    const value = input.textContent;
+    const frozen = document.createElement("div");
+    frozen.className = "line";
+    frozen.innerHTML = `${promptText()} ${escapeHtml(value)}`;
+    lineEl.replaceWith(frozen);
+    return value;
+  }
+
+  function escapeHtml(s) {
+    return s.replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;",
+        }[c])
+    );
+  }
+
+  screen.addEventListener("keydown", (e) => {
+    const cmd = document.getElementById("cmd");
+    if (!cmd) return;
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const line = cmd.closest(".prompt-line");
+      const value = cmd.textContent;
+      state.history.unshift(value);
+      state.historyIndex = -1;
+      const frozenValue = lockLine(line);
+      handleCommand(frozenValue);
+      appendPrompt();
+    }
+    // Arrow up for history
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (state.historyIndex < state.history.length - 1) {
+        state.historyIndex++;
+        cmd.textContent = state.history[state.historyIndex];
+        focusCmd();
+      }
+    }
+    // Arrow down for history
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (state.historyIndex > 0) {
+        state.historyIndex--;
+        cmd.textContent = state.history[state.historyIndex];
+        focusCmd();
+      } else {
+        state.historyIndex = -1;
+        cmd.textContent = "";
+      }
+    }
+  });
+
+  screen.addEventListener("mousedown", () => setTimeout(focusCmd, 0));
+  appendPrompt();
+})();
 
   function renderAboutMe() {
     print(
@@ -510,68 +896,3 @@
         );
     }
   }
-
-  function lockLine(lineEl) {
-    const input = lineEl.querySelector("#cmd");
-    if (!input) return;
-    const value = input.textContent;
-    const frozen = document.createElement("div");
-    frozen.className = "line";
-    frozen.innerHTML = `${promptText()} ${escapeHtml(value)}`;
-    lineEl.replaceWith(frozen);
-    return value;
-  }
-
-  function escapeHtml(s) {
-    return s.replace(
-      /[&<>"']/g,
-      (c) =>
-        ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;",
-        }[c])
-    );
-  }
-
-  screen.addEventListener("keydown", (e) => {
-    const cmd = document.getElementById("cmd");
-    if (!cmd) return;
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const line = cmd.closest(".prompt-line");
-      const value = cmd.textContent;
-      state.history.unshift(value);
-      state.historyIndex = -1;
-      const frozenValue = lockLine(line);
-      handleCommand(frozenValue);
-      appendPrompt();
-    }
-    // Arrow up for history
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      if (state.historyIndex < state.history.length - 1) {
-        state.historyIndex++;
-        cmd.textContent = state.history[state.historyIndex];
-        focusCmd();
-      }
-    }
-    // Arrow down for history
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (state.historyIndex > 0) {
-        state.historyIndex--;
-        cmd.textContent = state.history[state.historyIndex];
-        focusCmd();
-      } else {
-        state.historyIndex = -1;
-        cmd.textContent = "";
-      }
-    }
-  });
-
-  screen.addEventListener("mousedown", () => setTimeout(focusCmd, 0));
-  appendPrompt();
-})();

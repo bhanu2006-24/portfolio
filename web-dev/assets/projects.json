@@ -5,7 +5,10 @@
     "techStack": ["React", "TypeScript", "AI API"],
     "liveDemo": "https://aniglitch.pages.dev",
     "github": "https://github.com/bhanu2006-24",
-    "category": "ai"
+    "category": "ai",
+    "color": "purple",
+    "icon": "zap",
+    "badge": "AI Powered"
   },
   {
     "name": "OPPE Platform",
@@ -13,7 +16,10 @@
     "techStack": ["Pyodide", "WASM", "React"],
     "liveDemo": "https://oppe-practice.pages.dev",
     "github": "https://github.com/bhanu2006-24",
-    "category": "saas"
+    "category": "saas",
+    "color": "blue",
+    "icon": "terminal",
+    "badge": "EdTech"
   },
   {
     "name": "GrooveWave",
@@ -21,7 +27,10 @@
     "techStack": ["TypeScript", "Tailwind"],
     "liveDemo": "https://groovewave.pages.dev",
     "github": "https://github.com/bhanu2006-24",
-    "category": "saas"
+    "category": "saas",
+    "color": "green",
+    "icon": "music",
+    "badge": "Media SaaS"
   },
   {
     "name": "Deepen Your Faith",
@@ -29,7 +38,10 @@
     "techStack": ["Vite", "Cloudflare"],
     "liveDemo": "https://deepenyourfaith.in",
     "github": "https://github.com/bhanu2006-24",
-    "category": "commerce"
+    "category": "commerce",
+    "color": "orange",
+    "icon": "shopping-bag",
+    "badge": "E-Commerce"
   },
   {
     "name": "Remote Nexus",
@@ -37,7 +49,10 @@
     "techStack": ["React", "Vite"],
     "liveDemo": "https://remotenexus.pages.dev",
     "github": "https://github.com/bhanu2006-24",
-    "category": "saas"
+    "category": "saas",
+    "color": "cyan",
+    "icon": "briefcase",
+    "badge": "Jobs"
   },
   {
     "name": "Atmosphere AI",
@@ -45,7 +60,10 @@
     "techStack": ["React", "TypeScript"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/atmosphere-ai",
-    "category": "ai"
+    "category": "ai",
+    "color": "sky",
+    "icon": "cloud-sun",
+    "badge": "AI Weather"
   },
   {
     "name": "NovaNews",
@@ -53,7 +71,10 @@
     "techStack": ["React 19", "Vite"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/novanews",
-    "category": "saas"
+    "category": "saas",
+    "color": "purple",
+    "icon": "newspaper",
+    "badge": "News Platform"
   },
   {
     "name": "Crypto Pulse",
@@ -61,7 +82,10 @@
     "techStack": ["JavaScript", "CoinGecko API"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/crypto-pulse",
-    "category": "ai"
+    "category": "ai",
+    "color": "yellow",
+    "icon": "bitcoin",
+    "badge": "Crypto Analytics"
   },
   {
     "name": "Krishna Books",
@@ -69,7 +93,10 @@
     "techStack": ["React", "Tailwind"],
     "liveDemo": "https://krishna-books.pages.dev",
     "github": "https://github.com/bhanu2006-24",
-    "category": "saas"
+    "category": "saas",
+    "color": "yellow",
+    "icon": "book-open",
+    "badge": "Content"
   },
   {
     "name": "Bhanu Creative",
@@ -77,7 +104,10 @@
     "techStack": ["GSAP", "WebGL"],
     "liveDemo": "https://bhanu-creative.pages.dev/",
     "github": "",
-    "category": "creative"
+    "category": "creative",
+    "color": "pink",
+    "icon": "palette",
+    "badge": "Portfolio"
   },
   {
     "name": "MacOS Portfolio",
@@ -85,7 +115,10 @@
     "techStack": ["React", "TypeScript"],
     "liveDemo": "https://bhanu2006-24.github.io/bhanu-os-portfolio/",
     "github": "https://github.com/bhanu2006-24/bhanu-os-portfolio",
-    "category": "creative"
+    "category": "creative",
+    "color": "blue",
+    "icon": "monitor",
+    "badge": "OS Sim"
   },
   {
     "name": "Krishna Templates",
@@ -93,7 +126,10 @@
     "techStack": ["HTML/CSS", "Responsive"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/web_sample",
-    "category": "creative"
+    "category": "creative",
+    "color": "teal",
+    "icon": "layout-template",
+    "badge": "Templates"
   },
   {
     "name": "Find My IP",
@@ -101,7 +137,10 @@
     "techStack": ["API", "Dashboard"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/find-my-ip",
-    "category": "tools"
+    "category": "tools",
+    "color": "sky",
+    "icon": "globe",
+    "badge": "Utility"
   },
   {
     "name": "GSoC Planner",
@@ -109,7 +148,10 @@
     "techStack": ["Analytics", "PWA"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/GSOC-planner",
-    "category": "tools"
+    "category": "tools",
+    "color": "red",
+    "icon": "calendar",
+    "badge": "Open Source"
   },
   {
     "name": "GSAP Cocktails",
@@ -117,7 +159,10 @@
     "techStack": ["GSAP", "React"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/gsap-cocktails",
-    "category": "creative"
+    "category": "creative",
+    "color": "rose",
+    "icon": "glass-water",
+    "badge": "Animation"
   },
   {
     "name": "MacBook Clone",
@@ -125,7 +170,10 @@
     "techStack": ["Three.js", "GSAP"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/Macbook_Landing",
-    "category": "creative"
+    "category": "creative",
+    "color": "gray",
+    "icon": "laptop",
+    "badge": "3D Clone"
   },
   {
     "name": "LinkLift",
@@ -133,7 +181,10 @@
     "techStack": ["Python", "Streamlit"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/url-shortner",
-    "category": "tools"
+    "category": "tools",
+    "color": "indigo",
+    "icon": "link",
+    "badge": "SaaS"
   },
   {
     "name": "Neon Maze",
@@ -141,6 +192,9 @@
     "techStack": ["WebGL", "GameDev"],
     "liveDemo": "",
     "github": "https://github.com/bhanu2006-24/neon-maze",
-    "category": "creative"
+    "category": "creative",
+    "color": "lime",
+    "icon": "gamepad-2",
+    "badge": "Game"
   }
 ]
